@@ -6,71 +6,34 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Utilisateur
- *
- * @ORM\Table(name="utilisateur", uniqueConstraints={@ORM\UniqueConstraint(name="mail", columns={"mail"})})
- * @ORM\Entity
- */
+#[ORM\Entity (repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id=null ;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=20, nullable=false)
-     */
-    private $nom;
+    #[ORM\Column(length: 20)]
+    private ?string $nom=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=30, nullable=false)
-     */
-    private $prenom;
+    #[ORM\Column(length: 30)]
+    private ?string $prenom=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=100, nullable=false)
-     */
-    private $mail;
+    #[ORM\Column(length: 100)]
+    private ?string $mail=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mdp", type="string", length=100, nullable=false)
-     */
-    private $mdp;
+    #[ORM\Column(length: 100)]
+    private ?string $mdp=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="num_tel", type="string", length=20, nullable=false)
-     */
-    private $numTel;
+    #[ORM\Column(length: 20)]
+    private ?string $numTel=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=30, nullable=false)
-     */
-    private $role;
+    #[ORM\Column(length: 30)]
+    private ?string $role=null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="evaluation", type="float", precision=2, scale=1, nullable=false)
-     */
-    private $evaluation;
+    #[ORM\Column]
+    private ?float $evaluation=null;
 
     /**
      * @var bool
