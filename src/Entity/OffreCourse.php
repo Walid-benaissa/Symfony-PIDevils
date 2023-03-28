@@ -3,57 +3,30 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OffreCourseRepository;
 
-/**
- * OffreCourse
- *
- * @ORM\Table(name="offre_course")
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: OffreCourseRepository::class)]
 class OffreCourse
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_offre", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $idOffre;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="matricule_vehicule", type="integer", nullable=false)
-     */
-    private $matriculeVehicule;
+    #[ORM\Column(nullable: true)]
+    private ?int $matriculeVehicule = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cin_conducteur", type="integer", nullable=false)
-     */
-    private $cinConducteur;
+    #[ORM\Column(nullable: true)]
+    private ?int $cinConducteur = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_passagers", type="integer", nullable=false)
-     */
-    private $nbPassagers;
+    #[ORM\Column(nullable: true)]
+    private ?int $nbPassagers = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="options_offre", type="string", length=255, nullable=false)
-     */
-    private $optionsOffre;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $optionsOffre = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="statut_offre", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private $statutOffre;
 
     public function getIdOffre(): ?int
@@ -120,6 +93,4 @@ class OffreCourse
 
         return $this;
     }
-
-
 }

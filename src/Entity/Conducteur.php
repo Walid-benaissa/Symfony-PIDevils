@@ -4,38 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Conducteur
- *
- * @ORM\Table(name="conducteur", indexes={@ORM\Index(name="fk_utilisateur_conducteur", columns={"id"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ConducteurRepository::class)]
+
 class Conducteur
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="b3", type="string", length=255, nullable=false)
-     */
-    private $b3;
+    #[ORM\Column(length: 150)]
+    private ?string $b3 = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="permis", type="string", length=255, nullable=false)
-     */
-    private $permis;
+    #[ORM\Column(length: 150)]
+    private ?string $permis = null;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
-     * })
-     */
+    #[ORM\OneToOne(inversedBy: 'Conducteur')]
     private $id;
 
     public function getB3(): ?string
@@ -73,6 +52,4 @@ class Conducteur
 
         return $this;
     }
-
-
 }
