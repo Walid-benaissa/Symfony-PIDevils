@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReclamationRepository;
 
 #[ORM\Entity (repositoryClass: ReclamationRepository::class)]
 class Reclamation

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VehiculeRepository;
 
 #[ORM\Entity (repositoryClass: VehiculeRepository::class)]
 class Vehicule
