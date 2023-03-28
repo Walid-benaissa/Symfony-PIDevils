@@ -29,12 +29,8 @@ class Vehicule
     #[ORM\Column]
     private ?float $prix=null;
 
-    /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="disponibilite", type="boolean", nullable=true)
-     */
-    private $disponibilite;
+    #[ORM\Column]
+    private ?bool $disponibilite=false;
 
     #[ORM\Column(length: 255)]
     private ?string $description=null;

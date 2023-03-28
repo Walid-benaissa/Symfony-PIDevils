@@ -6,55 +6,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity (repositoryClass: UtilisateurRepository::class)]
+#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id=null ;
+    private ?int $id = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $nom=null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $prenom=null;
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $mail=null;
+    private ?string $mail = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $mdp=null;
+    private ?string $mdp = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $numTel=null;
+    private ?string $numTel = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $role=null;
+    private ?string $role = null;
 
     #[ORM\Column]
     private ?float $evaluation=null;
+    
+    #[ORM\Column]
+    private ?bool $bloque = false ;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="bloque", type="boolean", nullable=false)
-     */
-    private $bloque = '0';
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Utilisateur", inversedBy="id1")
-     * @ORM\JoinTable(name="commentaire",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id1", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id2", referencedColumnName="id")
-     *   }
-     * )
-     */
+    #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'id1')]
+    #[ORM\JoinTable(name: 'commentaire')]
+    #[ORM\JoinColumn(name: 'id1 ', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'id2', referencedColumnName: 'id')]
     private $id2 = array();
 
     /**
@@ -189,5 +176,4 @@ class Utilisateur
 
         return $this;
     }
-
 }
