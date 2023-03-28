@@ -4,56 +4,25 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Reclamation
- *
- * @ORM\Table(name="reclamation", indexes={@ORM\Index(name="fk_utilisateur_reclamation1", columns={"idAdmin"}), @ORM\Index(name="fk_utilisateur_reclamation2", columns={"idUser"})})
- * @ORM\Entity
- */
+#[ORM\Entity (repositoryClass: ReclamationRepository::class)]
 class Reclamation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id=null ;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="message", type="string", length=255, nullable=false)
-     */
-    private $message;
+    #[ORM\Column(length: 150)]
+    private ?string $message=null ;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string", length=255, nullable=false)
-     */
-    private $etat;
+    #[ORM\Column(length: 150)]
+    private ?string $etat=null;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idAdmin", referencedColumnName="id")
-     * })
-     */
-    private $idadmin;
+    #[ORM\ManyToOne (inversedBy: 'Utilisateurs')]
+    private ?int $idadmin=null ;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUser", referencedColumnName="id")
-     * })
-     */
-    private $iduser;
+    #[ORM\ManyToOne (inversedBy: 'Utilisateurs')]
+    private ?int $iduser=null ;
 
     public function getId(): ?int
     {
