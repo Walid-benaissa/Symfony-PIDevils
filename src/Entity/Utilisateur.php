@@ -34,13 +34,9 @@ class Utilisateur
 
     #[ORM\Column]
     private ?float $evaluation=null;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="bloque", type="boolean", nullable=false)
-     */
-    private $bloque = '0';
+    
+    #[ORM\Column]
+    private ?bool $bloque = false ;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
