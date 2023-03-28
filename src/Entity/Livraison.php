@@ -4,80 +4,35 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Livraison
- *
- * @ORM\Table(name="livraison", indexes={@ORM\Index(name="fk_livraison_client", columns={"id_client"}), @ORM\Index(name="fk_livraison_conducteur", columns={"id_livreur"}), @ORM\Index(name="fk_livraison_colis", columns={"id_colis"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: LivraisonRepository::class)]
 class Livraison
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_livraison", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idLivraison;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse_expedition", type="string", length=30, nullable=false)
-     */
-    private $adresseExpedition;
+    private ?int $idLivraison = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse_destinataire", type="string", length=30, nullable=false)
-     */
-    private $adresseDestinataire;
+    #[ORM\Column(length: 150)]
+    private ?string $adresseExpedition = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
+    #[ORM\Column(length: 150)]
+    private ?string $adresseDestinataire = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string", length=30, nullable=false)
-     */
-    private $etat;
+    #[ORM\Column]
+    private ?float $prix = null;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_client", referencedColumnName="id")
-     * })
-     */
-    private $idClient;
+    #[ORM\Column(length: 150)]
+    private ?string $etat = null;
 
-    /**
-     * @var \Colis
-     *
-     * @ORM\ManyToOne(targetEntity="Colis")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_colis", referencedColumnName="id")
-     * })
-     */
-    private $idColis;
+    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    private ?Utilisateur $Client = null;
 
-    /**
-     * @var \Utilisateur
-     *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_livreur", referencedColumnName="id")
-     * })
-     */
-    private $idLivreur;
+    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    private ?Colis $Colis = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    private ?Utilisateur $Livreur = null;
 
     public function getIdLivraison(): ?int
     {
@@ -134,39 +89,37 @@ class Livraison
 
     public function getIdClient(): ?Utilisateur
     {
-        return $this->idClient;
+        return $this->Client;
     }
 
-    public function setIdClient(?Utilisateur $idClient): self
+    public function setIdClient(?Utilisateur $Client): self
     {
-        $this->idClient = $idClient;
+        $this->Client = $Client;
 
         return $this;
     }
 
     public function getIdColis(): ?Colis
     {
-        return $this->idColis;
+        return $this->Colis;
     }
 
-    public function setIdColis(?Colis $idColis): self
+    public function setIdColis(?Colis $Colis): self
     {
-        $this->idColis = $idColis;
+        $this->Colis = $Colis;
 
         return $this;
     }
 
     public function getIdLivreur(): ?Utilisateur
     {
-        return $this->idLivreur;
+        return $this->Livreur;
     }
 
-    public function setIdLivreur(?Utilisateur $idLivreur): self
+    public function setIdLivreur(?Utilisateur $Livreur): self
     {
-        $this->idLivreur = $idLivreur;
+        $this->Livreur = $Livreur;
 
         return $this;
     }
-
-
 }

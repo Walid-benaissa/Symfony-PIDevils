@@ -4,57 +4,28 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Course
- *
- * @ORM\Table(name="course")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_course", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idCourse;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idCourse = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="point_depart", type="string", length=255, nullable=false)
-     */
-    private $pointDepart;
+    #[ORM\Column(length: 150)]
+    private ?string $pointDepart = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="point_destination", type="string", length=255, nullable=false)
-     */
-    private $pointDestination;
+    #[ORM\Column(length: 150)]
+    private ?string $pointDestination = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="distance", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $distance;
+    #[ORM\Column]
+    private ?float $distance = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
+    #[ORM\Column]
+    private  ?float $prix = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="statut_course", type="string", length=255, nullable=false)
-     */
-    private $statutCourse;
+    #[ORM\Column(length: 150)]
+    private ?string $statutCourse = null;
 
     public function getIdCourse(): ?int
     {
@@ -120,6 +91,4 @@ class Course
 
         return $this;
     }
-
-
 }
