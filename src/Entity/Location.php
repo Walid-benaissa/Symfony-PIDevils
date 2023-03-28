@@ -4,58 +4,34 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LocationRepository;
 
-/**
- * Location
- *
- * @ORM\Table(name="location", indexes={@ORM\Index(name="fk_vehicule_location", columns={"id_vehicule"}), @ORM\Index(name="fk_u_veh", columns={"id"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_contrat", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $idContrat;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
+    #[ORM\Column(nullable: true)]
+    private ?int $id = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_vehicule", type="integer", nullable=false)
-     */
-    private $idVehicule;
+    #[ORM\Column(nullable: true)]
+    private ?int $idVehicule = null;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="date_debut", type="date", nullable=true)
-     */
-    private $dateDebut;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="date_fin", type="date", nullable=true)
-     */
-    private $dateFin;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dateDebut = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lieu", type="string", length=255, nullable=false)
-     */
-    private $lieu;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dateFin = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lieu = null;
 
     public function getIdContrat(): ?int
     {
@@ -121,6 +97,4 @@ class Location
 
         return $this;
     }
-
-
 }

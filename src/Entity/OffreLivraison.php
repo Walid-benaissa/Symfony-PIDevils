@@ -3,30 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OffreLivraisonRepository;
 
-/**
- * OffreLivraison
- *
- * @ORM\Table(name="offre_livraison")
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass: OffreLivraisonRepository::class)]
 class OffreLivraison
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix_livraison", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prixLivraison;
+    #[ORM\Column(nullable: true)]
+    private ?float $prixLivraison = null;
 
     public function getId(): ?int
     {
@@ -44,6 +33,4 @@ class OffreLivraison
 
         return $this;
     }
-
-
 }
