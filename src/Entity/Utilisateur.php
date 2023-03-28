@@ -33,14 +33,10 @@ class Utilisateur
     private ?string $role = null;
 
     #[ORM\Column]
-    private ?float $evaluation = null;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="bloque", type="boolean", nullable=false)
-     */
-    private  $bloque = '0';
+    private ?float $evaluation=null;
+    
+    #[ORM\Column]
+    private ?bool $bloque = false ;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'id1')]
     #[ORM\JoinTable(name: 'commentaire')]

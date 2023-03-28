@@ -4,43 +4,26 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Colis
- *
- * @ORM\Table(name="colis")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ColisRepository::class)]
+
 class Colis
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_items", type="integer", nullable=false)
-     */
-    private $nbItems;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=250, nullable=false)
-     */
-    private $description;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="poids", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $poids;
+
+    #[ORM\Column]
+    private ?int $nbItems = null;
+
+    #[ORM\Column(length: 150)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?float $poids = null;
 
     public function getId(): ?int
     {
@@ -82,6 +65,4 @@ class Colis
 
         return $this;
     }
-
-
 }
