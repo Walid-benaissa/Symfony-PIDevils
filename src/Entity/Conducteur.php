@@ -14,7 +14,7 @@ class Conducteur
     #[ORM\Column(length: 150)]
     private ?string $permis = null;
 
-    #TORM\OneToOne(inversedBy: 'Conducteur')]   
+    #[ORM\OneToOne(inversedBy: 'Conducteur')]
     private $id;
 
     public function getB3(): ?string
