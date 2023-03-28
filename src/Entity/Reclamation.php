@@ -55,5 +55,58 @@ class Reclamation
      */
     private $iduser;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): self
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getIdadmin(): ?Utilisateur
+    {
+        return $this->idadmin;
+    }
+
+    public function setIdadmin(?Utilisateur $idadmin): self
+    {
+        $this->idadmin = $idadmin;
+
+        return $this;
+    }
+
+    public function getIduser(): ?Utilisateur
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?Utilisateur $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
 
 }

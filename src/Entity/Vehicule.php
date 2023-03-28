@@ -87,5 +87,118 @@ class Vehicule
      */
     private $idPromotion;
 
+    public function getIdVehicule(): ?int
+    {
+        return $this->idVehicule;
+    }
+
+    public function getNomV(): ?string
+    {
+        return $this->nomV;
+    }
+
+    public function setNomV(string $nomV): self
+    {
+        $this->nomV = $nomV;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function isDisponibilite(): ?bool
+    {
+        return $this->disponibilite;
+    }
+
+    public function setDisponibilite(?bool $disponibilite): self
+    {
+        $this->disponibilite = $disponibilite;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getIdPromotion(): ?Promotion
+    {
+        return $this->idPromotion;
+    }
+
+    public function setIdPromotion(?Promotion $idPromotion): self
+    {
+        $this->idPromotion = $idPromotion;
+
+        return $this;
+    }
+
 
 }

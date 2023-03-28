@@ -28,5 +28,22 @@ class Promotion
      */
     private $taux;
 
+    public function getIdPromotion(): ?int
+    {
+        return $this->idPromotion;
+    }
+
+    public function getTaux(): ?float
+    {
+        return $this->taux;
+    }
+
+    public function setTaux(float $taux): self
+    {
+        $this->taux = $taux;
+
+        return $this;
+    }
+
 
 }

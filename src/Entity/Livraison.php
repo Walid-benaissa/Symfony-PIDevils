@@ -79,5 +79,94 @@ class Livraison
      */
     private $idLivreur;
 
+    public function getIdLivraison(): ?int
+    {
+        return $this->idLivraison;
+    }
+
+    public function getAdresseExpedition(): ?string
+    {
+        return $this->adresseExpedition;
+    }
+
+    public function setAdresseExpedition(string $adresseExpedition): self
+    {
+        $this->adresseExpedition = $adresseExpedition;
+
+        return $this;
+    }
+
+    public function getAdresseDestinataire(): ?string
+    {
+        return $this->adresseDestinataire;
+    }
+
+    public function setAdresseDestinataire(string $adresseDestinataire): self
+    {
+        $this->adresseDestinataire = $adresseDestinataire;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?Utilisateur
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?Utilisateur $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
+    public function getIdColis(): ?Colis
+    {
+        return $this->idColis;
+    }
+
+    public function setIdColis(?Colis $idColis): self
+    {
+        $this->idColis = $idColis;
+
+        return $this;
+    }
+
+    public function getIdLivreur(): ?Utilisateur
+    {
+        return $this->idLivreur;
+    }
+
+    public function setIdLivreur(?Utilisateur $idLivreur): self
+    {
+        $this->idLivreur = $idLivreur;
+
+        return $this;
+    }
+
 
 }

@@ -28,5 +28,22 @@ class OffreLivraison
      */
     private $prixLivraison;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getPrixLivraison(): ?float
+    {
+        return $this->prixLivraison;
+    }
+
+    public function setPrixLivraison(float $prixLivraison): self
+    {
+        $this->prixLivraison = $prixLivraison;
+
+        return $this;
+    }
+
 
 }
