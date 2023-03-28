@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ColisRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ColisRepository::class)]

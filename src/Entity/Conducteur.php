@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\ConducteurRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConducteurRepository::class)]
