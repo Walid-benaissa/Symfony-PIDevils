@@ -1,54 +1,49 @@
-<!DOCTYPE html>
-
-<title>Utilisateur</title>
+{% extends 'base-back.html.twig'%}
 
 {% block body %}
-    <h1>Utilisateur</h1>
+	<h1>Utilisateur</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ utilisateur.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ utilisateur.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ utilisateur.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ utilisateur.mail }}</td>
-            </tr>
-            <tr>
-                <th>Mdp</th>
-                <td>{{ utilisateur.mdp }}</td>
-            </tr>
-            <tr>
-                <th>NumTel</th>
-                <td>{{ utilisateur.numTel }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ utilisateur.role }}</td>
-            </tr>
-            <tr>
-                <th>Evaluation</th>
-                <td>{{ utilisateur.evaluation }}</td>
-            </tr>
-            <tr>
-                <th>Bloque</th>
-                <td>{{ utilisateur.bloque ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ utilisateur.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ utilisateur.nom }}</td>
+			</tr>
+			<tr>
+				<th>Prénom</th>
+				<td>{{ utilisateur.prenom }}</td>
+			</tr>
+			<tr>
+				<th>Mail</th>
+				<td>{{ utilisateur.mail }}</td>
+			</tr>
 
-    <a href="{{ path('app_utilisateur_index') }}">back to list</a>
+			<tr>
+				<th>NumTel</th>
+				<td>{{ utilisateur.numTel }}</td>
+			</tr>
+			<tr>
+				<th>Rôle</th>
+				<td>{{ utilisateur.role }}</td>
+			</tr>
+			<tr>
+				<th>Evaluation</th>
+				<td>{{ utilisateur.evaluation }}</td>
+			</tr>
+			<tr>
+				<th>Bloque</th>
+				<td>{{ utilisateur.bloque ? 'Yes' : 'No' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+	<a href="{{ path('app_utilisateur_index') }}">back to list</a>
 
-    {{ include('utilisateur/_delete_form.html.twig') }}
+	<a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+
+	{{ include('utilisateur/_delete_form.html.twig') }}
 {% endblock %}
