@@ -14,7 +14,6 @@ class ReclamationType extends AbstractType
         $builder
             ->add('message')
             ->add('etat')
-            ->add('admin')
             ->add('user')
         ;
     }

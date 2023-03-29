@@ -1,37 +1,34 @@
-<!DOCTYPE html>
-
-<title>Reclamation index</title>
-
+{% extends 'base-back.html.twig'%}
 {% block body %}
-    <h1>Reclamation index</h1>
+	<h1>Gérer Reclamations</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Message</th>
-                <th>Etat</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reclamation in reclamations %}
-            <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.message }}</td>
-                <td>{{ reclamation.etat }}</td>
-                <td>
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Message</th>
+				<th>Etat</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for reclamation in reclamations %}
+				<tr>
+					<td>{{ reclamation.id }}</td>
+					<td>{{ reclamation.message }}</td>
+					<td>{{ reclamation.etat }}</td>
+					<td>
+						<a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
+						<a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+	<a href="{{ path('app_reclamation_new') }}">Create new</a>
 {% endblock %}
