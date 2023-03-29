@@ -52,27 +52,17 @@ class Reclamation
         return $this;
     }
 
-    public function getadmin(): ?Utilisateur
-    {
-        return $this->admin;
-    }
-
-    public function setadmin(?Utilisateur $admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    public function getuser(): ?Utilisateur
+    public function getUser(): ?Utilisateur
     {
         return $this->user;
     }
 
-    public function setuser(?Utilisateur $user): self
+    public function setUser(?Utilisateur $user): self
     {
         $this->user = $user;
 
         return $this;
     }
+
+    
 }
