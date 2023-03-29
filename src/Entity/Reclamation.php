@@ -19,10 +19,12 @@ class Reclamation
     #[ORM\Column(length: 150)]
     private ?string $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'idAdmin')]
     private ?Utilisateur $admin = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'idUser')]
     private ?Utilisateur $user = null;
 
     public function getId(): ?int

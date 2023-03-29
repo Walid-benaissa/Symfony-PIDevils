@@ -38,6 +38,12 @@ class Utilisateur
     #[ORM\Column]
     private ?bool $bloque = false ;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Reclamation::class, orphanRemoval: true)]
+    private Collection $reclamations;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Voiture::class, orphanRemoval: true)]
+    private Collection $voitures;
+
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'id1')]
     #[ORM\JoinTable(name: 'commentaire')]
     #[ORM\JoinColumn(name: 'id1 ', referencedColumnName: 'id')]
@@ -50,6 +56,7 @@ class Utilisateur
     public function __construct()
     {
         $this->id2 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reclamations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,5 +187,35 @@ class Utilisateur
     public function getBloque(): ?string
     {
         return $this->bloque;
+    }
+
+    /**
+     * @return Collection<int, Reclamation>
+     */
+    public function getReclamations(): Collection
+    {
+        return $this->reclamations;
+    }
+
+    public function addReclamation(Reclamation $reclamation): self
+    {
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations->add($reclamation);
+            $reclamation->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamation(Reclamation $reclamation): self
+    {
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getUtilisateur() === $this) {
+                $reclamation->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 }

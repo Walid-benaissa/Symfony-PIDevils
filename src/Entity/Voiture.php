@@ -26,7 +26,8 @@ class Voiture
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
-    private ?int $user = null;
+    #[ORM\JoinColumn(name: 'id')]
+    private ?Utilisateur $user = null;
 
     public function getImmatriculation(): ?string
     {
