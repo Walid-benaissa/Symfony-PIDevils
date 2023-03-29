@@ -5,26 +5,26 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VoitureRepository;
 
-#[ORM\Entity (repositoryClass: VoitureRepository::class)]
+#[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
 {
     #[ORM\Column(length: 30)]
-    private ?string $immatriculation=null;
+    private ?string $immatriculation = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $modele=null;
+    private ?string $modele = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $marque=null;
+    private ?string $marque = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $etat=null;
+    private ?string $etat = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $photo=null;
+    private ?string $photo = null;
 
-    #[ORM\ManyToOne (inversedBy: 'Utilisateurs')]
-    private ?int $id=null;
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    private ?int $user = null;
 
     public function getImmatriculation(): ?string
     {
@@ -79,17 +79,22 @@ class Voiture
         return $this;
     }
 
-    public function getId(): ?Utilisateur
+    public function getuser(): ?Utilisateur
     {
-        return $this->id;
+        return $this->user;
     }
 
-    public function setId(?Utilisateur $id): self
+    public function setuser(?Utilisateur $user): self
     {
-        $this->id = $id;
+        $this->user = $user;
 
         return $this;
     }
 
+    public function setImmatriculation(string $immatriculation): self
+    {
+        $this->immatriculation = $immatriculation;
 
+        return $this;
+    }
 }

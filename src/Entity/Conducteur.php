@@ -16,8 +16,8 @@ class Conducteur
     #[ORM\Column(length: 150)]
     private ?string $permis = null;
 
-    #[ORM\OneToOne(inversedBy: 'Conducteur')]
-    private $id;
+    #[ORM\OneToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    private ?Utilisateur $utilisateur = null;
 
     public function getB3(): ?string
     {
@@ -45,12 +45,24 @@ class Conducteur
 
     public function getId(): ?Utilisateur
     {
-        return $this->id;
+        return $this->utilisateur;
     }
 
-    public function setId(?Utilisateur $id): self
+    public function setId(?Utilisateur $utilisateur): self
     {
-        $this->id = $id;
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

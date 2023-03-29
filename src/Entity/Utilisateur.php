@@ -176,4 +176,9 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getBloque(): ?string
+    {
+        return $this->bloque;
+    }
 }

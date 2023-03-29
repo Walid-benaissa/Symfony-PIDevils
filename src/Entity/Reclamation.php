@@ -5,25 +5,25 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 
-#[ORM\Entity (repositoryClass: ReclamationRepository::class)]
+#[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id=null ;
+    private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $message=null ;
+    private ?string $message = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $etat=null;
+    private ?string $etat = null;
 
-    #[ORM\ManyToOne (inversedBy: 'Utilisateurs')]
-    private ?int $idadmin=null ;
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    private ?Utilisateur $admin = null;
 
-    #[ORM\ManyToOne (inversedBy: 'Utilisateurs')]
-    private ?int $iduser=null ;
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    private ?Utilisateur $user = null;
 
     public function getId(): ?int
     {
@@ -54,29 +54,27 @@ class Reclamation
         return $this;
     }
 
-    public function getIdadmin(): ?Utilisateur
+    public function getadmin(): ?Utilisateur
     {
-        return $this->idadmin;
+        return $this->admin;
     }
 
-    public function setIdadmin(?Utilisateur $idadmin): self
+    public function setadmin(?Utilisateur $admin): self
     {
-        $this->idadmin = $idadmin;
+        $this->admin = $admin;
 
         return $this;
     }
 
-    public function getIduser(): ?Utilisateur
+    public function getuser(): ?Utilisateur
     {
-        return $this->iduser;
+        return $this->user;
     }
 
-    public function setIduser(?Utilisateur $iduser): self
+    public function setuser(?Utilisateur $user): self
     {
-        $this->iduser = $iduser;
+        $this->user = $user;
 
         return $this;
     }
-
-
 }

@@ -27,13 +27,13 @@ class Livraison
     #[ORM\Column(length: 150)]
     private ?string $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
     private ?Utilisateur $Client = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Colis::class)]
     private ?Colis $Colis = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Livraison')]
+    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
     private ?Utilisateur $Livreur = null;
 
     public function getIdLivraison(): ?int
@@ -119,6 +119,42 @@ class Livraison
     }
 
     public function setIdLivreur(?Utilisateur $Livreur): self
+    {
+        $this->Livreur = $Livreur;
+
+        return $this;
+    }
+
+    public function getClient(): ?Utilisateur
+    {
+        return $this->Client;
+    }
+
+    public function setClient(?Utilisateur $Client): self
+    {
+        $this->Client = $Client;
+
+        return $this;
+    }
+
+    public function getColis(): ?Colis
+    {
+        return $this->Colis;
+    }
+
+    public function setColis(?Colis $Colis): self
+    {
+        $this->Colis = $Colis;
+
+        return $this;
+    }
+
+    public function getLivreur(): ?Utilisateur
+    {
+        return $this->Livreur;
+    }
+
+    public function setLivreur(?Utilisateur $Livreur): self
     {
         $this->Livreur = $Livreur;
 

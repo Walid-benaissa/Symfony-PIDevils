@@ -5,42 +5,41 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VehiculeRepository;
 
-#[ORM\Entity (repositoryClass: VehiculeRepository::class)]
+#[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idVehicule=null ;
+    private ?int $idVehicule = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nomV=null;
+    private ?string $nomV = null;
 
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id=null ;
-
-     #[ORM\Column(length: 255)]
-    private ?string $image=null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $ville=null;
 
     #[ORM\Column]
-    private ?float $prix=null;
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $ville = null;
 
     #[ORM\Column]
-    private ?bool $disponibilite=false;
+    private ?float $prix = null;
+
+    #[ORM\Column]
+    private ?bool $disponibilite = false;
 
     #[ORM\Column(length: 255)]
-    private ?string $description=null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type=null;
+    private ?string $type = null;
 
-    #[ORM\ManyToOne (inversedBy: 'Promotions')]
-    private ?int $idPromotion=null;
+    #[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
+    private ?Promotion $Promotion = null;
 
     public function getIdVehicule(): ?int
     {
@@ -143,17 +142,20 @@ class Vehicule
         return $this;
     }
 
-    public function getIdPromotion(): ?Promotion
+    public function getPromotion(): ?Promotion
     {
-        return $this->idPromotion;
+        return $this->Promotion;
     }
 
-    public function setIdPromotion(?Promotion $idPromotion): self
+    public function setPromotion(?Promotion $Promotion): self
     {
-        $this->idPromotion = $idPromotion;
+        $this->Promotion = $Promotion;
 
         return $this;
     }
 
-
+    public function getDisponibilite(): ?string
+    {
+        return $this->disponibilite;
+    }
 }
