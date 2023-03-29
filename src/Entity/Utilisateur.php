@@ -41,7 +41,7 @@ class Utilisateur
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
     private Collection $reclamations;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Voiture::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
     private Collection $voitures;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'id1')]
@@ -246,7 +246,7 @@ class Utilisateur
     {
         if (!$this->voitures->contains($voiture)) {
             $this->voitures->add($voiture);
-            $voiture->setUtilisateur($this);
+            $voiture->setUser($this);
         }
 
         return $this;
@@ -256,11 +256,13 @@ class Utilisateur
     {
         if ($this->voitures->removeElement($voiture)) {
             // set the owning side to null (unless already changed)
-            if ($voiture->getUtilisateur() === $this) {
-                $voiture->setUtilisateur(null);
+            if ($voiture->getUser() === $this) {
+                $voiture->setUser(null);
             }
         }
 
         return $this;
     }
+
+    
 }
