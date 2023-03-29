@@ -10,14 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Conducteur
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\OneToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    private ?Utilisateur $utilisateur = null;
+
     #[ORM\Column(length: 150)]
     private ?string $b3 = null;
 
     #[ORM\Column(length: 150)]
     private ?string $permis = null;
 
-    #[ORM\OneToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
-    private ?Utilisateur $utilisateur = null;
 
     public function getB3(): ?string
     {

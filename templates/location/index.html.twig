@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<title>Location index</title>
+
+{% block body %}
+    <h1>Location index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdContrat</th>
+                <th>Id</th>
+                <th>IdVehicule</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>Lieu</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for location in locations %}
+            <tr>
+                <td>{{ location.idContrat }}</td>
+                <td>{{ location.id }}</td>
+                <td>{{ location.idVehicule }}</td>
+                <td>{{ location.dateDebut ? location.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ location.dateFin ? location.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ location.lieu }}</td>
+                <td>
+                    <a href="{{ path('app_location_show', {'idContrat': location.idContrat}) }}">show</a>
+                    <a href="{{ path('app_location_edit', {'idContrat': location.idContrat}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_location_new') }}">Create new</a>
+{% endblock %}
