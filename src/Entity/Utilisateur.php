@@ -38,7 +38,7 @@ class Utilisateur
     #[ORM\Column]
     private ?bool $bloque = false ;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Reclamation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
     private Collection $reclamations;
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Voiture::class, orphanRemoval: true)]
@@ -57,6 +57,7 @@ class Utilisateur
     {
         $this->id2 = new \Doctrine\Common\Collections\ArrayCollection();
         $this->reclamations = new ArrayCollection();
+        $this->voitures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,6 +193,43 @@ class Utilisateur
     /**
      * @return Collection<int, Reclamation>
      */
+   
+    
+
+    
+    /**
+     * @return Collection<int, Voiture>
+     */
+    public function getVoitures(): Collection
+    {
+        return $this->voitures;
+    }
+
+    public function addVoiture(Voiture $voiture): self
+    {
+        if (!$this->voitures->contains($voiture)) {
+            $this->voitures->add($voiture);
+            $voiture->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(Voiture $voiture): self
+    {
+        if ($this->voitures->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getUtilisateur() === $this) {
+                $voiture->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reclamation>
+     */
     public function getReclamations(): Collection
     {
         return $this->reclamations;
@@ -201,7 +239,7 @@ class Utilisateur
     {
         if (!$this->reclamations->contains($reclamation)) {
             $this->reclamations->add($reclamation);
-            $reclamation->setUtilisateur($this);
+            $reclamation->setUser($this);
         }
 
         return $this;
@@ -211,8 +249,8 @@ class Utilisateur
     {
         if ($this->reclamations->removeElement($reclamation)) {
             // set the owning side to null (unless already changed)
-            if ($reclamation->getUtilisateur() === $this) {
-                $reclamation->setUtilisateur(null);
+            if ($reclamation->getUser() === $this) {
+                $reclamation->setUser(null);
             }
         }
 

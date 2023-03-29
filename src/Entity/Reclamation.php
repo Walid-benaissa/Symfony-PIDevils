@@ -20,10 +20,6 @@ class Reclamation
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
-    #[ORM\JoinColumn(name: 'idAdmin')]
-    private ?Utilisateur $admin = null;
-
-    #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'idUser')]
     private ?Utilisateur $user = null;
 
