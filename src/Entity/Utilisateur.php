@@ -200,32 +200,9 @@ class Utilisateur
     /**
      * @return Collection<int, Voiture>
      */
-    public function getVoitures(): Collection
-    {
-        return $this->voitures;
-    }
+    
 
-    public function addVoiture(Voiture $voiture): self
-    {
-        if (!$this->voitures->contains($voiture)) {
-            $this->voitures->add($voiture);
-            $voiture->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVoiture(Voiture $voiture): self
-    {
-        if ($this->voitures->removeElement($voiture)) {
-            // set the owning side to null (unless already changed)
-            if ($voiture->getUtilisateur() === $this) {
-                $voiture->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Reclamation>
@@ -251,6 +228,36 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($reclamation->getUser() === $this) {
                 $reclamation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voiture>
+     */
+    public function getVoitures(): Collection
+    {
+        return $this->voitures;
+    }
+
+    public function addVoiture(Voiture $voiture): self
+    {
+        if (!$this->voitures->contains($voiture)) {
+            $this->voitures->add($voiture);
+            $voiture->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(Voiture $voiture): self
+    {
+        if ($this->voitures->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getUtilisateur() === $this) {
+                $voiture->setUtilisateur(null);
             }
         }
 

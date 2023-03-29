@@ -25,7 +25,7 @@ class Voiture
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\ManyToOne(inversedBy: 'voitures', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'id')]
     private ?Utilisateur $user = null;
 
