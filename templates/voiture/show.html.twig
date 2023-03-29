@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<title>Voiture</title>
+
+{% block body %}
+    <h1>Voiture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Immatriculation</th>
+                <td>{{ voiture.immatriculation }}</td>
+            </tr>
+            <tr>
+                <th>Modele</th>
+                <td>{{ voiture.modele }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ voiture.marque }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ voiture.etat }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{{ voiture.photo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_voiture_index') }}">back to list</a>
+
+    <a href="{{ path('app_voiture_edit', {'immatriculation': voiture.immatriculation}) }}">edit</a>
+
+    {{ include('voiture/_delete_form.html.twig') }}
+{% endblock %}

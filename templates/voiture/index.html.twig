@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>Voiture index</title>
+
+{% block body %}
+    <h1>Voiture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Immatriculation</th>
+                <th>Modele</th>
+                <th>Marque</th>
+                <th>Etat</th>
+                <th>Photo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for voiture in voitures %}
+            <tr>
+                <td>{{ voiture.immatriculation }}</td>
+                <td>{{ voiture.modele }}</td>
+                <td>{{ voiture.marque }}</td>
+                <td>{{ voiture.etat }}</td>
+                <td>{{ voiture.photo }}</td>
+                <td>
+                    <a href="{{ path('app_voiture_show', {'immatriculation': voiture.immatriculation}) }}">show</a>
+                    <a href="{{ path('app_voiture_edit', {'immatriculation': voiture.immatriculation}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_voiture_new') }}">Create new</a>
+{% endblock %}
