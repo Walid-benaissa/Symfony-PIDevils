@@ -1,38 +1,32 @@
-<!DOCTYPE html>
-
-<title>Livraison</title>
-
+{% extends 'base-back.html.twig'%}
 {% block body %}
-    <h1>Livraison</h1>
+	<h1>Livraison</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>IdLivraison</th>
-                <td>{{ livraison.idLivraison }}</td>
-            </tr>
-            <tr>
-                <th>AdresseExpedition</th>
-                <td>{{ livraison.adresseExpedition }}</td>
-            </tr>
-            <tr>
-                <th>AdresseDestinataire</th>
-                <td>{{ livraison.adresseDestinataire }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ livraison.prix }}</td>
-            </tr>
-            <tr>
-                <th>Etat</th>
-                <td>{{ livraison.etat }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
 
-    <a href="{{ path('app_livraison_index') }}">back to list</a>
+			<tr>
+				<th>AdresseExpedition</th>
+				<td>{{ livraison.adresseExpedition }}</td>
+			</tr>
+			<tr>
+				<th>AdresseDestinataire</th>
+				<td>{{ livraison.adresseDestinataire }}</td>
+			</tr>
+			<tr>
+				<th>Prix</th>
+				<td>{{ livraison.prix }}</td>
+			</tr>
+			<tr>
+				<th>Etat</th>
+				<td>{{ livraison.etat }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}">edit</a>
+	<a href="{{ path('app_livraison_index') }}">back to list</a>
 
-    {{ include('livraison/_delete_form.html.twig') }}
+	<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}">edit</a>
+
+	{{ include('livraison/_delete_form.html.twig') }}
 {% endblock %}
