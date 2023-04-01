@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>Livraison index</title>
+
+{% block body %}
+    <h1>Livraison index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdLivraison</th>
+                <th>AdresseExpedition</th>
+                <th>AdresseDestinataire</th>
+                <th>Prix</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livraison in livraisons %}
+            <tr>
+                <td>{{ livraison.idLivraison }}</td>
+                <td>{{ livraison.adresseExpedition }}</td>
+                <td>{{ livraison.adresseDestinataire }}</td>
+                <td>{{ livraison.prix }}</td>
+                <td>{{ livraison.etat }}</td>
+                <td>
+                    <a href="{{ path('app_livraison_show', {'idLivraison': livraison.idLivraison}) }}">show</a>
+                    <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_livraison_new') }}">Create new</a>
+{% endblock %}

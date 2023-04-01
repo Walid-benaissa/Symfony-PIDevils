@@ -28,12 +28,15 @@ class Livraison
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'id_client')]
     private ?Utilisateur $Client = null;
 
     #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Colis::class)]
+    #[ORM\JoinColumn(name: 'id_colis')]
     private ?Colis $Colis = null;
 
     #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'id_livreur')]
     private ?Utilisateur $Livreur = null;
 
     public function getIdLivraison(): ?int
