@@ -1,0 +1,40 @@
+{% extends 'base-back.html.twig'%}
+
+{% block body %}
+    <h1>OffreCourse</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdOffre</th>
+                <td>{{ offre_course.idOffre }}</td>
+            </tr>
+            <tr>
+                <th>MatriculeVehicule</th>
+                <td>{{ offre_course.matriculeVehicule }}</td>
+            </tr>
+            <tr>
+                <th>CinConducteur</th>
+                <td>{{ offre_course.cinConducteur }}</td>
+            </tr>
+            <tr>
+                <th>NbPassagers</th>
+                <td>{{ offre_course.nbPassagers }}</td>
+            </tr>
+            <tr>
+                <th>OptionsOffre</th>
+                <td>{{ offre_course.optionsOffre }}</td>
+            </tr>
+            <tr>
+                <th>StatutOffre</th>
+                <td>{{ offre_course.statutOffre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_offre_course_index') }}">back to list</a>
+
+    <a href="{{ path('app_offre_course_edit', {'idOffre': offre_course.idOffre}) }}">edit</a>
+
+    {{ include('offre_course/_delete_form.html.twig') }}
+{% endblock %}

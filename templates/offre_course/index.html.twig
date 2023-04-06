@@ -1,0 +1,42 @@
+{% extends 'base-back.html.twig'%}
+
+
+{% block body %}
+    <h1>Offre Course </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id Offre</th>
+                <th>MatriculeVehicule</th>
+                <th>CinConducteur</th>
+                <th>NbPassagers</th>
+                <th>OptionsOffre</th>
+                <th>StatutOffre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offre_course in offre_courses %}
+            <tr>
+                <td>{{ offre_course.idOffre }}</td>
+                <td>{{ offre_course.matriculeVehicule }}</td>
+                <td>{{ offre_course.cinConducteur }}</td>
+                <td>{{ offre_course.nbPassagers }}</td>
+                <td>{{ offre_course.optionsOffre }}</td>
+                <td>{{ offre_course.statutOffre }}</td>
+                <td>
+                    <a href="{{ path('app_offre_course_show', {'idOffre': offre_course.idOffre}) }}">show</a>
+                    <a href="{{ path('app_offre_course_edit', {'idOffre': offre_course.idOffre}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_offre_course_new') }}">Create new</a>
+{% endblock %}

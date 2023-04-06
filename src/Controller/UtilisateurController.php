@@ -39,6 +39,15 @@ class UtilisateurController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/login', name: 'app_utilisateur_login', methods: ['GET', 'POST'])]
+    public function login(): Response
+    {
+       
+
+        return $this->renderForm('utilisateur/login.html.twig', [
+            
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response
