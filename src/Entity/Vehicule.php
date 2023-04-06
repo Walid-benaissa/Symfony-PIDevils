@@ -38,8 +38,8 @@ class Vehicule
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
-    private ?Promotion $Promotion = null;
+    //#[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
+    //private ?Promotion $Promotion = null;
 
     public function getIdVehicule(): ?int
     {
