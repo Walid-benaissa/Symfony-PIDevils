@@ -1,0 +1,42 @@
+{% extends 'base-back.html.twig'%}
+
+
+{% block body %}
+    <h1>Course </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdCourse</th>
+                <th>PointDepart</th>
+                <th>PointDestination</th>
+                <th>Distance</th>
+                <th>Prix</th>
+                <th>StatutCourse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.idCourse }}</td>
+                <td>{{ course.pointDepart }}</td>
+                <td>{{ course.pointDestination }}</td>
+                <td>{{ course.distance }}</td>
+                <td>{{ course.prix }}</td>
+                <td>{{ course.statutCourse }}</td>
+                <td>
+                    <a href="{{ path('app_course_show', {'idCourse': course.idCourse}) }}">show</a>
+                    <a href="{{ path('app_course_edit', {'idCourse': course.idCourse}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_course_new') }}">Create new</a>
+{% endblock %}
