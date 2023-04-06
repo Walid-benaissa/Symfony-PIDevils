@@ -1,0 +1,50 @@
+{% extends 'base-front.html.twig'%}
+
+
+
+{% block body %}
+<title>Vehicule index</title>
+    <h1>Vehicule index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdVehicule</th>
+                <th>NomV</th>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Ville</th>
+                <th>Prix</th>
+                <th>Disponibilite</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicule in vehicules %}
+            <tr>
+                <td>{{ vehicule.idVehicule }}</td>
+                <td>{{ vehicule.nomV }}</td>
+                <td>{{ vehicule.id }}</td>
+                <td>{{ vehicule.image }}</td>
+                <td>{{ vehicule.ville }}</td>
+                <td>{{ vehicule.prix }}</td>
+                <td>{{ vehicule.disponibilite ? 'Yes' : 'No' }}</td>
+                <td>{{ vehicule.description }}</td>
+                <td>{{ vehicule.type }}</td>
+                <td>
+                    <a href="{{ path('app_vehicule_show', {'idVehicule': vehicule.idVehicule}) }}">show</a>
+                    <a href="{{ path('app_vehicule_edit', {'idVehicule': vehicule.idVehicule}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vehicule_new') }}">Create new</a>
+{% endblock %}
