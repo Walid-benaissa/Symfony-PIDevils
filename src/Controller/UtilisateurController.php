@@ -10,9 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
 {
+    #[Route('/login', name: 'app_utilisateur_login', methods: ['GET', 'POST'])]
+    public function login(): Response
+    {
+
+
+        return $this->renderForm('utilisateur/login.html.twig', []);
+    }
+
+    #[Route('/utilisateur')]
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
@@ -37,15 +45,6 @@ class UtilisateurController extends AbstractController
         return $this->renderForm('utilisateur/new.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
-        ]);
-    }
-    #[Route('/login', name: 'app_utilisateur_login', methods: ['GET', 'POST'])]
-    public function login(): Response
-    {
-       
-
-        return $this->renderForm('utilisateur/login.html.twig', [
-            
         ]);
     }
 
@@ -78,7 +77,7 @@ class UtilisateurController extends AbstractController
     #[Route('/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
     public function delete(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
             $utilisateurRepository->remove($utilisateur, true);
         }
 
