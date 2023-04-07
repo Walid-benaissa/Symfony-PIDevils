@@ -20,8 +20,7 @@ class UtilisateurController extends AbstractController
         return $this->renderForm('utilisateur/login.html.twig', []);
     }
 
-    #[Route('/utilisateur')]
-    #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
+    #[Route('/utilisateur', name: 'app_utilisateur_index', methods: ['GET'])]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         return $this->render('utilisateur/index.html.twig', [
@@ -29,7 +28,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    #[Route('/utilisateur/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateur = new Utilisateur();
@@ -48,7 +47,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
+    #[Route('/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response
     {
         return $this->render('utilisateur/show.html.twig', [
@@ -56,7 +55,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
+    #[Route('/utilisateur/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
@@ -74,7 +73,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
+    #[Route('/utilisateur/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
     public function delete(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
