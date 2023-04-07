@@ -142,7 +142,7 @@ class Vehicule
         return $this;
     }
 
-    public function getPromotion(): ?Promotion
+    /* public function getPromotion(): ?Promotion
     {
         return $this->Promotion;
     }
@@ -152,7 +152,7 @@ class Vehicule
         $this->Promotion = $Promotion;
 
         return $this;
-    }
+    } */
 
     public function getDisponibilite(): ?string
     {
