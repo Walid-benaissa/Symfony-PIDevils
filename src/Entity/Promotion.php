@@ -10,7 +10,8 @@ class Promotion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    private ?int $idPromotion = null;
+    #[ORM\Column]
+    private $idPromotion;
 
     #[ORM\Column(nullable: true)]
     private ?float $taux = null;
