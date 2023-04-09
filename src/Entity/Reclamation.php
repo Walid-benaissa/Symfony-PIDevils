@@ -23,6 +23,9 @@ class Reclamation
     #[ORM\JoinColumn(name: 'idUser')]
     private ?Utilisateur $user = null;
 
+    #[ORM\Column(length: 30)]
+    private ?string $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Reclamation
     public function setUser(?Utilisateur $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

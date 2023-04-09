@@ -38,17 +38,10 @@ class Utilisateur
     #[ORM\Column]
     private ?bool $bloque = false ;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
-    private Collection $reclamations;
+    #[ORM\OneToMany(mappedBy: 'id1', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
-    private Collection $voitures;
 
-    #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'id1')]
-    #[ORM\JoinTable(name: 'commentaire')]
-    #[ORM\JoinColumn(name: 'id1 ', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'id2', referencedColumnName: 'id')]
-    private $id2 = array();
 
     /**
      * Constructor
@@ -58,6 +51,7 @@ class Utilisateur
         $this->id2 = new \Doctrine\Common\Collections\ArrayCollection();
         $this->reclamations = new ArrayCollection();
         $this->voitures = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -258,6 +252,36 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($voiture->getUser() === $this) {
                 $voiture->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setId1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getId1() === $this) {
+                $commentaire->setId1(null);
             }
         }
 
