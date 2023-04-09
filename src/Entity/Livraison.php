@@ -31,7 +31,7 @@ class Livraison
     #[ORM\JoinColumn(name: 'id_client')]
     private ?Utilisateur $Client = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Colis::class)]
+    #[ORM\OneToOne(inversedBy: 'id', targetEntity: Colis::class)]
     #[ORM\JoinColumn(name: 'id_colis')]
     private ?Colis $Colis = null;
 

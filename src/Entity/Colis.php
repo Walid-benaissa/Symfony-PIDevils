@@ -15,8 +15,6 @@ class Colis
     #[ORM\Column]
     private ?int $id = null;
 
-
-
     #[ORM\Column]
     private ?int $nbItems = null;
 
