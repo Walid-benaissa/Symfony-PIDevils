@@ -34,6 +34,10 @@ CREATE TABLE `colis` (
   `poids` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `colis` (`id`, `nb_items`, `description`, `poids`) VALUES
+(1, 3, 'Articles de décoration', 2.5),
+(2, 8, 'Achats', 3),
+(3, 7, 'Objets', 3);
 -- --------------------------------------------------------
 
 --
@@ -58,6 +62,10 @@ CREATE TABLE `conducteur` (
   `permis` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `conducteur` (`utilisateur_id`, `b3`, `permis`) VALUES
+(26, 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\large.png', 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\4a6da22d13921ddd495351a2cb442e65.png'),
+(27, 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\large.png', 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\4a6da22d13921ddd495351a2cb442e65.png'),
+(28, 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\1200px-Fiat_Punto_2012_5door_front.jpg', 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\4a6da22d13921ddd495351a2cb442e65.png');
 -- --------------------------------------------------------
 
 --
@@ -72,6 +80,11 @@ CREATE TABLE `course` (
   `prix` double NOT NULL,
   `statut_course` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `course` (`id_course`, `point_depart`, `point_destination`, `distance`, `prix`, `statut_course`) VALUES
+(1, 'Tunis', 'Ariana', 2, 10, 'en cours'),
+(2, 'bard', 'm5', 5, 15, 'termine'),
+(10, 'bardo', 'lac', 10, 12, 'En attente');
 
 -- --------------------------------------------------------
 
@@ -112,6 +125,10 @@ CREATE TABLE `livraison` (
   `etat` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `livraison` (`id_client`, `id_livreur`, `id_livraison`, `adresse_expedition`, `adresse_destinataire`, `prix`, `etat`, `id_colis`) VALUES
+(12, 26, 1, 'Ariana', 'Manouba', 4, 'en cours', 1),
+(12, 0, 2, 'Sfax', 'Monastir', 14, 'En attente', 2),
+(12, 0, 3, 'Tunis', 'Zaghouan', 6, 'En attente', 3);
 -- --------------------------------------------------------
 
 --
@@ -127,6 +144,8 @@ CREATE TABLE `location` (
   `lieu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `location` (`id_contrat`, `id`, `id_vehicule`, `date_debut`, `date_fin`, `lieu`) VALUES
+(58, 2, 57, '2023-03-09', '2023-03-11', 'kef');
 -- --------------------------------------------------------
 
 --
@@ -142,6 +161,8 @@ CREATE TABLE `offre_course` (
   `statut_offre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `offre_course` (`id_offre`, `matricule_vehicule`, `cin_conducteur`, `nb_passagers`, `options_offre`, `statut_offre`) VALUES
+(1, 111, 1111, 11, 'NC', 'actif');
 -- --------------------------------------------------------
 
 --
@@ -163,6 +184,31 @@ CREATE TABLE `promotion` (
   `id_promotion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `taux` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Déchargement des données de la table `promotion`
+--
+
+INSERT INTO `promotion` (`id_promotion`, `taux`) VALUES
+(1, 0),
+(2, 5),
+(3, 10),
+(4, 15),
+(5, 20),
+(6, 25),
+(7, 30),
+(8, 35),
+(9, 40),
+(10, 45),
+(11, 50),
+(12, 55),
+(13, 60),
+(14, 65),
+(15, 70),
+(16, 75),
+(17, 80),
+(18, 85),
+(19, 90);
+
 
 -- --------------------------------------------------------
 
@@ -177,6 +223,17 @@ CREATE TABLE `reclamation` (
   `idUser` int(11) DEFAULT NULL,
   `type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Déchargement des données de la table `reclamation`
+--
+INSERT INTO `reclamation` (`id`, `message`, `etat`, `type`, `idUser`) VALUES
+(1, 'test1', 'En cours', "Livraison", 12),
+(3, 'test3', 'En cours', "Livraison", 12),
+(7, 'test4	 ', 'Ouvert', "Livraison", 26),
+(8, 'test', 'Ouvert', "Livraison", 26),
+(9, 'aaaa', 'Ouvert', "Livraison", 26),
+(10, 'test5', 'Ouvert', "Livraison", 12);
+
 
 -- --------------------------------------------------------
 
@@ -195,6 +252,19 @@ CREATE TABLE `utilisateur` (
   `evaluation` double NOT NULL,
   `bloque` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `mdp`, `num_tel`, `role`, `evaluation`, `bloque`) VALUES
+(0, '', '', '', '', '', 'Admin', 0.0, 0),
+(12, 'khaled', 'khaled', 'khaled@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '56765345', 'Client', 0.0, 0),
+(13, 'kharmachi', 'abir', 'abir.kharmachi@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '256789467', 'Admin', 0.0, 0),
+(17, 'aziz', 'aziz', 'aziz@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '26786543', 'Client', 0.0, 0),
+(26, 'Ben Ghorbel', 'Nourr', 'nour@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '123456', 'Conducteur', 0.0, 0),
+(27, 'Ben aissa', 'Walid', 'walid@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '123456', 'Conducteur', 0.0, 0),
+(28, 'salah', 'salah', 'abir@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '125425', 'Conducteur', 0.0, 0);
+
 
 -- --------------------------------------------------------
 
@@ -214,6 +284,17 @@ CREATE TABLE `vehicule` (
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `vehicule`
+--
+
+INSERT INTO `vehicule` (`id_vehicule`, `nom_v`, `id`, `image`, `ville`, `prix`, `disponibilite`, `description`, `type`) VALUES
+(49, 'khled', 13,  'bmw.png', 'kef', 100, 1, 'dd', 'voiture'),
+(50, 'khled', 0,  'bmw.png', 'kef', 100, 1, 'dd', 'voiture'),
+(55, 'za', 0,  'bmw.png', 'kef', 6, 1, 'hello', 'voiture'),
+(56, 'fiesta', 13,  '1200px-Fiat_Punto_2012_5door_front.jpg', 'kef', 30, 1, 'oui', 'voiture'),
+(57, 'TOYOTA COROLLA AUTO', 13,  'png-transparent-2018-toyota-corolla-2017-toyota-corolla-2018-toyota-camry-car-toyota-compact-car-sedan-car.png', 'kef', 120, 1, 'Protection contre les dommages résultant d\'une collision ( 1400,00 EUR)Protection contre le vol ( 1400,00 EUR)La participation aux frais d\'immatriculationSurcharge Aéroport/GareTVA incluseContribution environnementale: 7,56 EUR', 'voiture');
+
 -- --------------------------------------------------------
 
 --
@@ -228,7 +309,9 @@ CREATE TABLE `voiture` (
   `etat` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+INSERT INTO `voiture` (`id`, `immatriculation`, `modele`, `marque`, `etat`, `photo`) VALUES
+(27, '123Tun456', 'Fiat', 'Punto', 'neuf', 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\1200px-Fiat_Punto_2012_5door_front.jpg'),
+(26, '321Tun123', 'R7', 'Audi', 'Occasion', 'C:\\Esprit\\Projet PIDEV\\PIDEVILS-Projet-PI\\src\\images\\Audi_RS_7_Sportback_(C8)_–_f_06082021.jpg');
 --
 -- Index pour les tables déchargées
 --
