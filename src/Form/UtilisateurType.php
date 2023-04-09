@@ -19,8 +19,7 @@ class UtilisateurType extends AbstractType
             ->add('mail', TextType::class, ['label' => 'E-mail:'])
             ->add('mdp', TextType::class, ['label' => 'Mot de passe:'])
             ->add('numTel', TextType::class, ['label' => 'Numero de téléphone:'])
-            ->add('role', TextType::class, ['label' => 'Rôle:'])
-            ->add('add', SubmitType::class, ['label' => 'Enregistrer']);
+            ->add('role', TextType::class, ['label' => 'Rôle:']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
