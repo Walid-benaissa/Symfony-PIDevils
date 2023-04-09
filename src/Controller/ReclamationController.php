@@ -69,7 +69,7 @@ class ReclamationController extends AbstractController
     #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reclamation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $reclamation->getId(), $request->request->get('_token'))) {
             $reclamationRepository->remove($reclamation, true);
         }
 
