@@ -1,5 +1,16 @@
 {{ form_start(form) }}
     {{ form_label(form.nom) }}<br>
     {{ form_widget(form.nom) }}<br>
-    <button class="btn">{{ button_label|default('Save') }}</button>
+     {{ form_label(form.prenom) }}<br>
+    {{ form_widget(form.prenom) }}<br>
+     {{ form_label(form.mail) }}<br>
+    {{ form_widget(form.mail) }}<br>
+     {{ form_label(form.mdp) }}<br>
+    {{ form_widget(form.mdp) }}<br>
+     {{ form_label(form.numTel) }}<br>
+    {{ form_widget(form.numTel) }}<br>
+     {{ form_label(form.role) }}<br>
+    {{ form_widget(form.role) }}<br>
+    {{ form_label(form.add) }}<br>
+    <button class="btn">{{ button_label|default('save') }}</button>
 {{ form_end(form) }}
