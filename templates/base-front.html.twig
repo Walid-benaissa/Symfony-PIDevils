@@ -71,7 +71,28 @@
 							<a class="nav-link scrollto " href="#portfolio">Location</a>
 						</li>
 
-
+					<li class="dropdown">
+							<a href="#">
+								<span>
+									Voiture</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+								<li>
+									<a href=""> Consulter  </a>
+								</li>
+								<li>
+									<a href="{{path('app_voiture_new')}}"> Ajouter  </a>
+								</li>
+								<li>
+									<a href=""> Modifier  </a>
+								</li>
+								<li>
+									<a href=""> Supprimer  </a>
+								</li>
+								
+							</ul>
+						</li>
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -82,23 +103,7 @@
 								<li>
 									<a href="#">Drop Down 1</a>
 								</li>
-								<li class="dropdown">
-									<a href="#">
-										<span>Deep Drop Down</span>
-										<i class="bi bi-chevron-right"></i>
-									</a>
-									<ul>
-										<li><a href="#">Deep Drop Down 1</a></li>
-										<li><a href="#">Deep Drop Down 2</a></li>
-									</ul>
-								</li>
-								<li>
-									<a href="#">Drop Down 2</a>
-								</li>
-								<li>
-									<a href="#">Drop Down 3</a>
-								</li>
-
+								
 							</ul>
 						</li>
 						<li>
@@ -109,7 +114,7 @@
 				</nav>
 				<!-- .navbar -->
 
-				<a href="#about" class="get-started-btn scrollto">Se Déconnecter</a>
+				<a  class="get-started-btn scrollto" href="{{path('app_utilisateur_login')}}"> Se Déconnecter</a>
 
 			</div>
 		</header>
