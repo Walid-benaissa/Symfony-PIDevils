@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
+
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
@@ -33,26 +34,33 @@ class Utilisateur
     private ?string $role = null;
 
     #[ORM\Column]
-    private ?float $evaluation=null;
-    
+    private ?float $evaluation = null;
+
     #[ORM\Column]
-    private ?bool $bloque = false ;
+    private ?bool $bloque = false;
 
     #[ORM\OneToMany(mappedBy: 'id1', targetEntity: Commentaire::class)]
     private Collection $commentaires;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
+    private Collection $reclamations;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
+    private Collection $voitures;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
+        $this->voitures = new ArrayCollection();
+    }
 
 
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->id2 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reclamations = new ArrayCollection();
-        $this->voitures = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -158,26 +166,9 @@ class Utilisateur
     /**
      * @return Collection<int, Utilisateur>
      */
-    public function getId2(): Collection
-    {
-        return $this->id2;
-    }
 
-    public function addId2(Utilisateur $id2): self
-    {
-        if (!$this->id2->contains($id2)) {
-            $this->id2->add($id2);
-        }
 
-        return $this;
-    }
 
-    public function removeId2(Utilisateur $id2): self
-    {
-        $this->id2->removeElement($id2);
-
-        return $this;
-    }
 
     public function getBloque(): ?string
     {
@@ -187,16 +178,16 @@ class Utilisateur
     /**
      * @return Collection<int, Reclamation>
      */
-   
-    
 
-    
+
+
+
     /**
      * @return Collection<int, Voiture>
      */
-    
 
-   
+
+
 
     /**
      * @return Collection<int, Reclamation>
@@ -287,6 +278,4 @@ class Utilisateur
 
         return $this;
     }
-
-    
 }
