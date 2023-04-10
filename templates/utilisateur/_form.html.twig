@@ -1,16 +1,28 @@
-{{ form_start(form) }}
+<link href="{{asset("css/creercompte.css")}}" rel="stylesheet">
+<div class="centerdiv">
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
     {{ form_label(form.nom) }}<br>
     {{ form_widget(form.nom) }}<br>
+    {{ form_errors(form.nom) }}<br>
      {{ form_label(form.prenom) }}<br>
     {{ form_widget(form.prenom) }}<br>
+    {{ form_errors(form.prenom) }}<br>
      {{ form_label(form.mail) }}<br>
     {{ form_widget(form.mail) }}<br>
+    {{ form_errors(form.mail) }}<br>
      {{ form_label(form.mdp) }}<br>
     {{ form_widget(form.mdp) }}<br>
+    {{ form_errors(form.mdp) }}<br>
+     {{ form_label(form.mdpc) }}<br>
+    {{ form_widget(form.mdpc) }}<br>
+    {{ form_errors(form.mdpc) }}<br>
      {{ form_label(form.numTel) }}<br>
     {{ form_widget(form.numTel) }}<br>
+    {{ form_errors(form.numTel) }}<br>
      {{ form_label(form.role) }}<br>
     {{ form_widget(form.role) }}<br>
+    {{ form_errors(form.role) }}<br>
     
-    <button class="btn">{{ button_label|default('save') }}</button>
+    <button class="submit">{{ button_label|default('Créer') }}</button>
 {{ form_end(form) }}
+</div>

@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\CreerCompteType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +35,7 @@ class UtilisateurController extends AbstractController
     public function new(Request $request, UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateur = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createForm(CreerCompteType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +45,6 @@ class UtilisateurController extends AbstractController
         }
 
         return $this->renderForm('utilisateur/new.html.twig', [
-            'utilisateur' => $utilisateur,
             'form' => $form,
         ]);
     }
