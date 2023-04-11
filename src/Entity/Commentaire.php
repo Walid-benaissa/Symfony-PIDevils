@@ -21,6 +21,9 @@ class Commentaire
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $id2 = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $message = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class Commentaire
     public function setId2(?Utilisateur $id2): self
     {
         $this->id2 = $id2;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): self
+    {
+        $this->message = $message;
 
         return $this;
     }

@@ -6,10 +6,11 @@
     {{ form_label(form.message) }}<br>
     </div>
     <div class="label">
-    {{ form_errors(form.message) }}<br>
-    </div>
+        {% if not form.vars.valid %}
+        {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
+    {% endif %}</div>
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
-    {{ form_errors(form.message)}}
+
     <div class="label">
     {{ form_label(form.type) }}<br>
     </div>

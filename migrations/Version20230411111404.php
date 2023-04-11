@@ -20,12 +20,10 @@ final class Version20230411111404 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE livraison DROP INDEX IDX_A60C9F1FA98E9EC9, ADD UNIQUE INDEX UNIQ_A60C9F1FA98E9EC9 (id_colis)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE livraison DROP INDEX UNIQ_A60C9F1FA98E9EC9, ADD INDEX IDX_A60C9F1FA98E9EC9 (id_colis)');
     }
 }
