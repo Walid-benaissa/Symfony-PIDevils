@@ -35,7 +35,7 @@ class UtilisateurController extends AbstractController
     public function new(Request $request, UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateur = new Utilisateur();
-        $form = $this->createForm(CreerCompteType::class);
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
