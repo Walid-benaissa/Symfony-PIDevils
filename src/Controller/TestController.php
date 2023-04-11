@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class TestController extends AbstractController
 {
@@ -21,6 +22,7 @@ class TestController extends AbstractController
     {
         return $this->render('herosection.html.twig', [
             'controller_name' => 'ClassroomController',
+            'user' => $this->getUser()
         ]);
     }
 }
