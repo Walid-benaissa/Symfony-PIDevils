@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-
-<title>New Livraison</title>
-
+{% extends 'base-front.html.twig'%}
 {% block body %}
-    <h1>Create new Livraison</h1>
 
-    {{ include('livraison/_form.html.twig') }}
+	{{ include('livraison/_form.html.twig') }}
 
-    <a href="{{ path('app_livraison_index') }}">back to list</a>
+	<a href="{{ path('app_livraison_index') }}">back to list</a>
 {% endblock %}

@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Colis;
 use App\Entity\Livraison;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,10 +18,12 @@ class LivraisonType extends AbstractType
             ->add('adresseDestinataire')
             ->add('prix')
             ->add('etat')
-            ->add('Client')
-            ->add('Colis')
-            ->add('Livreur')
-        ;
+            ->add('colis', EntityType::class, [
+                "class" => Colis::class,
+                'choice_label' => 'description',
+                "multiple" => false,
+                "expanded" => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

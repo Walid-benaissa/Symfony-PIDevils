@@ -1,4 +1,40 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+<h1 class="title">Ajouter Livraison</h1>
+    <div class="label">
+    {{ form_label(form.adresseExpedition) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.adresseExpedition)}}</div>
+    {{ form_errors(form.adresseExpedition)}}
+
+<div class="label">
+    {{ form_label(form.adresseDestinataire) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.adresseDestinataire)}}</div>
+    {{ form_errors(form.adresseDestinataire)}}
+
+ <div class="label">
+    {{ form_label(form.prix) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.prix)}}</div>
+    {{ form_errors(form.prix)}}
+
+    <div class="label">
+    {{ form_label(form.etat) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.etat)}}</div>
+    {{ form_errors(form.etat)}}  
+
+    
+    <div class="label">
+    {{ form_label(form.colis) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.colis)}}</div>
+    {{ form_errors(form.colis)}}  
+
+
+    <button class="submit">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}
+</div>

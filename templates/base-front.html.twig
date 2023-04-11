@@ -34,12 +34,12 @@
 		href="{{asset("front/css/style.css")}}" rel="stylesheet">
 
 	<!-- =======================================================
-																  * Template Name: Gp
-																  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-																  * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-																  * Author: BootstrapMade.com
-																  * License: https://bootstrapmade.com/license/
-																  ======================================================== -->
+																						  * Template Name: Gp
+																						  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+																						  * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
+																						  * Author: BootstrapMade.com
+																						  * License: https://bootstrapmade.com/license/
+																						  ======================================================== -->
 	</head>
 
 	<body>
@@ -64,8 +64,35 @@
 						<li>
 							<a class="nav-link scrollto" href="#about">Course</a>
 						</li>
-						<li>
-							<a class="nav-link scrollto" href="#services">Livraison</a>
+
+						<li class="dropdown">
+							<a href="#">
+								<span>
+									Livraison</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+								<li><a href="">Consulter</a></li>
+								<li><a href="{{path('app_livraison_new')}}">Ajouter</a></li>
+								<li><a href="">Modifier</a></li>
+								<li><a href="">Supprimer</a></li>
+
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="#">
+								<span>
+									Colis</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+								<li><a href="">Consulter</a></li>
+								<li><a href="{{path('app_colis_new')}}">Ajouter</a></li>
+								<li><a href="">Modifier</a></li>
+								<li><a href="">Supprimer</a></li>
+
+							</ul>
 						</li>
 						<li>
 							<a class="nav-link scrollto " href="#portfolio">Location</a>

@@ -1,4 +1,24 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Ajouter') }}</button>
-{{ form_end(form) }}
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+<h1 class="title">Ajouter Colis</h1>
+<div class="label">
+    {{ form_label(form.nbItems) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.nbItems)}}</div>
+    {{ form_errors(form.nbItems)}}
+ 
+ <div class="label">
+    {{ form_label(form.poids) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.poids)}}</div>
+    {{ form_errors(form.poids)}}
+    <div class="label">
+    {{ form_label(form.description) }}<br>
+     </div>
+    <div class="input">{{ form_widget(form.description)}}</div>
+    {{ form_errors(form.description)}}
+ <button class="submit">{{ button_label|default('Ajouter') }}</button>
+ {{ form_end(form) }}
+</div>

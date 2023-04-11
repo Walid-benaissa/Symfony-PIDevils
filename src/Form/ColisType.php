@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Colis;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,9 +14,8 @@ class ColisType extends AbstractType
     {
         $builder
             ->add('nbItems')
-            ->add('description')
-            ->add('poids')
-        ;
+            ->add('description', TextareaType::class)
+            ->add('poids');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
