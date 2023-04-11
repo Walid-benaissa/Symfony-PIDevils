@@ -1,4 +1,4 @@
-form {
+.form {
   max-width: 620px;
   width: 100%;
   background-color: #fff;
@@ -21,7 +21,7 @@ form {
   margin-bottom: 4px;
 }
 
-form textarea {
+.textarea {
   width: 100%;
   height: 100px;
 }
