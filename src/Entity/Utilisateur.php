@@ -136,6 +136,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->mdp;
     }
 
+    public function getmdp(): ?string
+    {
+        return $this->mdp;
+    }
+
     public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;

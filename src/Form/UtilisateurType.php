@@ -21,10 +21,7 @@ class UtilisateurType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom:',
-                'constraints' => new NotBlank(), new Length([
-                    'min' => 2,
-                    'max' => 30
-                ]),
+
                 'attr' => [
                     'placeholder' => 'saisir votre nom'
                 ]

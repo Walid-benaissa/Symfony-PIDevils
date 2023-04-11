@@ -14,11 +14,15 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      form_login:
+        login_path: app_login
+        check_path: app_login
+        username_parameter: "mail"
+        password_parameter: "password"
       lazy: true
       provider: users_in_memory
       logout:
         path: app_logout
-      custom_authenticator: App\Security\LoginAuthenticator
         # where to redirect after logout
         # target: app_any_route
 
