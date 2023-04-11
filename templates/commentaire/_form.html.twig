@@ -1,7 +1,15 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
+<h1 class="title">Effectuer une commentaire</h1>
+    <div class="label">
+    {{ form_label(form.message) }}<br>
+    </div>
+    <div class="label">
+        {% if not form.vars.valid %}
+        {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
+    {% endif %}</div>
+    <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
+    <button class="submit">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 </div>

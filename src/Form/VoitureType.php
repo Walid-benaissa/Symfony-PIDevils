@@ -25,7 +25,7 @@ class VoitureType extends AbstractType
                 },
                 "multiple" => false,
                 "expanded" => false
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
