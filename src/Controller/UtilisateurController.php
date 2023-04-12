@@ -33,7 +33,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    #[Route('/creatCpt', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $utilisateur = new Utilisateur();
