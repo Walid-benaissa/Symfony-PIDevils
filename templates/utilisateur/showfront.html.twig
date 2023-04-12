@@ -1,0 +1,43 @@
+{% extends 'base-front.html.twig'%}
+
+{% block body %}
+	<h1>Utilisateur</h1>
+
+	<table class="table">
+		<tbody>
+			
+			<tr>
+				<th>Nom</th>
+				<td>{{ utilisateur.nom }}</td>
+			</tr>
+			<tr>
+				<th>Prénom</th>
+				<td>{{ utilisateur.prenom }}</td>
+			</tr>
+			<tr>
+				<th>E-mail</th>
+				<td>{{ utilisateur.mail }}</td>
+			</tr>
+
+			<tr>
+				<th>Numéro de Téléphone</th>
+				<td>{{ utilisateur.numTel }}</td>
+			</tr>
+			<tr>
+				<th>Rôle</th>
+				<td>{{ utilisateur.role }}</td>
+			</tr>
+			<tr>
+				<th>Evaluation</th>
+				<td>{{ utilisateur.evaluation }}</td>
+			</tr>
+			
+		</tbody>
+	</table>
+
+	
+
+	<a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier</a>
+
+	
+{% endblock %}

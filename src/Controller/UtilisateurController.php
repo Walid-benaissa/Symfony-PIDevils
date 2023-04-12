@@ -64,7 +64,13 @@ class UtilisateurController extends AbstractController
             'utilisateur' => $utilisateur,
         ]);
     }
-
+    #[Route('/utilisateur/{id}', name: 'app_utilisateur_showfr', methods: ['GET'])]
+    public function showfr(Utilisateur $utilisateur): Response
+    {
+        return $this->render('utilisateur/showfront.html.twig', [
+            'utilisateur' => $utilisateur,
+        ]);
+    }
     #[Route('/utilisateur/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
