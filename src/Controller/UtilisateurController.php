@@ -20,12 +20,10 @@ class UtilisateurController extends AbstractController
     #[Route('/login', name: 'app_utilisateur_login', methods: ['GET', 'POST'])]
     public function login(): Response
     {
-
-
         return $this->renderForm('utilisateur/login.html.twig', []);
     }
 
-    #[Route('/utilisateur', name: 'app_utilisateur_index', methods: ['GET'])]
+    #[Route('/admin/utilisateur', name: 'app_utilisateur_index', methods: ['GET'])]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         $user = $this->getUser();
@@ -59,7 +57,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
+    #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response
     {
         return $this->render('utilisateur/show.html.twig', [
@@ -90,7 +88,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
+    #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
     public function delete(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {

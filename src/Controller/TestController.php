@@ -9,7 +9,17 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class TestController extends AbstractController
 {
-    #[Route('/back', name: 'app_test')]
+    #[Route('/redirect', name: 'app_test_role')]
+    public function rolescheck(): Response
+    {
+        $user = $this->getUser();
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return $this->redirectToRoute('app_test', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->redirectToRoute('app_test1', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/admin', name: 'app_test')]
     public function index(): Response
     {
         return $this->render('1stpage.html.twig', [

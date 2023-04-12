@@ -10,10 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/voiture')]
 class VoitureController extends AbstractController
 {
-    #[Route('/', name: 'app_voiture_index', methods: ['GET'])]
+    #[Route('/admin/voiture', name: 'app_voiture_index', methods: ['GET'])]
     public function index(VoitureRepository $voitureRepository): Response
     {
         return $this->render('voiture/index.html.twig', [
@@ -21,7 +20,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_voiture_new', methods: ['GET', 'POST'])]
+    #[Route('/voiture/new', name: 'app_voiture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VoitureRepository $voitureRepository): Response
     {
         $voiture = new Voiture();
@@ -39,7 +38,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}', name: 'app_voiture_show', methods: ['GET'])]
+    #[Route('/admin/voiture/{immatriculation}', name: 'app_voiture_show', methods: ['GET'])]
     public function show(Voiture $voiture): Response
     {
         return $this->render('voiture/show.html.twig', [
@@ -47,7 +46,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/voituser/{id}', name: 'app_voiture_showfr', methods: ['GET'])]
+    #[Route('/voiture/voituser/{id}', name: 'app_voiture_showfr', methods: ['GET'])]
     public function showfr(VoitureRepository $voitureRepository, $id): Response
     {
         return $this->render('voiture/showfront.html.twig', [
@@ -55,7 +54,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
+    #[Route('/voiture/edit/{id}', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, $id, VoitureRepository $voitureRepository): Response
     {
         $voiture = $voitureRepository->findByUser($id);
@@ -73,7 +72,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}', name: 'app_voiture_delete', methods: ['POST'])]
+    #[Route('/voiture/{immatriculation}', name: 'app_voiture_delete', methods: ['POST'])]
     public function delete(Request $request, Voiture $voiture, VoitureRepository $voitureRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $voiture->getImmatriculation(), $request->request->get('_token'))) {

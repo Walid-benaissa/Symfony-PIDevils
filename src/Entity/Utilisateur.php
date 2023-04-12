@@ -92,10 +92,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        $roles = [];
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
+        if ($this->getRole() == "Admin")
+            $roles[] = 'ROLE_ADMIN';
+        if ($this->getRole() == "Conducteur")
+            $roles[] = 'ROLE_COND';
         return array_unique($roles);
     }
 
