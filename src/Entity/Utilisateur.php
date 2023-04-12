@@ -27,15 +27,24 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre prénom")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Votre prénom ne doit pas contenir des chiffres',
+    )]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre mail")]
     #[ORM\Column(length: 100)]
     private ?string $mail = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre mot de passe")]
     #[ORM\Column(length: 100)]
     private ?string $mdp = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 

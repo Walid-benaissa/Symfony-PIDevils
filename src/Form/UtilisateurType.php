@@ -26,8 +26,18 @@ class UtilisateurType extends AbstractType
                     'placeholder' => 'saisir votre nom'
                 ]
             ])
-            ->add('prenom', TextType::class, ['label' => 'Prénom:'])
-            ->add('mail', TextType::class, ['label' => 'E-mail:'])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom:',
+                'attr' => [
+                    'placeholder' => 'saisir votre prénom'
+                ]
+            ])
+            ->add('mail', TextType::class, [
+                'label' => 'E-mail:',
+                'attr' => [
+                    'placeholder' => 'saisir votre e-mail'
+                ]
+            ])
             ->add('mdp', RepeatedType::class, [
                 'type' => PasswordType::class,
 
@@ -43,13 +53,19 @@ class UtilisateurType extends AbstractType
                     'attr' => ['placeholder' => 'Confirmez mot de passe'],
                 ]
             ])
-            ->add('numTel', TextType::class, ['label' => 'Numero de téléphone:'])
+            ->add('numTel', TextType::class, [
+                'label' => 'Numéro de téléphone:',
+                'attr' => ['placeholder' => 'Saisir votre numéro de téléphone']
+            ])
             ->add('role', ChoiceType::class, [
+                'label' => 'Rôle:',
                 'choices'  => [
                     'Client' => 'Client',
                     'Conducteur' => 'Conducteur'
 
                 ],
+                'multiple' => false,
+                'expanded' => true
             ]);
     }
 
