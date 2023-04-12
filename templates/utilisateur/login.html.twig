@@ -1,4 +1,4 @@
-{% block body %}
+
 	<!DOCTYPE html>
 	<html lang="en">
 
@@ -102,38 +102,16 @@
 												<p class="text-center small"></p>
 											</div>
 
-											<form class="row g-3 needs-validation" novalidate>
-
-												<div class="col-12">
-													<label for="yourUsername" class="form-label">E-mail</label>
-													<div class="input-group has-validation">
-														<span class="input-group-text" id="inputGroupPrepend">@</span>
-														<input type="text" name="username" class="form-control" id="yourUsername" required>
-														<div class="invalid-feedback"> Enter votre e-mail.</div>
-													</div>
-												</div>
-
-												<div class="col-12">
-													<label for="yourPassword" class="form-label">Mot de Passe</label>
-													<input type="password" name="password" class="form-control" id="yourPassword" required>
-													<div class="invalid-feedback"> enter votre mot de passe!</div>
-												</div>
-
-												<div class="col-12">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-														<label class="form-check-label" for="rememberMe">enregister </label>
-													</div>
-												</div>
-												<div class="col-12">
-													<button class="btn btn-primary w-100" type="submit">Se Connecter</button>
-												</div>
-												<div class="col-12">
-													<p class="small mb-0">Vous n'avez pas un compte?
-														<a href="{{ path('app_utilisateur_new') }}">Créer un compte</a>
-													</p>
-												</div>
-											</form>
+											
+											<div class="row g-4 needs-validation" novalidate>
+											{% block body %}
+											{% endblock %}
+											</div>
+											<div class="col-12 offset-">
+											<p class="mb-0">Vous n'avez pas un compte ?
+												<a href="{{ path('app_utilisateur_new') }}">Créer compte</a>
+											</p>
+										</div>
 										</div>
 									</div>
 								</div>
@@ -152,4 +130,4 @@
 		</body>
 	</html>
 
-{% endblock %}
+

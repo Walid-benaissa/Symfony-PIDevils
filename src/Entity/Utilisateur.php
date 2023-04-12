@@ -6,10 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,7 +19,7 @@ class Utilisateur
     private ?int $id = null;
 
     #[ORM\Column(length: 20)]
-    #[Assert\NotBlank(message: "Vous devez saisir votre nom!")]
+    #[Assert\NotBlank(message: "Vous devez saisir votre nom")]
     #[Assert\Regex(
         pattern: '/\d/',
         match: false,
@@ -25,15 +27,24 @@ class Utilisateur
     )]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre prénom")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Votre prénom ne doit pas contenir des chiffres',
+    )]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre mail")]
     #[ORM\Column(length: 100)]
     private ?string $mail = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre mot de passe")]
     #[ORM\Column(length: 100)]
     private ?string $mdp = null;
 
+    #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 
@@ -41,7 +52,7 @@ class Utilisateur
     private ?string $role = null;
 
     #[ORM\Column]
-    private ?float $evaluation = null;
+    private ?float $evaluation = 0;
 
     #[ORM\Column]
     private ?bool $bloque = false;
@@ -68,6 +79,25 @@ class Utilisateur
      * Constructor
      */
 
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->mail;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = [];
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
 
     public function getId(): ?int
     {
@@ -110,7 +140,12 @@ class Utilisateur
         return $this;
     }
 
-    public function getMdp(): ?string
+    public function getPassword(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function getmdp(): ?string
     {
         return $this->mdp;
     }

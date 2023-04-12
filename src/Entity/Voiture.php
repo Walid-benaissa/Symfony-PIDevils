@@ -9,7 +9,6 @@ use App\Repository\VoitureRepository;
 class Voiture
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(length: 30)]
     private ?string $immatriculation = null;
 

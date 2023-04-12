@@ -24,7 +24,6 @@
                 <td>{{ voiture.photo }}</td>
                 <td>
                     <a href="{{ path('app_voiture_show', {'immatriculation': voiture.immatriculation}) }}">show</a>
-                    <a href="{{ path('app_voiture_edit', {'immatriculation': voiture.immatriculation}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,6 +33,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_voiture_new') }}">Create new</a>
 {% endblock %}

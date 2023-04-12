@@ -27,13 +27,12 @@ class VoitureController extends AbstractController
         $voiture = new Voiture();
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $voiture->setuser($this->getUser());
+            $id = $voiture->getuser()->getId();
             $voitureRepository->save($voiture, true);
-
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('voiture/new.html.twig', [
             'voiture' => $voiture,
             'form' => $form,
@@ -48,16 +47,24 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}/edit', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Voiture $voiture, VoitureRepository $voitureRepository): Response
+    #[Route('/voituser/{id}', name: 'app_voiture_showfr', methods: ['GET'])]
+    public function showfr(VoitureRepository $voitureRepository, $id): Response
     {
+        return $this->render('voiture/showfront.html.twig', [
+            'voiture' => $voitureRepository->findByUser($id),
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, $id, VoitureRepository $voitureRepository): Response
+    {
+        $voiture = $voitureRepository->findByUser($id);
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $voitureRepository->save($voiture, true);
-
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $voiture->getuser()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('voiture/edit.html.twig', [
@@ -69,10 +76,11 @@ class VoitureController extends AbstractController
     #[Route('/{immatriculation}', name: 'app_voiture_delete', methods: ['POST'])]
     public function delete(Request $request, Voiture $voiture, VoitureRepository $voitureRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$voiture->getImmatriculation(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $voiture->getImmatriculation(), $request->request->get('_token'))) {
+            $id = $voiture->getuser()->getId();
             $voitureRepository->remove($voiture, true);
         }
 
-        return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,7 +1,7 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
 {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
-<h1 class="title">Effectuer une reclamation</h1>
+<h1 class="title">Effectuer une commentaire</h1>
     <div class="label">
     {{ form_label(form.message) }}<br>
     </div>
@@ -10,20 +10,6 @@
         {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
     {% endif %}</div>
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
-
-    <div class="label">
-    {{ form_label(form.type) }}<br>
-    </div>
-    <div class="input">
-    {{ form_widget(form.type)}}
-    </Div>
-    <div class="label">
-    {{ form_label(form.etat) }}<br>
-    </div>
-    <div class="input">
-    {{ form_widget(form.etat)}}
-    </Div>
-    {{ form_errors(form.type)}}<br>
     <button class="submit">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 </div>
