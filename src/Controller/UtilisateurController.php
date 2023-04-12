@@ -52,7 +52,7 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('utilisateur/new.html.twig', [
+        return $this->renderForm('utilisateur/creatCpt.html.twig', [
             'form' => $form,
         ]);
     }
@@ -71,8 +71,9 @@ class UtilisateurController extends AbstractController
             'utilisateur' => $utilisateur,
         ]);
     }
-    #[Route('/utilisateur/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+
+    #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
+    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
@@ -89,6 +90,29 @@ class UtilisateurController extends AbstractController
         }
 
         return $this->renderForm('utilisateur/edit.html.twig', [
+            'utilisateur' => $utilisateur,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/utilisateur/{id}/edit/', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
+
+    public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hashedPassword = $passwordHasher->hashPassword(
+                $utilisateur,
+                $utilisateur->getmdp()
+            );
+            $utilisateur->setMdp($hashedPassword);
+            $utilisateurRepository->save($utilisateur, true);
+
+            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('utilisateur/editfront.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
         ]);
