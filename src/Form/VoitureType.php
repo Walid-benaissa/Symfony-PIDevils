@@ -14,18 +14,11 @@ class VoitureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('immatriculation')
             ->add('modele')
             ->add('marque')
             ->add('etat')
-            ->add('photo')
-            ->add('user', EntityType::class, [
-                "class" => Utilisateur::class,
-                'choice_label' => function ($user) {
-                    return $user->getId() . "-" . $user->getPrenom() . " " . $user->getNom();
-                },
-                "multiple" => false,
-                "expanded" => false
-            ]);
+            ->add('photo');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
