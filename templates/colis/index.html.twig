@@ -21,7 +21,7 @@
 					<td>{{ coli.poids }}</td>
 					<td>
 						<a href="{{ path('app_colis_show', {'id': coli.id}) }}">show</a>
-						<a href="{{ path('app_colis_edit', {'id': coli.id}) }}">edit</a>
+						<!--<a href="{{ path('app_colis_edit', {'id': coli.id}) }}">edit</a>-->
 					</td>
 				</tr>
 			{% else %}
@@ -32,5 +32,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_colis_new') }}">Create new</a>
+	<!--<a href="{{ path('app_colis_new') }}">Create new</a>-->
 {% endblock %}
