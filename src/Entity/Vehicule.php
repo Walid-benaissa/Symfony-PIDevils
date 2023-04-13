@@ -20,7 +20,7 @@ class Vehicule
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
@@ -29,8 +29,7 @@ class Vehicule
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\Column]
-    private ?bool $disponibilite = false;
+   
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
@@ -106,17 +105,7 @@ class Vehicule
         return $this;
     }
 
-    public function isDisponibilite(): ?bool
-    {
-        return $this->disponibilite;
-    }
-
-    public function setDisponibilite(?bool $disponibilite): self
-    {
-        $this->disponibilite = $disponibilite;
-
-        return $this;
-    }
+ 
 
     public function getDescription(): ?string
     {
@@ -154,8 +143,5 @@ class Vehicule
         return $this;
     } */
 
-    public function getDisponibilite(): ?string
-    {
-        return $this->disponibilite;
-    }
+
 }

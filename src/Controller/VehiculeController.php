@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/vehicule')]
 class VehiculeController extends AbstractController
@@ -22,13 +23,34 @@ class VehiculeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, VehiculeRepository $vehiculeRepository): Response
+    public function new(Request $request, VehiculeRepository $vehiculeRepository ,SluggerInterface $slugger = null): Response
     {
         $vehicule = new Vehicule();
         $form = $this->createForm(VehiculeType::class, $vehicule);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoC = $form->get('image')->getData();
+            if ($photoC) {
+                $originalImgName = pathinfo($photoC->getClientOriginalName(), PATHINFO_FILENAME);
+                $newImgename = $originalImgName . '-' . uniqid() . '.' . $photoC->guessExtension();
+    
+                if ($slugger) {
+                    $safeImgname = $slugger->slug($originalImgName);
+                    $newImgename = $safeImgname . '-' . uniqid() . '.' . $photoC->guessExtension();
+                }
+    
+                try {
+                    $photoC->move(
+                        $this->getParameter('imgb_directory'),
+                        $newImgename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                }
+    
+                $vehicule->setImage($newImgename);
+            }
             $vehiculeRepository->save($vehicule, true);
 
             return $this->redirectToRoute('app_vehicule_index', [], Response::HTTP_SEE_OTHER);
