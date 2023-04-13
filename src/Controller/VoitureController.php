@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Voiture;
 use App\Form\VoitureType;
 use App\Repository\VoitureRepository;
+use App\Service\ContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ class VoitureController extends AbstractController
     #[Route('/admin/voiture', name: 'app_voiture_index', methods: ['GET'])]
     public function index(VoitureRepository $voitureRepository): Response
     {
+
         return $this->render('voiture/index.html.twig', [
             'voitures' => $voitureRepository->findAll(),
         ]);
@@ -24,11 +26,13 @@ class VoitureController extends AbstractController
     public function new(Request $request, VoitureRepository $voitureRepository): Response
     {
         $voiture = new Voiture();
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
+        if ($voitureRepository->findByUser($id) != null)
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $voiture->setuser($this->getUser());
-            $id = $voiture->getuser()->getId();
             $voitureRepository->save($voiture, true);
             return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
@@ -57,6 +61,12 @@ class VoitureController extends AbstractController
     #[Route('/voiture/edit/{id}', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, $id, VoitureRepository $voitureRepository): Response
     {
+        $voiture = new Voiture();
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
+        if ($voitureRepository->findByUser($id) == null)
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
+
         $voiture = $voitureRepository->findByUser($id);
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);

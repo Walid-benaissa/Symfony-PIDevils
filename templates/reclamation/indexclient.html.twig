@@ -1,16 +1,16 @@
-{% extends 'base-back.html.twig'%}
-<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+{% extends 'base-front.html.twig'%}
 {% block body %}
-	<h1>Gérer Reclamations</h1>
-    <div class="card">
-    <div class="img-container">
-        <div class="img">
-        </div>
-        <div class="description card">
-            <span class="title">
-                Card
-            </span>
-        </div>
-    </div>
+<link href="{{asset("css/cardreclamation.css")}}" rel="stylesheet">
+	<div class="container bod">
+    <h1 class="title">Reclamations</h1>
+    <div class="row">
+    {% for i in reclamations %}
+    <div class="card col-3">
+  <div class="card-overlay"></div>
+  <div class="card-inner">{{i.message}}</div>
+  <div class="card-inner etat">{{i.etat}}</div>
+</div>
+{% endfor %}
+</div>
 </div>
 {% endblock %}

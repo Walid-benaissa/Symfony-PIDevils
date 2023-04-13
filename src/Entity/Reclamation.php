@@ -20,7 +20,6 @@ class Reclamation
     private ?string $message = null;
 
     #[ORM\Column(length: 150)]
-    #[Assert\NotBlank(message: "Vous devez saisir un etat ")]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]

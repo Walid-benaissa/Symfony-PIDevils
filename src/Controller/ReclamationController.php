@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Utilisateur;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
 
 class ReclamationController extends AbstractController
 {
@@ -27,11 +29,11 @@ class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamation->setEtat('Ouvert');
+            $reclamation->setUser($this->getUser());
             $reclamationRepository->save($reclamation, true);
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reclamation/new.html.twig', [
@@ -52,7 +54,7 @@ class ReclamationController extends AbstractController
     public function showrecuser(ReclamationRepository $rp, $id): Response
     {
         return $this->render('reclamation/indexclient.html.twig', [
-            'reclamation' => $rp->findByUser($id),
+            'reclamations' => $rp->findByUser($id),
         ]);
     }
 

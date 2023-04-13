@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Voiture;
+use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,8 +12,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class TestController extends AbstractController
 {
     #[Route('/redirect', name: 'app_test_role')]
-    public function rolescheck(): Response
+    public function rolescheck(VoitureRepository $vr): Response
     {
+        $voiture = new Voiture();
+        $voiture->setuser($this->getUser());
+        if ($vr->findByUser($voiture->getuser()->getId()))
+            $hasVoiture = true;
         $user = $this->getUser();
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             return $this->redirectToRoute('app_test', [], Response::HTTP_SEE_OTHER);

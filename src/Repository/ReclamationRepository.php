@@ -46,7 +46,7 @@ class ReclamationRepository extends ServiceEntityRepository
             ->where('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     //    /**

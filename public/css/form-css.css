@@ -67,6 +67,7 @@ form select {
   transition: all 0.2s ease-in-out;
   align-self: center;
   width: 30%;
+  margin-top: 10px;
 }
 
 .centerdiv {
