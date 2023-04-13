@@ -27,6 +27,15 @@ class VoitureController extends AbstractController
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['photo']->getData();
+            $destination = 'C:/uploadedFiles/Images/';
+            $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
+            $image->move($destination, $fileName);
+            $voiture->setPhoto('C:/uploadedFiles/Images/' . $fileName);
+
+
             $voiture->setuser($this->getUser());
             $id = $voiture->getuser()->getId();
             $voitureRepository->save($voiture, true);

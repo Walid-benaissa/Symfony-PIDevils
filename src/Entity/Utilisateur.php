@@ -37,6 +37,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[Assert\NotBlank(message: "Vous devez saisir votre mail")]
+    #[Assert\Email(
+        message: 'Vous devez saisir un e-mail valide',
+    )]
     #[ORM\Column(length: 100)]
     private ?string $mail = null;
 
@@ -45,6 +48,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $mdp = null;
 
     #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'vous devez saisie un numéro valide',
+    )]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        minMessage: 'vous devez saisie un numéro valide',
+        maxMessage: 'vous devez saisie un numéro valide',
+    )]
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 

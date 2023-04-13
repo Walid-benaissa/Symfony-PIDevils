@@ -27,7 +27,6 @@ class Voiture
     private ?string $etat = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Vous devez saisir une photo ")]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures', targetEntity: Utilisateur::class)]
