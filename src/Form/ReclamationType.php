@@ -18,7 +18,6 @@ class ReclamationType extends AbstractType
     {
         $builder
             ->add('message', TextareaType::class)
-            ->add('etat')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
                     'Livraison' => 'Livraison',

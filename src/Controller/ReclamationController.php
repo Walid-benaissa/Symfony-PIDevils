@@ -29,8 +29,8 @@ class ReclamationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setEtat('Ouvert');
             $reclamationRepository->save($reclamation, true);
-
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -45,6 +45,14 @@ class ReclamationController extends AbstractController
     {
         return $this->render('reclamation/show.html.twig', [
             'reclamation' => $reclamation,
+        ]);
+    }
+
+    #[Route('/reclamation/{id}', name: 'app_reclamation_showuser', methods: ['GET'])]
+    public function showrecuser(ReclamationRepository $rp, $id): Response
+    {
+        return $this->render('reclamation/indexclient.html.twig', [
+            'reclamation' => $rp->findByUser($id),
         ]);
     }
 

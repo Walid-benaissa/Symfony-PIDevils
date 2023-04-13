@@ -1,6 +1,6 @@
 {% extends 'base-front.html.twig'%}
 
 {% block body %}
-    <h1>Modifier Voiture</h1>
+    {% set title="Modifier voiture" %}
     {{ include('voiture/_form.html.twig', {'button_label': 'Modifier'}) }}
 {% endblock %}
