@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ColisRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ColisRepository::class)]
 
@@ -16,6 +17,7 @@ class Colis
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Champ vide!!")]
     private ?int $nbItems = null;
 
     #[ORM\Column(length: 150)]

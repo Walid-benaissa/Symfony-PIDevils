@@ -11,9 +11,8 @@ class Livraison
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-
-    private ?int $idLivraison = null;
+    #[ORM\Column(type: "integer", name: "id_livraison", nullable: false)]
+    private int $idLivraison;
 
     #[ORM\Column(length: 150)]
     private ?string $adresseExpedition = null;
@@ -27,19 +26,19 @@ class Livraison
     #[ORM\Column(length: 150)]
     private ?string $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'id_client')]
     private ?Utilisateur $Client = null;
 
-    #[ORM\OneToOne(inversedBy: 'id', targetEntity: Colis::class)]
+    #[ORM\OneToOne(targetEntity: Colis::class)]
     #[ORM\JoinColumn(name: 'id_colis')]
     private ?Colis $Colis = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id', targetEntity: Utilisateur::class)]
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'id_livreur')]
     private ?Utilisateur $Livreur = null;
 
-    public function getIdLivraison(): ?int
+    public function getIdLivraison(): int
     {
         return $this->idLivraison;
     }

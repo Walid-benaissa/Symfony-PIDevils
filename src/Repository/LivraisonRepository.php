@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Livraison;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,6 +31,7 @@ class LivraisonRepository extends ServiceEntityRepository
         }
     }
 
+
     public function remove(Livraison $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -39,28 +41,38 @@ class LivraisonRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Livraison[] Returns an array of Livraison objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByUser($id)
+    {
+        return $this->createQueryBuilder('l')
+            ->join('l.Client', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Livraison
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Livraison[] Returns an array of Livraison objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('l.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Livraison
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
