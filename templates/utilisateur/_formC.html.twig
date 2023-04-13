@@ -15,8 +15,12 @@
     {{ form_errors(form.mail) }}<br>
     {{ form_widget(form.mdp) }}<br>
     {{ form_errors(form.mdp) }}<br>
-    {{ form_widget(form.role) }}<br>
-    {{ form_errors(form.role) }}<br>
+    {{ form_label(form.b3) }}<br>
+    {{ form_widget(form.b3) }}<br>
+    {{ form_errors(form.b3) }}<br>
+     {{ form_label(form.permis) }}<br>
+    {{ form_widget(form.permis) }}<br>
+    {{ form_errors(form.permis) }}<br>
     <button class="submit">{{ button_label|default('Créer') }}</button>
 {{ form_end(form, {'render_rest': false}) }}
 </div>

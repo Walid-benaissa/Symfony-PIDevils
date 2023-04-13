@@ -7,48 +7,33 @@
      <div class="label">
     {{ form_label(form.nom) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.nom)}}
-    </Div>
+    {{ form_widget(form.nom,{'attr':{'class': 'input' }})}}
     {{ form_errors(form.nom)}}<br>
     <div class="label">
     {{ form_label(form.prenom) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.prenom)}}
-    </Div>
+    
+    {{ form_widget(form.prenom,{'attr':{'class': 'input' }})}}
+    
     {{ form_errors(form.prenom)}}<br>
 	 <div class="label">
     {{ form_label(form.numTel) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.numTel)}}
-    </Div>
+    
+    {{ form_widget(form.numTel,{'attr':{'class': 'input' }})}}
+    
     {{ form_errors(form.numTel)}}<br>
 	 <div class="label">
     {{ form_label(form.mail) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.mail)}}
-    </Div>
+    
+    {{ form_widget(form.mail,{'attr':{'class': 'input' }})}}
+    
     {{ form_errors(form.mail)}}<br>
-	 <div class="label">
-    {{ form_label(form.mdp) }}<br>
-    </div>
-    <div class="input">
-    {{ form_widget(form.mdp)}}<br>
-    </Div>
-    {{ form_errors(form.mdp)}}<br>
-	 <div class="label">
-    {{ form_label(form.role) }}<br>
-    </div>
-    <div class="input">
-    {{ form_widget(form.role)}}
-    </Div>
-    {{ form_errors(form.role)}}<br>
+    {# {{form_widget(formc.chmdp)}} #}
     <button class="submit">{{ button_label|default('Modifier') }}</button>
 	<a href="{{ path('app_utilisateur_showfr', {'id': utilisateur.id}) }}">Retour</a>
-    {{ form_end(form) }}
+    {{ form_end(form, {'render_rest': false}) }}
 </div>
 <br><br>
 {% endblock %}

@@ -18,7 +18,7 @@
 
 .label {
   color: rgb(0, 0, 0);
-  margin-bottom: 4px;
+  margin-bottom: 20px;
 }
 
 .textarea {
@@ -32,13 +32,12 @@ form select {
 
 .input {
   padding: 10px;
+  width: 70%;
   margin-bottom: 20px;
-  width: 150%;
-  max-width: 100%;
   font-size: 1rem;
   color: #4a5568;
   outline: none;
-  border: 1px solid transparent;
+  border: 1px solid;
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
@@ -46,14 +45,6 @@ form select {
 .input:focus {
   background-color: #fff;
   box-shadow: 0 0 0 2px #cbd5e0;
-}
-
-.input:valid {
-  border: 1px solid green;
-}
-
-.input:invalid {
-  border: 1px solid rgba(14, 14, 14, 0.205);
 }
 
 .submit {
