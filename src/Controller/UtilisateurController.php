@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\Voiture;
 use App\Form\CreerCompteType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
@@ -75,6 +76,9 @@ class UtilisateurController extends AbstractController
     #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
     public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $voiture = new Voiture;
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
@@ -86,7 +90,7 @@ class UtilisateurController extends AbstractController
             $utilisateur->setMdp($hashedPassword);
             $utilisateurRepository->save($utilisateur, true);
 
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_editb', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/edit.html.twig', [
