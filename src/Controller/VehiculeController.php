@@ -21,6 +21,13 @@ class VehiculeController extends AbstractController
             'vehicules' => $vehiculeRepository->findAll(),
         ]);
     }
+    #[Route('/list', name: 'app_vehicule', methods: ['GET'])]
+    public function listvehicule(VehiculeRepository $vehiculeRepository): Response
+    {
+        return $this->render('vehicule/listvehicule.html.twig', [
+            'vehicules' => $vehiculeRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VehiculeRepository $vehiculeRepository ,SluggerInterface $slugger = null): Response

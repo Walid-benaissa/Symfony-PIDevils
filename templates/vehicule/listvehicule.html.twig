@@ -1,0 +1,64 @@
+{% extends 'base-front.html.twig' %}
+
+{% block body %}
+  <title>Vehicule list</title>
+  <h1>Vehicule list</h1>
+  <style>
+    .vehicule-container {
+      display: flex; /* new */
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    .image-container {
+      width: 30%; /* new */
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-right: 10px; /* new */
+    }
+    .circular-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .vehicule-description {
+      flex: 1; /* new */
+      margin-bottom: 10px;
+    }
+    .vehicule-price {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .select-button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      align-self: flex-end; /* new */
+      margin-top: auto; /* new */
+    }
+  </style>
+
+  {% for vehicule in vehicules %}
+    <div class="vehicule-container">
+      <div class="image-container">
+        <img src="{{ asset('photo/'~vehicule.image) }}" alt="{{ vehicule.nomV }}" class="circular-image">
+      </div>
+      <div class="vehicule-description">
+        <h2>{{ vehicule.nomV }}</h2>
+        <p>{{ vehicule.description }}</p>
+        <div class="vehicule-price">
+          {{ vehicule.prix }} EUR
+        </div>
+        <a href="{{ path('app_vehicule_show', {'idVehicule': vehicule.idVehicule}) }}" class="select-button">Select</a>
+      </div>
+    </div>
+  {% else %}
+    <p>No records found.</p>
+  {% endfor %}
+
+  <a href="{{ path('app_vehicule_new') }}">Create new</a>
+{% endblock %}
