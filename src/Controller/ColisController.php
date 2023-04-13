@@ -21,6 +21,15 @@ class ColisController extends AbstractController
         ]);
     }
 
+
+    // #[Route('/colis/{id}', name: 'app_colis_byuser', methods: ['GET'])]
+    // public function getcolisbyuser(ColisRepository $colisRepository): Response
+    // {
+    //     return $this->render('colis/list.html.twig', [
+    //         'colis' => $colisRepository->findAll(),
+    //     ]);
+    // }
+
     #[Route('/new', name: 'app_colis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ColisRepository $colisRepository): Response
     {
@@ -69,7 +78,7 @@ class ColisController extends AbstractController
     #[Route('/{id}', name: 'app_colis_delete', methods: ['POST'])]
     public function delete(Request $request, Colis $coli, ColisRepository $colisRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$coli->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $coli->getId(), $request->request->get('_token'))) {
             $colisRepository->remove($coli, true);
         }
 

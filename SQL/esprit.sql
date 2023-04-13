@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 11 avr. 2023 à 22:32
+-- Généré le : mer. 12 avr. 2023 à 17:26
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -295,11 +295,13 @@ CREATE TABLE `utilisateur` (
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `mdp`, `num_tel`, `role`, `evaluation`, `bloque`) VALUES
 (0, '', '', '', '', '', 'Admin', 0, 0),
 (12, 'khaled', 'khaled', 'khaled@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '56765345', 'Client', 0, 0),
-(13, 'kharmachi', 'abir', 'abir.kharmachi@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '256789467', 'Admin', 0, 0),
+(13, 'kharmachi', 'abir', 'abir.kharmachi@gmail.com', '123', '256789467', 'Admin', 0, 0),
 (17, 'aziz', 'aziz', 'aziz@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '26786543', 'Client', 0, 0),
 (26, 'Ben Ghorbel', 'Nourr', 'nour@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '123456', 'Conducteur', 0, 0),
 (27, 'Ben aissa', 'Walid', 'walid@gmail.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '123456', 'Conducteur', 0, 0),
-(28, 'salah', 'salah', 'abir@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '125425', 'Conducteur', 0, 0);
+(28, 'salah', 'salah', 'abir@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '125425', 'Conducteur', 0, 0),
+(29, 'client', 'client', 'client@gmail.com', '$2y$13$qQ06m5aCO4pcLahTGgIphen4MFdbRW9/EOtHvoqP3IzN7b1YyPuoq', 'client', 'Client', 0, 0),
+(30, 'admin', 'admin', 'admin@gmail.com', '$2y$13$qQ06m5aCO4pcLahTGgIphen4MFdbRW9/EOtHvoqP3IzN7b1YyPuoq', '25463456', 'Admin', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -486,7 +488,7 @@ ALTER TABLE `reclamation`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `vehicule`

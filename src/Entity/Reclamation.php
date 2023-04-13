@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -14,6 +16,7 @@ class Reclamation
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "Vous devez saisir un message ")]
     private ?string $message = null;
 
     #[ORM\Column(length: 150)]
@@ -78,6 +81,4 @@ class Reclamation
 
         return $this;
     }
-
-    
 }

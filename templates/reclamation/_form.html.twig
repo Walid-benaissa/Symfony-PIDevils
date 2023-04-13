@@ -17,12 +17,6 @@
     <div class="input">
     {{ form_widget(form.type)}}
     </Div>
-    <div class="label">
-    {{ form_label(form.etat) }}<br>
-    </div>
-    <div class="input">
-    {{ form_widget(form.etat)}}
-    </Div>
     {{ form_errors(form.type)}}<br>
     <button class="submit">{{ button_label|default('Ajouter') }}</button>
     {{ form_end(form) }}

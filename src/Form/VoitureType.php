@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use App\Entity\Voiture;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,8 +44,11 @@ class VoitureType extends AbstractType
                     'placeholder' => 'saisir l\'etat de votre voiture'
                 ]
             ])
-            ->add('photo', TextType::class, [
-                'label' => 'Photo:',
+            ->add('photo', FileType::class, [
+                'label' => 'Image:',
+                'required' => false,
+                'mapped' => false,
+
 
                 'attr' => [
                     'placeholder' => 'Entrer une photo de votre voiture'

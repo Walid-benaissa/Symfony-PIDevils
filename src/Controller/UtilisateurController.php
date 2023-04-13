@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\Voiture;
 use App\Form\CreerCompteType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
@@ -33,7 +34,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    #[Route('/creatCpt', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $utilisateur = new Utilisateur();
@@ -52,7 +53,7 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('utilisateur/new.html.twig', [
+        return $this->renderForm('utilisateur/creatCpt.html.twig', [
             'form' => $form,
         ]);
     }
@@ -71,7 +72,34 @@ class UtilisateurController extends AbstractController
             'utilisateur' => $utilisateur,
         ]);
     }
-    #[Route('/utilisateur/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
+
+    #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
+    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $voiture = new Voiture;
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hashedPassword = $passwordHasher->hashPassword(
+                $utilisateur,
+                $utilisateur->getmdp()
+            );
+            $utilisateur->setMdp($hashedPassword);
+            $utilisateurRepository->save($utilisateur, true);
+
+            return $this->redirectToRoute('app_utilisateur_editb', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('utilisateur/edit.html.twig', [
+            'utilisateur' => $utilisateur,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/utilisateur/{id}/edit/', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
+
     public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
@@ -88,7 +116,7 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('utilisateur/edit.html.twig', [
+        return $this->renderForm('utilisateur/editfront.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
         ]);
