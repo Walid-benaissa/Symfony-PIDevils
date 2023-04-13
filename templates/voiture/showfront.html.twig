@@ -1,9 +1,11 @@
-{% extends 'base-front.html.twig'%}
+{% extends 'base-front.html.twig'%} 
 {% block body %}
+
+<div>
 <title>Voiture</title>
     <h1>Voiture</h1>
     {% if voiture != null %}
-    <table class="table">
+    <table class="table" >
         <tbody>
             <tr>
                 <th>Immatriculation</th>
@@ -27,8 +29,11 @@
             </tr>
         </tbody>
     </table>
+    <br>
     {{ include('voiture/_delete_form.html.twig') }}
     {% else %}
     <h1>aucune voiture existe</h1>
     {% endif %}
+    <div>
+    <br>
 {% endblock %}

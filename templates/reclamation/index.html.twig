@@ -18,17 +18,17 @@
 					<td>{{ reclamation.message }}</td>
 					<td>{{ reclamation.etat }}</td>
 					<td>
-						<a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
-						<a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+						<a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">Voir plus</a>
+						<a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">no records found</td>
+					<td colspan="4">Aucune reclamation </td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_reclamation_new') }}">Create new</a>
+	
 {% endblock %}

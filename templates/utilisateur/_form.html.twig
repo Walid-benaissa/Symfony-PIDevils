@@ -7,16 +7,16 @@
      {{ form_label(form.prenom) }}<br>
     {{ form_widget(form.prenom) }}<br>
     {{ form_errors(form.prenom) }}<br>
+     {{ form_label(form.numTel) }}<br>
+    {{ form_widget(form.numTel) }}<br>
+    {{ form_errors(form.numTel) }}<br>
      {{ form_label(form.mail) }}<br>
     {{ form_widget(form.mail) }}<br>
     {{ form_errors(form.mail) }}<br>
     {{ form_widget(form.mdp) }}<br>
     {{ form_errors(form.mdp) }}<br>
-     {{ form_label(form.numTel) }}<br>
-    {{ form_widget(form.numTel) }}<br>
-    {{ form_errors(form.numTel) }}<br>
-     {{ form_label(form.role) }}<br>
-    {{ form_widget(form.role) }}<br>
+     {{ form_label(form.role) }}
+    {{ form_widget(form.role) }}
     {{ form_errors(form.role) }}<br>
     
     <button class="submit">{{ button_label|default('Créer') }}</button>

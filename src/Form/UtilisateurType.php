@@ -40,6 +40,7 @@ class UtilisateurType extends AbstractType
             ])
             ->add('mdp', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'label' => ' ',
 
                 'required' => true,
                 'first_options' => [

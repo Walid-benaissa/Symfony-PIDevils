@@ -10,11 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
 
-    #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
+    #[Route('/admin/reclamation', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(ReclamationRepository $reclamationRepository): Response
     {
         return $this->render('reclamation/index.html.twig', [
@@ -22,7 +21,7 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
+    #[Route('/reclamation/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReclamationRepository $reclamationRepository): Response
     {
         $reclamation = new Reclamation();
@@ -41,7 +40,7 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
+    #[Route('/admin/reclamation/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
     {
         return $this->render('reclamation/show.html.twig', [
@@ -49,7 +48,7 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/reclamation/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
         $form = $this->createForm(ReclamationType::class, $reclamation);
@@ -67,7 +66,7 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
+    #[Route('/admin/reclamation/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $reclamation->getId(), $request->request->get('_token'))) {

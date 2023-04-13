@@ -1,7 +1,7 @@
 {% extends 'base-back.html.twig'%}
 
 {% block body %}
-	<h1>liste des utilisateurs de {{user.id}}
+	<h1>liste des utilisateurs 
 	</h1>
 
 	<table class="table">
@@ -10,12 +10,12 @@
 				<th>Id</th>
 				<th>Nom</th>
 				<th>Prénom</th>
-				<th>Mail</th>
-				<th>NumTel</th>
-				<th>Role</th>
+				<th>E-mail</th>
+				<th>Numéro de Téléphone</th>
+				<th>Rôle</th>
 				<th>Evaluation</th>
 				<th>Bloque</th>
-				<th>actions</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,17 +30,17 @@
 					<td>{{ utilisateur.evaluation }}</td>
 					<td>{{ utilisateur.bloque ? 'Yes' : 'No' }}</td>
 					<td>
-						<a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
-						<a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+						<a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Voir plus </a>
+						<a href="{{ path('app_utilisateur_editb', {'id': utilisateur.id}) }}"> Modifier</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="10">no records found</td>
+					<td colspan="10">Aucun utilisateur</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_utilisateur_new') }}">Create new</a>
+
 {% endblock %}
