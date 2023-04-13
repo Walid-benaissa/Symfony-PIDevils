@@ -4,24 +4,30 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VoitureRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
 {
     #[ORM\Id]
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank(message: "Vous devez saisir l'immatriculation")]
     private ?string $immatriculation = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank(message: "Vous devez saisir le modèle ")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank(message: "Vous devez saisir la marque ")]
     private ?string $marque = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Vous devez saisir l'etat ")]
     private ?string $etat = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Vous devez saisir une photo ")]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures', targetEntity: Utilisateur::class)]

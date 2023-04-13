@@ -15,8 +15,8 @@
                 <td>{{ commentaire.id }}</td>
                 <td>{{ commentaire.message }}</td>
                 <td>
-                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
+                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">Voir plus</a>
+                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -27,5 +27,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_commentaire_new') }}">Create new</a>
+ 
 {% endblock %}
