@@ -9,8 +9,11 @@
   <div class="card-overlay"></div>
   <div class="card-inner">{{i.message}}</div>
   <div class="card-inner etat">{{i.etat}}</div>
+  <div class="card-inner">{{i.type}}</div>
 </div>
-{% endfor %}
+{% else %}
+    <h1>Aucune reclamation a été effectué</h1>
+    {% endfor %}
 </div>
 </div>
 {% endblock %}
