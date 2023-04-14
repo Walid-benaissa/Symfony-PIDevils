@@ -62,7 +62,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 
-    #[Assert\NotBlank(message: "Vous devez choisir un role")]
     #[ORM\Column(length: 30)]
     private ?string $role = null;
 

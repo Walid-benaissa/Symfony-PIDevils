@@ -45,8 +45,8 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
 
+        $utilisateur->setRole("Client");
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
@@ -70,6 +70,7 @@ class UtilisateurController extends AbstractController
         $c = new Conducteur();
         $formC = $this->createForm(ConducteurType::class);
         $formC->handleRequest($request);
+        $u->setRole("Conducteur");
 
         if ($formC->isSubmitted() && $formC->isValid()) {
             $data = $formC->getData();
