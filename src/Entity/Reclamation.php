@@ -16,7 +16,6 @@ class Reclamation
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-    #[Assert\NotBlank(message: "Vous devez saisir un message ")]
     private ?string $message = null;
 
     #[ORM\Column(length: 150)]

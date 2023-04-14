@@ -51,14 +51,16 @@
         <h2>{{ vehicule.nomV }}</h2>
         <p>{{ vehicule.description }}</p>
         <div class="vehicule-price">
-          {{ vehicule.prix }} EUR
+          {{ vehicule.prix }} EUR /par jour
         </div>
-        <a href="{{ path('app_vehicule_show', {'idVehicule': vehicule.idVehicule}) }}" class="select-button">Select</a>
+        <a href="{{ path('app_location_new',) }}" class="select-button">Select </a>
       </div>
     </div>
   {% else %}
     <p>No records found.</p>
   {% endfor %}
 
-  <a href="{{ path('app_vehicule_new') }}">Create new</a>
+	<a href="{{ path('app_vehicule_new') }}">Create new</a>
 {% endblock %}
+
+

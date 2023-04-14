@@ -9,14 +9,14 @@
     {{ form_label(form.message) }}<br>
     </div>
     <div class="label">
-        {% if not form.vars.valid %}
         {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
-    {% endif %}</div>
+    </div>
     {% if button_label == "Update"  %}
-    <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea',"disabled":"disabled" }})}}</div>
+    <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea'}})}}</div>
     {% else %}
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
     {% endif %}
+    {{ form_errors(form.message)}}<br>
     <div class="label">
     {{ form_label(form.type) }}<br>
     </div>
@@ -24,10 +24,19 @@
     {{ form_widget(form.type)}}
     </Div>
     {{ form_errors(form.type)}}<br>
+    {% if button_label == "Update"  %}
+    <div class="label">
+    {{ form_label(form.etat) }}<br>
+    </div>
+    <div class="input">
+    {{ form_widget(form.etat)}}
+    </Div>
+    {{ form_errors(form.etat)}}<br>
+    {% endif %}
+
     <div class="row">
     {% if button_label == "Update" %}
     <button class="col-2 offset-2 submit btn">{{ button_label|default('Ajouter') }}</button>
-    {{ include('reclamation/_delete_form.html.twig') }}
     {% else %}
     <button class="col-2 offset-4 submit">{{ button_label|default('Ajouter') }}</button>
     {% endif %}

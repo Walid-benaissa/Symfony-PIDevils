@@ -1,4 +1,4 @@
-{% extends 'base-back.html.twig'%}
+{% extends 'base-front.html.twig'%}
 
 
 {% block body %}
@@ -25,10 +25,7 @@
                 <td>{{ location.dateDebut ? location.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ location.dateFin ? location.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ location.lieu }}</td>
-                <td>
-                    <a href="{{ path('app_location_show', {'idContrat': location.idContrat}) }}">show</a>
-                    <a href="{{ path('app_location_edit', {'idContrat': location.idContrat}) }}">edit</a>
-                </td>
+              
             </tr>
         {% else %}
             <tr>
@@ -38,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_location_new') }}">Create new</a>
+
 {% endblock %}

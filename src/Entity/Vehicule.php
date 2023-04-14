@@ -15,33 +15,39 @@ class Vehicule
     private ?int $idVehicule = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Vous devez saisir votre nom")]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     #[Assert\Regex(
         pattern: '/\d/',
         match: false,
-        message: 'Votre prénom ne doit pas contenir des chiffres',
+        message: 'le nom ne peut  pas contenir des chiffres',
     )]
     private ?string $nomV = null;
 
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+   
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $ville = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?float $prix = null;
 
 
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $type = null;
 
     //#[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
