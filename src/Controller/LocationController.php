@@ -21,6 +21,14 @@ class LocationController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'app_location_list', methods: ['GET'])]
+    public function list(LocationRepository $locationRepository): Response
+    {
+        return $this->render('location/LISTlocation.html.twig', [
+            'locations' => $locationRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
     public function new(Request $request, LocationRepository $locationRepository): Response
     {
