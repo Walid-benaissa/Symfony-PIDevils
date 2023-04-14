@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ReclamationController extends AbstractController
 {
@@ -29,8 +30,8 @@ class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
+        $reclamation->setEtat('Ouvert');
         if ($form->isSubmitted() && $form->isValid()) {
-            $reclamation->setEtat('Ouvert');
             $reclamation->setUser($this->getUser());
             $reclamationRepository->save($reclamation, true);
             return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
@@ -62,6 +63,11 @@ class ReclamationController extends AbstractController
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
         $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->add('etat', ChoiceType::class, ['choices'  => [
+            'Ouvert' => 'Ouvert',
+            'En Cours' => "En Cours",
+            'Traité' => 'Traite',
+        ],]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
