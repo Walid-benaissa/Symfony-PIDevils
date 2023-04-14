@@ -1,6 +1,6 @@
 {% extends 'base-back.html.twig'%}
 {% block body %}
-    <h1>Commentaire index</h1>
+    <h1>Commentaires</h1>
     <table class="table">
         <thead>
             <tr>
@@ -16,7 +16,7 @@
                 <td>{{ commentaire.message }}</td>
                 <td>
                     <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">Voir plus</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">Modifier</a>
+                   
                 </td>
             </tr>
         {% else %}
