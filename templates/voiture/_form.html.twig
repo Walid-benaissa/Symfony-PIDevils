@@ -5,41 +5,41 @@
     <div class="label">
     {{ form_label(form.immatriculation) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.immatriculation)}}
-    </div>
+    
+    {{ form_widget(form.immatriculation,{'attr':{'class': 'input' }})}}
+    
      {{ form_errors(form.immatriculation)}}<br>
 
      <div class="label">
     {{ form_label(form.modele) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.modele)}}
-    </div>
+   
+    {{ form_widget(form.modele,{'attr':{'class': 'input' }})}}
+  
      {{ form_errors(form.modele)}}<br>
 
       <div class="label">
     {{ form_label(form.marque) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.marque)}}
-    </div>
+    
+    {{ form_widget(form.marque,{'attr':{'class': 'input' }})}}
+    
      {{ form_errors(form.marque)}}<br>
 
       <div class="label">
     {{ form_label(form.etat) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.etat)}}
-    </div>
+    
+    {{ form_widget(form.etat,{'attr':{'class': 'input' }})}}
+    
      {{ form_errors(form.etat)}}<br>
 
       <div class="label">
     {{ form_label(form.photo) }}<br>
     </div>
-    <div class="input">
-    {{ form_widget(form.photo)}}
-    </div>
+    
+    {{ form_widget(form.photo,{'attr':{'class': 'input' }})}}
+    
      {{ form_errors(form.photo)}}<br>
     <button class="submit">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

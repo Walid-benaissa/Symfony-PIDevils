@@ -71,7 +71,7 @@ class UtilisateurController extends AbstractController
         $formC = $this->createForm(ConducteurType::class);
         $formC->handleRequest($request);
 
-        if ($formC->isSubmitted()) {
+        if ($formC->isSubmitted() && $formC->isValid()) {
             $data = $formC->getData();
             $u->setNom($data["nom"]);
             $u->setPrenom($data["prenom"]);
