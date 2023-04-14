@@ -16,8 +16,8 @@
 
   
     <label for="inputMail">Mail:</label>
-    <input type="text" style="margin-top: 10px; value="{{ last_username }}" name="mail" id="inputMail" class="form-control" autocomplete="username" required autofocus>
-    <label style="margin-top: 10px; for="inputPassword">Mot de passe:</label>
+    <input type="text" style="margin-top: 10px"; value="{{ last_username }}" name="mail" id="inputMail" class="form-control" autocomplete="username" required autofocus/>
+    <label style="margin-top: 10px;" for="inputPassword">Mot de passe:</label>
     <input type="password" style="margin-top: 10px;" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
@@ -35,7 +35,7 @@
         </div>
     #}
 
-    <button style="margin-top: 10px;" class="btn  btn-primary" type="submit">
+    <button style="margin-top: 10px;margin-left:30%;" class="btn  btn-primary" type="submit">
 Se connecter    </button>
 </form>
 {% endblock %}
