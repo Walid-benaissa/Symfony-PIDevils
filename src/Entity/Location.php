@@ -12,11 +12,10 @@ class Location
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private $idContrat;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $id = null;
+
 
     #[ORM\Column(nullable: true)]
     private ?int $idVehicule = null;
@@ -38,17 +37,7 @@ class Location
         return $this->idContrat;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     public function getIdVehicule(): ?int
     {

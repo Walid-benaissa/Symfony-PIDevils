@@ -1,4 +1,34 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+  <div class="form-group">
+    {{ form_label(form.nomV, 'Nom') }}
+    {{ form_widget(form.nomV, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.id, 'ID') }}
+    {{ form_widget(form.id, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.image, 'Insirer le photo de votre voiture (Image file)') }}
+    {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.ville, 'Ville') }}
+    {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.prix, 'Prix') }}
+    {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.description, 'Description') }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.type, 'Type') }}
+    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form._token) }}
+  </div>
+  <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

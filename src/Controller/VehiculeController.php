@@ -14,7 +14,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/vehicule')]
 class VehiculeController extends AbstractController
 {
-    #[Route('/', name: 'app_vehicule_index', methods: ['GET'])]
+    #[Route('/admin/vehicule/', name: 'app_vehicule_index', methods: ['GET'])]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
         return $this->render('vehicule/index.html.twig', [
