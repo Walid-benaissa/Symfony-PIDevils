@@ -65,7 +65,7 @@ class LocationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $locationRepository->save($location, true);
 
-            return $this->redirectToRoute('app_location_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_location_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('location/edit.html.twig', [
