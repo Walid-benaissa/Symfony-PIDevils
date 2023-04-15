@@ -1,38 +1,59 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
-
-{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
-<h1 class="title">Ajouter Livraison</h1>
-    <div class="label">
+    {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form'}}) }}
+    <h1 class="title">Ajouter Livraison</h1>
+    {# <div class="label">
     {{ form_label(form.adresseExpedition) }}<br>
      </div>
     <div class="input">{{ form_widget(form.adresseExpedition)}}</div>
-    {{ form_errors(form.adresseExpedition)}}
+    {{ form_errors(form.adresseExpedition)}} #}
+<label for="inputText" class ="col-sm-12 col-form-label"> Adresse Expedition </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.adresseExpedition)}}
+    {{ form_errors(form.adresseExpedition ,{'attr':{'class':'text-danger'}})}}
+    </div>
 
-<div class="label">
+{# <div class="label">
     {{ form_label(form.adresseDestinataire) }}<br>
      </div>
     <div class="input">{{ form_widget(form.adresseDestinataire)}}</div>
-    {{ form_errors(form.adresseDestinataire)}}
+    {{ form_errors(form.adresseDestinataire)}} #}
+  <label for="inputText" class ="col-sm-12 col-form-label"> Adresse Destinataire </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.adresseDestinataire)}}
+    {{ form_errors(form.adresseDestinataire ,{'attr':{'class':'text-danger'}})}}
+    </div>  
 
- <div class="label">
+ {# <div class="label">
     {{ form_label(form.prix) }}<br>
      </div>
     <div class="input">{{ form_widget(form.prix)}}</div>
-    {{ form_errors(form.prix)}}
+    {{ form_errors(form.prix)}} #}
+      <label for="inputText" class ="col-sm-12 col-form-label"> Prix </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.prix)}}
+    {{ form_errors(form.prix ,{'attr':{'class':'text-danger'}})}}
+    </div>  
 
-    <div class="label">
+    {# <div class="label">
     {{ form_label(form.etat) }}<br>
      </div>
     <div class="input">{{ form_widget(form.etat)}}</div>
-    {{ form_errors(form.etat)}}  
+    {{ form_errors(form.etat)}}   #}
 
-    
+       <label for="inputText" class ="col-sm-12 col-form-label"> Colis</label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.colis)}}
+    {{ form_errors(form.colis ,{'attr':{'class':'text-danger'}})}}
+    </div>  
+    </br>
+
+{#     
     <div class="label">
     {{ form_label(form.colis) }}<br>
      </div>
     <div class="input">{{ form_widget(form.colis)}}</div>
-    {{ form_errors(form.colis)}}  
+    {{ form_errors(form.colis)}}   #}
 
 
     <button class="submit">{{ button_label|default('Ajouter') }}</button>

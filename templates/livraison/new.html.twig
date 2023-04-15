@@ -1,7 +1,5 @@
 {% extends 'base-front.html.twig'%}
 {% block body %}
-
-	{{ include('livraison/_form.html.twig') }}
-
-	<a href="{{ path('app_livraison_index') }}">back to list</a>
+	{{ include('livraison/_form.html.twig') }}<br>
+	<a href="{{ path('app_livraison_byuser',{'id': app.user.id}) }}">back to list</a>
 {% endblock %}

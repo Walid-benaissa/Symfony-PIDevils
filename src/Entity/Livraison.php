@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LivraisonRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LivraisonRepository::class)]
 class Livraison
@@ -15,12 +16,25 @@ class Livraison
     private int $idLivraison;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "L'adresse d'expédition est obligatoire !")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9\s]+$/',
+        message: "L'adresse d'expédition ne doit pas contenir des caractères spéciaux !"
+    )]
     private ?string $adresseExpedition = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "L'adresse destinataire est obligatoire !")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9\s]+$/',
+        message: "L'adresse destinataire ne doit pas contenir des caractères spéciaux !"
+    )]
     private ?string $adresseDestinataire = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire !")]
+    #[Assert\NotEqualTo(value: 0, message: "Le prix ne doit pas être égal à 0 !")]
+    #[Assert\Positive(message: "Le prix ne doit pas être négatif !")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 150)]
