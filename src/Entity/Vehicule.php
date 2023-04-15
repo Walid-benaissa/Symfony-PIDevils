@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VehiculeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
@@ -14,28 +15,39 @@ class Vehicule
     private ?int $idVehicule = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'le nom ne peut  pas contenir des chiffres',
+    )]
     private ?string $nomV = null;
 
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
+   
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $ville = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?float $prix = null;
 
-    #[ORM\Column]
-    private ?bool $disponibilite = false;
+
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $type = null;
 
     //#[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
@@ -106,17 +118,7 @@ class Vehicule
         return $this;
     }
 
-    public function isDisponibilite(): ?bool
-    {
-        return $this->disponibilite;
-    }
 
-    public function setDisponibilite(?bool $disponibilite): self
-    {
-        $this->disponibilite = $disponibilite;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -153,9 +155,4 @@ class Vehicule
 
         return $this;
     } */
-
-    public function getDisponibilite(): ?string
-    {
-        return $this->disponibilite;
-    }
 }

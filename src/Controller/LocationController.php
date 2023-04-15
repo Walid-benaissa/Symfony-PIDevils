@@ -21,6 +21,14 @@ class LocationController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'app_location_list', methods: ['GET'])]
+    public function list(LocationRepository $locationRepository): Response
+    {
+        return $this->render('location/LISTlocation.html.twig', [
+            'locations' => $locationRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
     public function new(Request $request, LocationRepository $locationRepository): Response
     {
@@ -31,7 +39,7 @@ class LocationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $locationRepository->save($location, true);
 
-            return $this->redirectToRoute('app_location_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_location_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('location/new.html.twig', [
@@ -57,7 +65,7 @@ class LocationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $locationRepository->save($location, true);
 
-            return $this->redirectToRoute('app_location_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_location_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('location/edit.html.twig', [

@@ -1,0 +1,58 @@
+{% extends 'base-front.html.twig'%}
+
+{% block title %}vehicule index{% endblock %}
+
+{% block body %}
+ <style>
+ .hide {
+  display: none !important;
+}
+
+</style>
+
+<h1>Dieu aime qui donne avec joie.</h1>
+
+<script>
+ function showContent(event) {
+    console.log("showContent() called"); // add this line
+    event.preventDefault();
+    var content = event.target.parentElement.nextElementSibling;
+    content.classList.toggle("hide");
+}
+
+
+
+</script>
+
+
+
+<div class="row">
+  {% for vehicule in vehicules %}
+    <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+      <div class="post-entry">
+        <a href="#" class="mb-3 img-wrap"><img src="{{asset('photo/'~vehicule.image)}}" alt="Image placeholder" class="img-fluid"></a>
+  <a href="#" style="color: black;"><h3 style="display: inline-block; margin-right: 5px;color: orange !important;">Name</h3> {{ vehicule.name }}</a>
+
+      
+       <p style="color: black;">association:{{ vehicule.Id  }}</p>
+        <a href="{{ path('app_don_new') }}" class="btn btn-success">Make Don</a>
+        <p style="color: black;"><a href="#" class="link-underline" onclick="showContent(event)">Read More</a></p>
+         <p class="hide" style="color: black; background-color: #F7CAC9; padding: 10px;">
+    Message: {{ vehicule.Description }}<br> 
+    Lieu: {{ vehicule.Prix }}
+</p>
+         
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+
+
+
+    
+{% endblock %}

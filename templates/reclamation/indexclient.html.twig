@@ -1,0 +1,26 @@
+{% extends 'base-front.html.twig'%}
+{% block body %}
+<link href="{{asset("css/cardreclamation.css")}}" rel="stylesheet">
+	<div class="container bod">
+    <h1 class="title offset-5">Reclamations</h1>
+    <div class="row">
+    {% for i in reclamations %}
+    <div class="card-container col-2 offset-1">
+      <div class="card">
+          <p class="card-title">{{i.etat}}</p>
+          <div class="card-hidden">
+              <p class="title-in">{{i.etat}}</p>
+              <p>{{i.message}}</p>
+              <p>Type: {{i.type}}</p>
+          </div>
+      </div>
+  </div>
+{% else %}
+    <h1>Aucune reclamation a été effectué</h1>
+    {% endfor %}
+</div>
+
+</div>
+</div>
+  
+{% endblock %}

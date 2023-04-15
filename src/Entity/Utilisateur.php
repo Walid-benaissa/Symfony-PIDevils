@@ -37,6 +37,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[Assert\NotBlank(message: "Vous devez saisir votre mail")]
+    #[Assert\Email(
+        message: 'Vous devez saisir un e-mail valide',
+    )]
     #[ORM\Column(length: 100)]
     private ?string $mail = null;
 
@@ -45,6 +48,17 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $mdp = null;
 
     #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
+    #[Assert\Regex(
+        pattern: '/\D/',
+        match: false,
+        message: 'vous devez saisir que des chiffres',
+    )]
+    #[Assert\Length(
+        min: 8,
+        max: 11,
+        minMessage: 'vous devez saisie un numéro valide',
+        maxMessage: 'vous devez saisie un numéro valide',
+    )]
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 
@@ -151,7 +165,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->mdp;
     }
 
-    public function setMdp(string $mdp): self
+    public function setMdp(?string $mdp): self
     {
         $this->mdp = $mdp;
 
@@ -175,7 +189,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->role;
     }
 
-    public function setRole(string $role): self
+    public function setRole(?string $role): self
     {
         $this->role = $role;
 

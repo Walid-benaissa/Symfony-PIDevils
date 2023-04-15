@@ -4,6 +4,25 @@
 {% block body %}
 	<title>Vehicule index</title>
 	<h1>Vehicule index</h1>
+	<style>
+    table {
+      border-collapse: collapse;
+    }
+    table td {
+      padding: 10px;
+    }
+    .image-container {
+      width: 50px; /* ajustez la taille du conteneur selon vos besoins */
+      height: 50px;
+      border-radius: 50%; /* pour créer une forme de cercle */
+      overflow: hidden; /* pour masquer les coins de l'image */
+    }
+    .circular-image {
+      width: 100%; /* pour que l'image remplisse entièrement le conteneur */
+      height: 100%;
+      object-fit: cover; /* pour que l'image conserve son ratio d'aspect */
+    }
+  </style>
 
 	<table class="table">
 		<thead>
@@ -14,7 +33,6 @@
 				<th>Image</th>
 				<th>Ville</th>
 				<th>Prix</th>
-				<th>Disponibilite</th>
 				<th>Description</th>
 				<th>Type</th>
 				<th>actions</th>
@@ -26,10 +44,13 @@
 					<td>{{ vehicule.idVehicule }}</td>
 					<td>{{ vehicule.nomV }}</td>
 					<td>{{ vehicule.id }}</td>
-					<td>{{ vehicule.image }}</td>
+	<td>
+      <div class="image-container">
+        <img src="{{asset('photo/'~vehicule.image)}}" alt="Game" class="circular-image">
+      </div>
+    </td>
 					<td>{{ vehicule.ville }}</td>
 					<td>{{ vehicule.prix }}</td>
-					<td>{{ vehicule.disponibilite ? 'Yes' : 'No' }}</td>
 					<td>{{ vehicule.description }}</td>
 					<td>{{ vehicule.type }}</td>
 					<td>
@@ -47,3 +68,4 @@
 
 	<a href="{{ path('app_vehicule_new') }}">Create new</a>
 {% endblock %}
+

@@ -5,30 +5,65 @@ namespace App\Controller;
 use App\Entity\Voiture;
 use App\Form\VoitureType;
 use App\Repository\VoitureRepository;
+use App\Service\ContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class VoitureController extends AbstractController
 {
     #[Route('/admin/voiture', name: 'app_voiture_index', methods: ['GET'])]
     public function index(VoitureRepository $voitureRepository): Response
     {
+
         return $this->render('voiture/index.html.twig', [
             'voitures' => $voitureRepository->findAll(),
         ]);
     }
 
     #[Route('/voiture/new', name: 'app_voiture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, VoitureRepository $voitureRepository): Response
+    public function new(Request $request, VoitureRepository $voitureRepository, SluggerInterface $slugger = null): Response
     {
         $voiture = new Voiture();
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
+        if ($voitureRepository->findByUser($id) != null)
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $voiture->setuser($this->getUser());
-            $id = $voiture->getuser()->getId();
+            /** @var UploadedFile $image */
+            /*  $image = $form['photo']->getData();
+            $destination = 'C:/uploadedFiles/Images/';
+            $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
+            $image->move($destination, $fileName);
+            $voiture->setPhoto('C:/uploadedFiles/Images/' . $fileName); */
+            $photoC = $form->get('photo')->getData();
+            if ($photoC) {
+                $originalImgName = pathinfo($photoC->getClientOriginalName(), PATHINFO_FILENAME);
+                $newImgename = $originalImgName . '-' . uniqid() . '.' . $photoC->guessExtension();
+
+                if ($slugger) {
+                    $safeImgname = $slugger->slug($originalImgName);
+                    $newImgename = $safeImgname . '-' . uniqid() . '.' . $photoC->guessExtension();
+                }
+
+                try {
+                    $photoC->move(
+                        $this->getParameter('imgb_directory'),
+                        $newImgename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                }
+            }
+            $voiture->setPhoto($newImgename);
+
+
             $voitureRepository->save($voiture, true);
             return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
@@ -57,6 +92,12 @@ class VoitureController extends AbstractController
     #[Route('/voiture/edit/{id}', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, $id, VoitureRepository $voitureRepository): Response
     {
+        $voiture = new Voiture();
+        $voiture->setuser($this->getUser());
+        $id = $voiture->getuser()->getId();
+        if ($voitureRepository->findByUser($id) == null)
+            return $this->redirectToRoute('app_voiture_showfr', ['id' => $id], Response::HTTP_SEE_OTHER);
+
         $voiture = $voitureRepository->findByUser($id);
         $form = $this->createForm(VoitureType::class, $voiture);
         $form->handleRequest($request);

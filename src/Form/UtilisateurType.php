@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,7 +33,7 @@ class UtilisateurType extends AbstractType
                     'placeholder' => 'saisir votre prénom'
                 ]
             ])
-            ->add('mail', TextType::class, [
+            ->add('mail', EmailType::class, [
                 'label' => 'E-mail:',
                 'attr' => [
                     'placeholder' => 'saisir votre e-mail'
@@ -41,7 +42,6 @@ class UtilisateurType extends AbstractType
             ->add('mdp', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => ' ',
-
                 'required' => true,
                 'first_options' => [
                     'label' => 'Mot de passe:',
@@ -57,16 +57,6 @@ class UtilisateurType extends AbstractType
             ->add('numTel', TextType::class, [
                 'label' => 'Numéro de téléphone:',
                 'attr' => ['placeholder' => 'Saisir votre numéro de téléphone']
-            ])
-            ->add('role', ChoiceType::class, [
-                'label' => 'Rôle:',
-                'choices'  => [
-                    'Client' => 'Client',
-                    'Conducteur' => 'Conducteur'
-
-                ],
-                'multiple' => false,
-                'expanded' => true
             ]);
     }
 

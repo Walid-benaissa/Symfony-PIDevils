@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Utilisateur;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ReclamationController extends AbstractController
 {
@@ -27,11 +30,11 @@ class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
-
+        $reclamation->setEtat('Ouvert');
         if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setUser($this->getUser());
             $reclamationRepository->save($reclamation, true);
-
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reclamation/new.html.twig', [
@@ -48,10 +51,23 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    #[Route('/reclamation/{id}', name: 'app_reclamation_showuser', methods: ['GET'])]
+    public function showrecuser(ReclamationRepository $rp, $id): Response
+    {
+        return $this->render('reclamation/indexclient.html.twig', [
+            'reclamations' => $rp->findByUser($id),
+        ]);
+    }
+
     #[Route('/admin/reclamation/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
         $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->add('etat', ChoiceType::class, ['choices'  => [
+            'Ouvert' => 'Ouvert',
+            'En Cours' => "En Cours",
+            'Traité' => 'Traite',
+        ],]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

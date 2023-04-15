@@ -2,15 +2,23 @@
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
+use App\Entity\Conducteur;
 use App\Entity\Utilisateur;
+use App\Entity\Voiture;
+use App\Form\ConducteurType;
 use App\Form\CreerCompteType;
+use App\Form\ModifProfilType;
 use App\Form\UtilisateurType;
+use App\Repository\ConducteurRepository;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -39,8 +47,8 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
 
+        $utilisateur->setRole("Client");
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
@@ -49,13 +57,85 @@ class UtilisateurController extends AbstractController
             $utilisateur->setMdp($hashedPassword);
             $utilisateurRepository->save($utilisateur, true);
 
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/creatCpt.html.twig', [
             'form' => $form,
         ]);
     }
+
+    #[Route('/creatCptC', name: 'app_utilisateur_newC', methods: ['GET', 'POST'])]
+    public function newC(Profiler $profiler, LoggerInterface $logger, Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $u = new Utilisateur();
+        $c = new Conducteur();
+        $formC = $this->createForm(ConducteurType::class);
+        $formC->handleRequest($request);
+        $u->setRole("Conducteur");
+        try {
+            // Code that may throw an exception...
+            $u = new Utilisateur();
+            $c = new Conducteur();
+            $formC = $this->createForm(ConducteurType::class);
+            $formC->handleRequest($request);
+            if ($formC->isSubmitted() && $formC->isValid()) {
+                $data = $formC->getData();
+                $u->setNom($data["nom"]);
+                $u->setPrenom($data["prenom"]);
+                $u->setMail($data["mail"]);
+                $u->setNumTel($data["numTel"]);
+                $u->setRole("Conducteur");
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $u,
+                    $data["mdp"]
+                );
+                $u->setMdp($hashedPassword);
+                $ur->save($u, true);
+
+                /** @var UploadedFile $image */
+                $image = $formC['b3']->getData();
+                $destination = 'C:/uploadedFiles/Images/';
+                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
+                $image->move($destination, $fileName);
+                $c->setB3('C:/uploadedFiles/Images/' . $fileName);
+
+                /** @var UploadedFile $image */
+                $image = $formC['permis']->getData();
+                $destination = 'C:/uploadedFiles/Images/';
+                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
+                $image->move($destination, $fileName);
+                $c->setPermis('C:/uploadedFiles/Images/' . $fileName);
+
+                $c->setUtilisateur($u);
+                $cr->save($c, true);
+                return $this->redirectToRoute('app_utilisateur_login', [], Response::HTTP_SEE_OTHER);
+            }
+            return $this->renderForm('utilisateur/creatCptC.html.twig', [
+                'form' => $formC,
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(sprintf(
+                'An exception occurred: %s in %s:%d',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+
+            ));
+            $profiler->disable();
+            throw $e;
+        }
+    }
+
+
+    #[Route('/choixrole', name: 'app_utilisateur_choix', methods: ['GET'])]
+    public function choixR(Request $request): Response
+    {
+        return $this->render('utilisateur/choixrole.html.twig', []);
+    }
+
 
     #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response
@@ -75,9 +155,9 @@ class UtilisateurController extends AbstractController
     #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
     public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $id = $utilisateur->getId();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
@@ -86,7 +166,7 @@ class UtilisateurController extends AbstractController
             $utilisateur->setMdp($hashedPassword);
             $utilisateurRepository->save($utilisateur, true);
 
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_editb', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/edit.html.twig', [
@@ -98,23 +178,30 @@ class UtilisateurController extends AbstractController
 
     public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $passwordHasher->hashPassword(
+        $form = $this->createForm(ModifProfilType::class, ["nom" => $utilisateur->getNom(), "prenom" => $utilisateur->getPrenom(), "numTel" => $utilisateur->getNumTel(), "mail" => $utilisateur->getMail(),]);
+        $form->handleRequest($request);
+        /* $formc = $this->createFormBuilder();
+        $formc->add('chmdp', ChoiceType::class, ["choices" => ["Changer mot de passe" => true]]); */
+        if ($form->isSubmitted()) {
+            /* $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
                 $utilisateur->getmdp()
             );
-            $utilisateur->setMdp($hashedPassword);
+            $utilisateur->setMdp($hashedPassword); */
+            $data = $form->getData();
+            $utilisateur->setNom($data["nom"]);
+            $utilisateur->setPrenom($data["prenom"]);
+            $utilisateur->setNumTel($data["numTel"]);
+            $utilisateur->setMail($data["mail"]);
             $utilisateurRepository->save($utilisateur, true);
-
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_showfr', ['id' => $utilisateur->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/editfront.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
+            /* 'formc' => $formc, */
         ]);
     }
 
