@@ -38,6 +38,22 @@ class VehiculeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function count_vehicule(){
+        $qb = $this->createQueryBuilder('p')
+            ->select('COUNT(p.idVehicule)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+
+    }
+    public function countPeopleByTypeDon(): array
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('d.type as type, COUNT(DISTINCT d.idVehicule) as count')
+            ->groupBy('d.type')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 
 //    /**
 //     * @return Vehicule[] Returns an array of Vehicule objects

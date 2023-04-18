@@ -1,36 +1,37 @@
 {% extends 'base-front.html.twig'%}
 {% block body %}
-	<h1>Liste des Colis</h1>
 
-	<table class="table">
-		<thead>
-			<tr>
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+<style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+</style>
+<div class="row">
+<div class="card-grid">
 
-				<th>Nombre d'objets</th>
-				<th>Description</th>
-				<th>Poids</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for coli in colis %}
-				<tr>
+{% for coli in colis %}
+  <div class="col-md-4 mb-4">
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
 
-					<td>{{ coli.nbItems }}</td>
-					<td>{{ coli.description }}</td>
-					<td>{{ coli.poids }}</td>
-					<td>
-						<a href="{{ path('app_colis_show', {'id': coli.id}) }}">show</a>
-						<!--<a href="{{ path('app_colis_edit', {'id': coli.id}) }}">edit</a>-->
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="5">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <h5 class="card-title text-center  mb-3">Colis : {{ coli.description }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Nombre d'objets : {{coli.nbItems}}</h6>
+	<p class="card-text mb-2 text-muted">Poids : {{coli.poids}}</p>
 
-	<!--<a href="{{ path('app_colis_new') }}">Create new</a>-->
+	<a href="{{ path('app_colis_edit', {'id': coli.id}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
+  	<a href="{{ path('app_colis_delete', {'id': coli.id}) }}"><i class="fa-solid fa-trash"></i></a>
+  
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+	{# <a href="{{ path('app_livraison_new') }}">Create new</a> #}
+	</div>
 {% endblock %}

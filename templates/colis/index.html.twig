@@ -1,36 +1,41 @@
+
 {% extends 'base-back.html.twig'%}
 {% block body %}
-	<h1>Liste des Colis</h1>
+
+<h1 class="text-center mt-5 mb-3">Liste des Colis</h1>
+</br>
 
 	<table class="table">
 		<thead>
 			<tr>
 
-				<th>Nombre d'objets</th>
+				
 				<th>Description</th>
+				<th>Nombre d'objets</th>
 				<th>Poids</th>
-				<th>actions</th>
+				{# <th>actions</th> #}
 			</tr>
 		</thead>
 		<tbody>
 			{% for coli in colis %}
 				<tr>
-
+                    <td>{{ coli.description }}</td>
 					<td>{{ coli.nbItems }}</td>
-					<td>{{ coli.description }}</td>
 					<td>{{ coli.poids }}</td>
-					<td>
+					{# <td>
 						<a href="{{ path('app_colis_show', {'id': coli.id}) }}">show</a>
-						<!--<a href="{{ path('app_colis_edit', {'id': coli.id}) }}">edit</a>-->
-					</td>
+					
+					</td> #}
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="5">no records found</td>
+					<td colspan="5">Aucun Colis</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+	
 
-	<!--<a href="{{ path('app_colis_new') }}">Create new</a>-->
+
 {% endblock %}
+

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/vehicule')]
 class VehiculeController extends AbstractController
@@ -22,10 +23,23 @@ class VehiculeController extends AbstractController
         ]);
     }
     #[Route('/list', name: 'app_vehicule', methods: ['GET'])]
-    public function listvehicule(VehiculeRepository $vehiculeRepository): Response
+    public function listvehicule(Request $request , VehiculeRepository $vehiculeRepository,PaginatorInterface $paginator): Response
     {
+        $allBesoinsQuery = $vehiculeRepository->createQueryBuilder('p')
+        ->orderBy('p.nomV', 'ASC')
+        ->getQuery();
+
+    // Paginate the results of the query
+    $pagination = $paginator->paginate(
+        // Doctrine Query, not results
+        $allBesoinsQuery,
+        // Define the page parameter
+        $request->query->getInt('page', 1),
+        // Items per page
+        3
+    );
         return $this->render('vehicule/listvehicule.html.twig', [
-            'vehicules' => $vehiculeRepository->findAll(),
+            'vehicules' => $pagination,
         ]);
     }
 
@@ -103,5 +117,15 @@ class VehiculeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_vehicule_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/dons/stat', name: 'app_don_stat')]
+    public function displayDonStats(VehiculeRepository $donRepository): Response
+    {
+        $stats = $donRepository->countPeopleByTypeDon();
+
+        return $this->render('vehicule/statistiquev.html.twig', [
+            'stats' => $stats,
+        ]);
     }
 }

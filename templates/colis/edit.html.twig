@@ -1,11 +1,31 @@
 {% extends 'base-front.html.twig'%}
 
 {% block body %}
-	<h1>Modifier Colis</h1>
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+   {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
+    <h1 class="title">Modifier Colis </h1>
+    <label for="inputText" class ="col-sm-12 col-form-label"> Nombre d'objets </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.nbItems)}}
+    {{ form_errors(form.nbItems ,{'attr':{'class':'text-danger'}})}}
+    </div>
 
-	{{ include('colis/_form.html.twig', {'button_label': 'Update'}) }}
+  <label for="inputText" class ="col-sm-12 col-form-label"> Description </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.description)}}
+    {{ form_errors(form.description ,{'attr':{'class':'text-danger'}})}}
+    </div>  
+      <label for="inputText" class ="col-sm-12 col-form-label"> Poids </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.poids)}}
+    {{ form_errors(form.poids ,{'attr':{'class':'text-danger'}})}}
+    </div>  
 
-	<a href="{{ path('app_colis_index') }}">back to list</a>
+        </br>
+    <button class="submit">{{ button_label|default('Modifier') }}</button>
+    {{ form_end(form) }}
+    
+</div>
 
-	{{ include('colis/_delete_form.html.twig') }}
 {% endblock %}

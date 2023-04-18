@@ -1,19 +1,5 @@
 {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.idVehicule) }}
-        {{ form_widget(form.idVehicule, { 'attr': {'class': 'form-control'} }) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.dateDebut) }}
-        {{ form_widget(form.dateDebut, { 'attr': {'class': 'form-control'} }) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.dateFin) }}
-        {{ form_widget(form.dateFin, { 'attr': {'class': 'form-control'} }) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.lieu) }}
-        {{ form_widget(form.lieu, { 'attr': {'class': 'form-control'} }) }}
-    </div>
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }} </button>
+
 {{ form_end(form) }}

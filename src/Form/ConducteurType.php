@@ -65,16 +65,8 @@ class ConducteurType extends AbstractType
                 'constraints' => new NotBlank(message: "Vous devez saisir votre numéro"),
                 'attr' => ['placeholder' => 'Saisir votre numéro de téléphone']
             ])
-            ->add('role', ChoiceType::class, [
-                'label' => 'Rôle:',
-                'choices'  => [
-                    'Client' => 'Client',
-                    'Conducteur' => 'Conducteur'
 
-                ],
-                'multiple' => false,
-                'expanded' => true
-            ])
+
             ->add('b3', FileType::class, [
                 'label' => 'B3:',
                 'constraints' => new NotBlank(message: "Vous devez choisir une image"),

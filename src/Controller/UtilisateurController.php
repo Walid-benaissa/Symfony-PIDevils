@@ -47,8 +47,8 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
 
+        $utilisateur->setRole("Client");
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
@@ -68,6 +68,11 @@ class UtilisateurController extends AbstractController
     #[Route('/creatCptC', name: 'app_utilisateur_newC', methods: ['GET', 'POST'])]
     public function newC(Profiler $profiler, LoggerInterface $logger, Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $u = new Utilisateur();
+        $c = new Conducteur();
+        $formC = $this->createForm(ConducteurType::class);
+        $formC->handleRequest($request);
+        $u->setRole("Conducteur");
         try {
             // Code that may throw an exception...
             $u = new Utilisateur();

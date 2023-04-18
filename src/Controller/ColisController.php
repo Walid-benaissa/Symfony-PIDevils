@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Colis;
+use App\Entity\Livraison;
 use App\Form\ColisType;
 use App\Repository\ColisRepository;
+use App\Repository\LivraisonRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +26,13 @@ class ColisController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'app_colis_all', methods: ['GET'])]
+    public function all(ColisRepository $colisRepository): Response
+    {
+        return $this->render('colis/list.html.twig', [
+            'colis' => $colisRepository->findAll(),
+        ]);
+    }
 
     // #[Route('/colis/{id}', name: 'app_colis_byuser', methods: ['GET'])]
     // public function getcolisbyuser(ColisRepository $colisRepository): Response
@@ -40,7 +52,7 @@ class ColisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $colisRepository->save($coli, true);
 
-            return $this->redirectToRoute('app_colis_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_livraison_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('colis/new.html.twig', [
@@ -66,7 +78,7 @@ class ColisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $colisRepository->save($coli, true);
 
-            return $this->redirectToRoute('app_colis_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_colis_all', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('colis/edit.html.twig', [
@@ -75,13 +87,26 @@ class ColisController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_colis_delete', methods: ['POST'])]
-    public function delete(Request $request, Colis $coli, ColisRepository $colisRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $coli->getId(), $request->request->get('_token'))) {
-            $colisRepository->remove($coli, true);
-        }
 
-        return $this->redirectToRoute('app_colis_index', [], Response::HTTP_SEE_OTHER);
+
+    #[Route('/colis/delete/{id}', name: 'app_colis_delete')]
+    public function delete(Request $request,  Colis $coli = null, ManagerRegistry $doctrine): RedirectResponse
+
+    {
+
+        $manager = $doctrine->getManager();
+        $manager->remove($coli);
+        $manager->flush();
+
+        return $this->redirectToRoute('app_colis_all', [], Response::HTTP_SEE_OTHER);
     }
+    // #[Route('/{id}', name: 'app_colis_delete', methods: ['POST'])]
+    // public function delete(Request $request, Colis $coli, ColisRepository $colisRepository): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete' . $coli->getId(), $request->request->get('_token'))) {
+    //         $colisRepository->remove($coli, true);
+    //     }
+
+    //     return $this->redirectToRoute('app_colis_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }

@@ -29,6 +29,9 @@
             
         </tbody>
     </table>
+    <div class="image-container">
+        <img src="{{ asset('photo/'~voiture.photo) }}" alt="NOM" class="circular-image">
+        </div>
     <br>
     {{ include('voiture/_delete_form.html.twig') }}
     {% else %}

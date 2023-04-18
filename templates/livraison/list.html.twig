@@ -1,38 +1,45 @@
 {% extends 'base-front.html.twig'%}
 {% block body %}
-	<h1>Consulter Livraisons</h1>
 
-	<table class="table">
-		<thead>
-			<tr>
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+<style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+</style>
+<div class="row">
+<div class="card-grid">
 
-				<th>Adresse Expedition</th>
-				<th>Adresse Destinataire</th>
-				<th>Prix</th>
-				<th>Etat</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for livraison in livraisons %}
-				<tr>
+{% for livraison in livraisons %}
+  <div class="col-md-4 mb-4">
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
 
-					<td>{{ livraison.adresseExpedition }}</td>
-					<td>{{ livraison.adresseDestinataire }}</td>
-					<td>{{ livraison.prix }}</td>
-					<td>{{ livraison.etat }}</td>
-					<td>
-						<a href="{{ path('app_livraison_show', {'idLivraison': livraison.idLivraison}) }}">show</a>
-						<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="6">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <h5 class="card-title text-center  mb-3">{{ livraison.colis.description }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Adresse Expedition : {{livraison.adresseExpedition}}</h6>
+	<p class="card-text mb-2 text-muted">Adresse Destinataire : {{livraison.adresseDestinataire}}</p>
+    <p class="card-text mb-2 text-muted ">Prix : {{livraison.prix}} Dinars  </p>
+    <p class="card-text mb-2 text-muted ">Etat : {{livraison.etat}}  </p>
 
-	<!--<a href="{{ path('app_livraison_new') }}">Create new</a>-->
+     {# {% if livraison.colis is not empty %}
+        <p class="card-text mb-2 text-muted  ">Poids : {{ livraison.colis.poids }}</p>
+        <p class="card-text mb-2 text-muted ">Nombre d'objets : {{ livraison.colis.nbItems}}</p>
+    {% endif %} #}
+    {# <a href="{{path('livraison.edit',{id:livraison.idLivraison})}}" class="card-link">editer</a> #}
+	<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
+  	<a href="{{ path('app_livraison_delete', {'id': livraison.idLivraison}) }}"><i class="fa-solid fa-trash"></i></a>
+  	{# <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.colis.id}) }}"><i class="fa-solid fa-circle-info"></i></a> #}
+
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+	{# <a href="{{ path('app_livraison_new') }}">Create new</a> #}
+	</div>
 {% endblock %}
