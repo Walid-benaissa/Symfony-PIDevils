@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Colis;
 use App\Entity\Livraison;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,13 +18,24 @@ class LivraisonType extends AbstractType
             ->add('adresseExpedition')
             ->add('adresseDestinataire')
             ->add('prix')
-            ->add('etat')
+            // ->add('etat')
             ->add('colis', EntityType::class, [
                 "class" => Colis::class,
                 'choice_label' => 'description',
                 "multiple" => false,
                 "expanded" => false
             ]);
+        // ->add('colis', EntityType::class, [
+        //     "class" => Colis::class,
+        //     'choice_label' => 'description',
+        //     "multiple" => false,
+        //     "expanded" => false,
+        //     "query_builder" => function (EntityRepository $er) {
+        //         return $er->createQueryBuilder('c')
+        //             ->leftJoin('c.livraison', 'l')
+        //             ->where('l.id IS NULL');
+        //     }
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

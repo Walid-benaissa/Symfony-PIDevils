@@ -57,16 +57,6 @@ class UtilisateurType extends AbstractType
             ->add('numTel', TextType::class, [
                 'label' => 'Numéro de téléphone:',
                 'attr' => ['placeholder' => 'Saisir votre numéro de téléphone']
-            ])
-            ->add('role', ChoiceType::class, [
-                'label' => 'Rôle:',
-                'choices'  => [
-                    'Client' => 'Client',
-                    'Conducteur' => 'Conducteur'
-
-                ],
-                'multiple' => false,
-                'expanded' => true
             ]);
     }
 
