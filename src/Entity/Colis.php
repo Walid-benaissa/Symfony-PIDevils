@@ -26,8 +26,8 @@ class Colis
         Assert\Length(
             min: 5,
             max: 39,
-            minMessage: "La description doit comporter au moins 5 caractères ",
-            maxMessage: "La description doit comporter au plus 5 caractères",
+            minMessage: "La description doit comporter au moins 5 caractères ! ",
+            maxMessage: "La description doit comporter au plus 5 caractères ! ",
         )
     ]
 
