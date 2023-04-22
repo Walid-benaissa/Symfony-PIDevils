@@ -12,6 +12,7 @@ use App\Form\ModifProfilType;
 use App\Form\UtilisateurType;
 use App\Repository\ConducteurRepository;
 use App\Repository\UtilisateurRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -211,6 +212,19 @@ class UtilisateurController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
             $utilisateurRepository->remove($utilisateur, true);
         }
+
+        return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/admin/utilisateurbloque/{id}', name: 'app_utilisateur_bloquer')]
+    public function bloquer(Request $request, Utilisateur $u, ManagerRegistry $doctrine): Response
+    {
+        $u->setBloque(!$u->isBloque());
+        if ($u->isBloque()) {
+            $u->setMdp('!' . $u->getmdp());
+        } else
+            $u->setMdp(substr($u->getmdp(), 1));
+        $em = $doctrine->getManager();
+        $em->flush();
 
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
     }
