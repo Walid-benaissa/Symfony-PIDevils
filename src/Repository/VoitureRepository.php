@@ -41,6 +41,7 @@ class VoitureRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+
     public function remove(Voiture $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
