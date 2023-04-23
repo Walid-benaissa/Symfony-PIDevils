@@ -15,7 +15,10 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -227,5 +230,74 @@ class UtilisateurController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/mdp/Oublie/', name: 'app_utilisateur_mdpOb')]
+    public function changemdp(Request $request, UtilisateurRepository $ur): Response
+    {
+        $err = '';
+        $form = $this->createFormBuilder()
+            ->add('mail', EmailType::class, ['label' => 'Mail:'])
+            ->add('save', SubmitType::class, ['label' => 'Envoyer'])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mail = $form->getData()['mail'];
+            if ($ur->findBy(['mail' => $mail]) != null) {
+
+                return $this->redirectToRoute('app_mail', ['to' => $mail]);
+            } else {
+                $err = "votre mail n'est pas valide ";
+            }
+        }
+
+        return  $this->render('utilisateur/mdpOublier.html.twig', [
+            'form' => $form,
+            'err' => $err
+        ]);
+    }
+
+
+
+    #[Route('/mdp/changemdpOublie/', name: 'app_utilisateur_mdpObchange')]
+    public function mdpOublier(Request $request, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+
+    {
+
+        $form = $this->createFormBuilder()
+            ->add('mdp', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'label' => ' ',
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Mot de passe:',
+                    'attr' => [
+                        'placeholder' => 'saisir votre mot de passe'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe:',
+                    'attr' => ['placeholder' => 'Confirmez mot de passe'],
+                ]
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Valider'])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mdp = $form->getData()['mdp'];
+            $utilisateur = new Utilisateur();
+            $hashedPassword = $passwordHasher->hashPassword(
+                $utilisateur,
+                $mdp
+            );
+            $utilisateur->setMdp($hashedPassword);
+            $ur->save($utilisateur, true);
+
+            return $this->redirectToRoute('app_utilisateur_login');
+        }
+
+        return  $this->render('utilisateur/modifiermdpOublier.html.twig', [
+            'form' => $form,
+
+        ]);
     }
 }
