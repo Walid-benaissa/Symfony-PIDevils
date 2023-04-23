@@ -19,7 +19,7 @@
     <input type="text" style="margin-top: 10px"; value="{{ last_username }}" name="mail" id="inputMail" class="form-control" autocomplete="username" required autofocus/>
     <label style="margin-top: 10px;" for="inputPassword">Mot de passe:</label>
     <input type="password" style="margin-top: 10px;" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+    												<a href="{{ path('app_utilisateur_mdpOb') }}">Mot de passe oublié?</a>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
