@@ -3,15 +3,12 @@
 	<link href="{{asset("css/cardreclamation.css")}}" rel="stylesheet">
 	<div class="container bod">
 	<a class="col-1 btn btn-primary" href="{{ path('app_reclamation_index') }}">Retour</a>
+	<a class="col-1 btn btn-primary" href="{{ path('app_reclamation_pdf_show',{"id":reclamation.id}) }}">Imprimer PDF</a>
 
-    <h1 class="title">Reclamations</h1>
+    <h1 class="title">Reclamation n° {{reclamation.id}}</h1>
     <div class="row">
     <table class="table">
 		<tbody>
-			<tr>
-				<th>Id</th>
-					<td>{{ reclamation.id }}</td>
-			</tr>
 			<tr>
 				<th>Effectué par</th>
 					<td>{{ reclamation.user.nom ~ " " ~ reclamation.user.prenom }}</td>

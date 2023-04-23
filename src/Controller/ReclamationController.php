@@ -3,15 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
-use App\Entity\Utilisateur;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class ReclamationController extends AbstractController
 {
@@ -49,6 +49,19 @@ class ReclamationController extends AbstractController
         return $this->render('reclamation/show.html.twig', [
             'reclamation' => $reclamation,
         ]);
+    }
+    #[Route('/admin/reclamation/print/{id}', name: 'app_reclamation_pdf_show')]
+    public function showpdf(Reclamation $reclamation)
+    {
+        $html =  $this->renderView('reclamation\reclamationpdf.html.twig', ['reclamation' => $reclamation,]);
+        $dompdf = new Dompdf(['chroot' => __DIR__, 'enable_remote' => true]);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        return new Response(
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
     }
 
     #[Route('/reclamation/{id}', name: 'app_reclamation_showuser', methods: ['GET'])]
