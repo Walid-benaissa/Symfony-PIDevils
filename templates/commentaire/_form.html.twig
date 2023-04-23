@@ -5,10 +5,6 @@
     <div class="label">
     {{ form_label(form.message) }}<br>
     </div>
-    <div class="label">
-        {% if not form.vars.valid %}
-        {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
-        {% endif %}</div>
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
     <button class="submit">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

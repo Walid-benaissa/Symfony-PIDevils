@@ -28,6 +28,7 @@ class CommentaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $commentaire->setId1($this->getUser());
             $commentaire->setId2($this->getUser());
             $commentaireRepository->save($commentaire, true);
