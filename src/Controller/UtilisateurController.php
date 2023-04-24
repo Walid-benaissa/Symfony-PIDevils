@@ -255,49 +255,4 @@ class UtilisateurController extends AbstractController
             'err' => $err
         ]);
     }
-
-
-
-    #[Route('/mdp/changemdpOublie/', name: 'app_utilisateur_mdpObchange')]
-    public function mdpOublier(Request $request, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
-
-    {
-
-        $form = $this->createFormBuilder()
-            ->add('mdp', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'label' => ' ',
-                'required' => true,
-                'first_options' => [
-                    'label' => 'Mot de passe:',
-                    'attr' => [
-                        'placeholder' => 'saisir votre mot de passe'
-                    ],
-                ],
-                'second_options' => [
-                    'label' => 'Confirmez le mot de passe:',
-                    'attr' => ['placeholder' => 'Confirmez mot de passe'],
-                ]
-            ])
-            ->add('save', SubmitType::class, ['label' => 'Valider'])
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mdp = $form->getData()['mdp'];
-            $utilisateur = new Utilisateur();
-            $hashedPassword = $passwordHasher->hashPassword(
-                $utilisateur,
-                $mdp
-            );
-            $utilisateur->setMdp($hashedPassword);
-            $ur->save($utilisateur, true);
-
-            return $this->redirectToRoute('app_utilisateur_login');
-        }
-
-        return  $this->render('utilisateur/modifiermdpOublier.html.twig', [
-            'form' => $form,
-
-        ]);
-    }
 }
