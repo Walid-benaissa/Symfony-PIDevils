@@ -266,7 +266,7 @@ class MailController extends AbstractController
             if ($codee == $code) {
                 return $this->redirectToRoute('app_utilisateur_mdpObchange', []);
             } else {
-                $err = "votre code n'est pas valide c'est: " . $code;
+                $err = "votre code n'est pas valide";
             }
         }
 
