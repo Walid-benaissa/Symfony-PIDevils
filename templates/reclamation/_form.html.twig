@@ -8,9 +8,6 @@
     <div class="label">
     {{ form_label(form.message) }}<br>
     </div>
-    <div class="label">
-        {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
-    </div>
     {% if button_label == "Update"  %}
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea'}})}}</div>
     {% else %}
