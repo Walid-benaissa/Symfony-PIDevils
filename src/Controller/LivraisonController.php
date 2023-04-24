@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twilio\Rest\Client;
-
 
 class LivraisonController extends AbstractController
 {
@@ -127,5 +125,35 @@ class LivraisonController extends AbstractController
         $manager->flush();
 
         return $this->redirectToRoute('app_livraison_byuser', ['id' => $livraison->getIdClient()->getId()], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/livraison/envoyer', name: 'app_livraison_sms', methods: ['GET', 'POST'])]
+    public function sms(Request $request): Response
+    {
+        $form = $this->createForm(SendType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dt = $form->getData();
+
+            return $this->redirectToRoute('app_livraison_sms', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('sms/sms.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        // $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
+        // $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
+
+        // $client = new Client($accountSid, $authToken);
+
+        // $message = $client->messages->create(
+        //     '+21628440373', // replace with admin's phone number
+        //     [
+        //         'from' => '+16076955652', // replace with your Twilio phone number
+        //         'body' => 'Bonjour, votre livraison est en route ! Merci pour votre confiance !' // replace with your message
+        //     ]
+        // );
     }
 }
