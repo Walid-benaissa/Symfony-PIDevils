@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
@@ -15,14 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 class MailController extends AbstractController
 {
 
+
     #[Route('mdp/mail/{to}', name: 'app_mail')]
-    public function sendEmail(MailerInterface $mailer, $to)
+    public function sendEmail(MailerInterface $mailer, $to, Request $request)
     {
         $code = "";
         $digits = "0123456789";
         for ($i = 0; $i < 6; $i++) {
             $code .= $digits[rand(0, 9)];
         }
+        $session = $request->getSession();
+        $session->set("code", $code);
         $email = (new Email())
             ->from('pfe.mailer2022@gmail.com')
             ->to($to)
@@ -243,12 +247,12 @@ class MailController extends AbstractController
             </html>');
 
         $mailer->send($email);
-        return $this->redirectToRoute('app_utilisateur_codeV', ['code' => $code, 'mail' => $to]);
+        return $this->redirectToRoute('app_utilisateur_codeV');
     }
 
 
-    #[Route('/mdp/codeV/{code}', name: 'app_utilisateur_codeV')]
-    public function codeV(Request $request, $code, $mail): Response
+    #[Route('/mdp/codeV', name: 'app_utilisateur_codeV')]
+    public function codeV(Request $request, SessionInterface $session): Response
     {
         $err = '';
         $form = $this->createFormBuilder()
@@ -258,18 +262,17 @@ class MailController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $codee = $form->getData()['code'];
+            $code = $request->getSession()->get('code');
             if ($codee == $code) {
-
                 return $this->redirectToRoute('app_utilisateur_mdpObchange', []);
             } else {
-                $err = "votre code n'est pas valide ";
+                $err = "votre code n'est pas valide c'est: " . $code;
             }
         }
 
         return  $this->render('utilisateur/codeValidation.html.twig', [
             'form' => $form,
-            'err' => $mail,
-
+            'err' => $err
         ]);
     }
 }
