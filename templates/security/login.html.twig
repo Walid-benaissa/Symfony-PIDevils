@@ -36,6 +36,12 @@
     #}
 
     <button style="margin-top: 10px;margin-left:30%;" class="btn  btn-primary" type="submit">
-Se connecter    </button>
+Se connecter    </button> 
+
+ <div class="col-12 offset-">
+		<p class="mb-0">Vous n'avez pas un compte ?
+			<a href="{{ path('app_utilisateur_choix') }}">Créer compte</a>
+		</p>
+  </div>
 </form>
 {% endblock %}
