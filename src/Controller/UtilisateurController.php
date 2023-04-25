@@ -26,6 +26,8 @@ use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+
 
 class UtilisateurController extends AbstractController
 {
@@ -50,6 +52,13 @@ class UtilisateurController extends AbstractController
     {
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form->add('captcha', CaptchaType::class, [
+            'label' => ' ',
+
+            'attr' => [
+                'placeholder' => 'Entre code'
+            ]
+        ]);
 
         $utilisateur->setRole("Client");
         $form->handleRequest($request);
@@ -70,18 +79,20 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/creatCptC', name: 'app_utilisateur_newC', methods: ['GET', 'POST'])]
-    public function newC(Profiler $profiler, LoggerInterface $logger, Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+    public function newC(Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $u = new Utilisateur();
-        $c = new Conducteur();
-        $formC = $this->createForm(ConducteurType::class);
-        $formC->handleRequest($request);
-        $u->setRole("Conducteur");
         try {
             // Code that may throw an exception...
             $u = new Utilisateur();
             $c = new Conducteur();
             $formC = $this->createForm(ConducteurType::class);
+            $formC->add('captcha', CaptchaType::class, [
+                'label' => ' ',
+
+                'attr' => [
+                    'placeholder' => 'Entre code'
+                ]
+            ]);
             $formC->handleRequest($request);
             if ($formC->isSubmitted() && $formC->isValid()) {
                 $data = $formC->getData();
@@ -115,20 +126,13 @@ class UtilisateurController extends AbstractController
 
                 $c->setUtilisateur($u);
                 $cr->save($c, true);
+
                 return $this->redirectToRoute('app_utilisateur_login', [], Response::HTTP_SEE_OTHER);
             }
             return $this->renderForm('utilisateur/creatCptC.html.twig', [
                 'form' => $formC,
             ]);
         } catch (\Exception $e) {
-            $logger->error(sprintf(
-                'An exception occurred: %s in %s:%d',
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-
-            ));
-            $profiler->disable();
             throw $e;
         }
     }
@@ -253,6 +257,50 @@ class UtilisateurController extends AbstractController
         return  $this->render('utilisateur/mdpOublier.html.twig', [
             'form' => $form,
             'err' => $err
+        ]);
+    }
+
+    #[Route('/utilisateur/modifiermotdepasse/{id}', name: 'app_utilisateur_changemdp')]
+    public function editPassword(Request $request,  Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface  $passwordHasher)
+    {
+        $err = "";
+        $form = $this->createFormBuilder()
+            ->add('mdpA', PasswordType::class, ['label' => 'Ancien mot de passe '])
+            ->add('mdp', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'label' => ' ',
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Mot de passe:',
+                    'attr' => [
+                        'placeholder' => 'saisir votre mot de passe'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe:',
+                    'attr' => ['placeholder' => 'Confirmez mot de passe'],
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $oldpwd = $data['mdpA'];
+            if ($passwordHasher->isPasswordValid($utilisateur, $oldpwd)) {
+                $newpwd = $data['mdp'];
+                $hashedPassword2 = $passwordHasher->hashPassword($utilisateur, $newpwd);
+                $utilisateur->setMdp($hashedPassword2);
+                $utilisateurRepository->save($utilisateur, true);
+                return $this->redirectToRoute('app_utilisateur_showfr', ['id' => $utilisateur->getId()], Response::HTTP_SEE_OTHER);
+            } else {
+                $err = "Ancien mot de passe incorrect";
+            }
+        }
+        return $this->renderForm('utilisateur/changermdpfront.html.twig', [
+            'utilisateur' => $utilisateur,
+            'form' => $form,
+            'err' => $err,
         ]);
     }
 }
