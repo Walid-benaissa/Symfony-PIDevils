@@ -9,6 +9,10 @@
   border-radius: 10px;
 }
 
+#form_eval label {
+  display: none;
+}
+
 .title {
   text-align: center;
   font-size: 2rem;
@@ -65,4 +69,13 @@ form select {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.star-label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.star-image:hover {
+  cursor: pointer;
 }

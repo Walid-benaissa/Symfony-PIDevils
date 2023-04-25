@@ -1,8 +1,10 @@
+{% extends 'base-front.html.twig'%}
+{% block body %}
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
 {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
-<h1 class="title">Evauler votre conducteur</h1>
-<div>
+<h1 class="title">Evaluer conducteur</h1>
+    <div>
     {% for eval in form.eval %}
     <div style="display: inline-block;margin-right:60px">
     <label for={{'eval-' ~ loop.index}}>
@@ -13,10 +15,9 @@
     </div>
     {% endfor %}
     </div>
-    <div class="label">
-    {{ form_label(form.message) }}<br>
-    </div>
-    <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
     <button class="submit">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 </div>
+<br>
+
+{% endblock %}
