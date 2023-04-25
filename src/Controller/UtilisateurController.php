@@ -259,4 +259,48 @@ class UtilisateurController extends AbstractController
             'err' => $err
         ]);
     }
+
+    #[Route('/utilisateur/modifiermotdepasse/{id}', name: 'app_utilisateur_changemdp')]
+    public function editPassword(Request $request,  Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface  $passwordHasher)
+    {
+        $err = "";
+        $form = $this->createFormBuilder()
+            ->add('mdpA', PasswordType::class, ['label' => 'Ancien mot de passe '])
+            ->add('mdp', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'label' => ' ',
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Mot de passe:',
+                    'attr' => [
+                        'placeholder' => 'saisir votre mot de passe'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe:',
+                    'attr' => ['placeholder' => 'Confirmez mot de passe'],
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $oldpwd = $data['mdpA'];
+            if ($passwordHasher->isPasswordValid($utilisateur, $oldpwd)) {
+                $newpwd = $data['mdp'];
+                $hashedPassword2 = $passwordHasher->hashPassword($utilisateur, $newpwd);
+                $utilisateur->setMdp($hashedPassword2);
+                $utilisateurRepository->save($utilisateur, true);
+                return $this->redirectToRoute('app_utilisateur_showfr', ['id' => $utilisateur->getId()], Response::HTTP_SEE_OTHER);
+            } else {
+                $err = "Ancien mot de passe incorrect";
+            }
+        }
+        return $this->renderForm('utilisateur/changermdpfront.html.twig', [
+            'utilisateur' => $utilisateur,
+            'form' => $form,
+            'err' => $err,
+        ]);
+    }
 }

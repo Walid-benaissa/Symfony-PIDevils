@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Entity\Voiture;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart; 
+use Symfony\UX\Chartjs\Model\Chart;
 
 class TestController extends AbstractController
 {
@@ -53,7 +54,7 @@ class TestController extends AbstractController
         ]);
         return $this->render('1stpage.html.twig', [
             'controller_name' => 'ClassroomController',
-            "chart"=>$chart
+            "chart" => $chart
         ]);
     }
 
@@ -63,6 +64,14 @@ class TestController extends AbstractController
         return $this->render('herosection.html.twig', [
             'controller_name' => 'ClassroomController',
             'user' => $this->getUser()
+        ]);
+    }
+
+    #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
+    public function showStat(Utilisateur $utilisateur): Response
+    {
+        return $this->render('utilisateur/1stpage.html.twig', [
+            'utilisateur' => $utilisateur,
         ]);
     }
 }
