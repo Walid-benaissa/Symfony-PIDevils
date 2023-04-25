@@ -6,6 +6,7 @@ use App\Entity\Livraison;
 use App\Form\LivraisonType;
 use App\Repository\LivraisonRepository;
 use App\Repository\UtilisateurRepository;
+use App\Service\TwilioClient;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -90,29 +91,6 @@ class LivraisonController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    // public function delete(Request $request, User $user, UserRepository $userRepository): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-    //         $userRepository->remove($user, true);
-    //     }
-
-    //     return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    // }
-
-    // #[Route('/livraison/{idLivraison}/delete', name: 'app_livraison_delete',methods: ['POST'])]
-    // public function delete(Request $request, int $idLivraison, EntityManagerInterface $entityManager): RedirectResponse
-    // {
-    //     $livraison = $entityManager->getRepository(Livraison::class)->find($idLivraison);
-    //     if ($livraison) {
-    //         $entityManager->remove($livraison);
-    //         $entityManager->flush();
-    //         $this->addFlash(type: 'SUCCESS', message: "La livraison a été supprimée avec succès");
-    //     } else {
-    //         $this->addFlash(type: 'error', message: "Livraison n'existe pas !");
-    //     }
-    //     return $this->redirectToRoute('app_livraison_byuser', ['id' => $livraison->getIdClient()->getId()], Response::HTTP_SEE_OTHER);
-    // }
 
 
     #[Route('/livraison/delete/{id}', name: 'app_livraison_delete')]
@@ -127,33 +105,44 @@ class LivraisonController extends AbstractController
         return $this->redirectToRoute('app_livraison_byuser', ['id' => $livraison->getIdClient()->getId()], Response::HTTP_SEE_OTHER);
     }
 
+    // #[Route('/livraison/{id}/alls/prix/{prixMin}/{prixMax}', name: 'app_livraison_prix')]
+    // public function LivraisonByprix(ManagerRegistry $doctrine, $prixMin, $prixMax, LivraisonRepository $livraisonRepository): Response
+    // {
 
-    #[Route('/livraison/envoyer', name: 'app_livraison_sms', methods: ['GET', 'POST'])]
-    public function sms(Request $request): Response
+    //     return $this->render('livraison/list.html.twig', [
+    //         'livraisons' => $livraisonRepository->findLivraisonByPrixInterval($prixMin, $prixMax),
+    //     ]);
+    // }
+
+
+    #[Route('/rechercheParPrix', name: 'app_livraison_prix')]
+    public function RechercherPrix(Request $request, LivraisonRepository $livraisonRepository): Response
     {
-        $form = $this->createForm(SendType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $dt = $form->getData();
+        $minPrix = $request->get('min');
+        $maxPrix = $request->get('max');
 
-            return $this->redirectToRoute('app_livraison_sms', [], Response::HTTP_SEE_OTHER);
-        }
+        return $this->render('livraison/list.html.twig', [
+            'livraisons' => $livraisonRepository->findByPrix($minPrix, $maxPrix),
 
-        return $this->render('sms/sms.html.twig', [
-            'form' => $form->createView(),
+
+
         ]);
-
-        // $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
-        // $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
-
-        // $client = new Client($accountSid, $authToken);
-
-        // $message = $client->messages->create(
-        //     '+21628440373', // replace with admin's phone number
-        //     [
-        //         'from' => '+16076955652', // replace with your Twilio phone number
-        //         'body' => 'Bonjour, votre livraison est en route ! Merci pour votre confiance !' // replace with your message
-        //     ]
-        // );
     }
+
+    // #[Route('/send-sms', name: 'Password_send_sms', methods: ['GET'])]
+    // public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(SendType::class);
+
+    //     $form->handleRequest($request);
+
+    //     $to = '+21628440373'; // The phone number to send the SMS to
+    //     $from = '+16076955652'; // Your Twilio phone number
+    //     $body = 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !.'; // The message body
+
+    //     $twilioClient->sendSMS($to, $from, $body);
+    //     $this->new($request, $entityManager);
+
+    //     return new Response('SMS sent successfully!');
+    // }
 }

@@ -11,8 +11,7 @@ class SendType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number')
-            ->add('message', TextareaType::class);
+            ->add('number');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
