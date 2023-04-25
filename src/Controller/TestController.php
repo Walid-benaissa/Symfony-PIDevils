@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Entity\Voiture;
+use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart; 
+use Symfony\UX\Chartjs\Model\Chart;
 
 class TestController extends AbstractController
 {
@@ -27,33 +29,15 @@ class TestController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_test')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(UtilisateurRepository $ur): Response
     {
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $cond = $ur->findbyrole('Conducteur');
+        $client = $ur->findbyrole('Client');
 
-        $chart->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            'datasets' => [
-                [
-                    'label' => 'My First dataset',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45],
-                ],
-            ],
-        ]);
-
-        $chart->setOptions([
-            'scales' => [
-                'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
-                ],
-            ],
-        ]);
         return $this->render('1stpage.html.twig', [
             'controller_name' => 'ClassroomController',
-            "chart"=>$chart
+            'cond' =>  $cond,
+            'client' => $client
         ]);
     }
 
@@ -63,6 +47,17 @@ class TestController extends AbstractController
         return $this->render('herosection.html.twig', [
             'controller_name' => 'ClassroomController',
             'user' => $this->getUser()
+        ]);
+    }
+
+    #[Route('/admin/utilisateurstat', name: 'app_utilisateur_showStat', methods: ['GET'])]
+    public function showStat(UtilisateurRepository $ur): Response
+    {
+        $cond = $ur->findbyrole('Conducteur');
+        $client = $ur->findbyrole('Client');
+        return $this->render('utilisateur/1stpage.html.twig', [
+            'cond' =>  $cond,
+            'client' => $client
         ]);
     }
 }

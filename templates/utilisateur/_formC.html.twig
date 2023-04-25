@@ -21,6 +21,9 @@
      {{ form_label(form.permis) }}<br>
     {{ form_widget(form.permis) }}<br>
     {{ form_errors(form.permis) }}<br>
+      {{ form_label(form.captcha) }}<br>
+      {{ form_widget(form.captcha) }}<br>
+      {{ form_errors(form.captcha) }}<br>
     <button class="submit">{{ button_label|default('Créer') }}</button>
 {{ form_end(form) }}
 </div>
