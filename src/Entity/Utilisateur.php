@@ -79,11 +79,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
     private Collection $voitures;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Course::class, orphanRemoval: true)]
+    private Collection $courses;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->reclamations = new ArrayCollection();
         $this->voitures = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
 
@@ -329,6 +333,36 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($commentaire->getId1() === $this) {
                 $commentaire->setId1(null);
+            }
+        }
+
+        return $this;
+    }
+
+     /**
+     * @return Collection<int, Course>
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourses(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
+            $course->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        if ($this->courses->removeElement($course)) {
+            // set the owning side to null (unless already changed)
+            if ($course->getUser() === $this) {
+                $course->setUser(null);
             }
         }
 
