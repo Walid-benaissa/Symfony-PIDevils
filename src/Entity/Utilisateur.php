@@ -48,13 +48,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $mdp = null;
 
     #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
-    #[Assert\Type(
-        type: 'integer',
-        message: 'vous devez saisie un numéro valide',
+    #[Assert\Regex(
+        pattern: '/\D/',
+        match: false,
+        message: 'vous devez saisir que des chiffres',
     )]
     #[Assert\Length(
         min: 8,
-        max: 8,
+        max: 11,
         minMessage: 'vous devez saisie un numéro valide',
         maxMessage: 'vous devez saisie un numéro valide',
     )]
@@ -168,7 +169,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->mdp;
     }
 
-    public function setMdp(string $mdp): self
+    public function setMdp(?string $mdp): self
     {
         $this->mdp = $mdp;
 
@@ -192,7 +193,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->role;
     }
 
-    public function setRole(string $role): self
+    public function setRole(?string $role): self
     {
         $this->role = $role;
 

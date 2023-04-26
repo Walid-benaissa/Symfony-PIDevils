@@ -20,7 +20,7 @@ class VehiculeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Vehicule::class);
     }
-
+//.................................................
     public function save(Vehicule $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -37,6 +37,22 @@ class VehiculeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function count_vehicule(){
+        $qb = $this->createQueryBuilder('p')
+            ->select('COUNT(p.idVehicule)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+
+    }
+    public function countPeopleByTypeDon(): array
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('d.type as type, COUNT(DISTINCT d.idVehicule) as count')
+            ->groupBy('d.type')
+            ->getQuery();
+
+        return $qb->getResult();
     }
 
 //    /**

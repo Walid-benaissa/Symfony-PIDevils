@@ -1,24 +1,40 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
 
-{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+{{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form'}}) }}
 <h1 class="title">Ajouter Colis</h1>
-<div class="label">
+<label for="inputText" class ="col-sm-12 col-form-label"> Nombre d'objets </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.nbItems)}}
+    {{ form_errors(form.nbItems ,{'attr':{'class':'text-danger'}})}}
+    </div>
+{# <div class="label">
     {{ form_label(form.nbItems) }}<br>
      </div>
-    <div class="input">{{ form_widget(form.nbItems)}}</div>
-    {{ form_errors(form.nbItems)}}
- 
- <div class="label">
+    <div class="input">
+    {{ form_widget(form.nbItems,{'attr':{'class':'form-control'}})}}</div>
+    {{ form_errors(form.nbItems ,{'attr':{'class':'text-danger'}})}} #}
+ <label for="inputText" class ="col-sm-12 col-form-label"> Poids </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.poids)}}
+    {{ form_errors(form.poids ,{'attr':{'class':'text-danger'}})}}
+</div>
+ {# <div class="label">
     {{ form_label(form.poids) }}<br>
      </div>
     <div class="input">{{ form_widget(form.poids)}}</div>
-    {{ form_errors(form.poids)}}
-    <div class="label">
+    {{ form_errors(form.poids)}} #}
+     <label for="inputText" class ="col-sm-12 col-form-label"> Description </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.description)}}
+    {{ form_errors(form.description ,{'attr':{'class':'text-danger'}})}}
+</div> <br>
+
+    {# <div class="label">
     {{ form_label(form.description) }}<br>
      </div>
     <div class="input">{{ form_widget(form.description)}}</div>
-    {{ form_errors(form.description)}}
+    {{ form_errors(form.description)}} #}
  <button class="submit">{{ button_label|default('Ajouter') }}</button>
  {{ form_end(form) }}
 </div>

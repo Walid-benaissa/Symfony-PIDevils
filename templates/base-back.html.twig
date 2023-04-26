@@ -40,7 +40,7 @@
 		<header id="header" class="header fixed-top d-flex align-items-center">
 
 			<div class="d-flex align-items-center justify-content-between">
-				<a href="index.html" class="logo d-flex align-items-center">
+				<a href="{{path('app_test')}}" class="logo d-flex align-items-center">
 					<img src="{{asset("back/img/logo1.png")}}" alt="">
 					<span class="d-none d-lg-block">Fi Thneyti</span>
 				</a>
@@ -291,7 +291,7 @@
 			<ul class="sidebar-nav" id="sidebar-nav">
 
 				<li class="nav-item">
-					<a class="nav-link " href="index.html">
+					<a class="nav-link " href="{{path('app_test')}}">
 						<i class="bi bi-grid"></i>
 						<span>Dashboard</span>
 					</a>
@@ -324,6 +324,23 @@
 					<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li>
 							<a href="{{path('app_livraison_index')}}">
+								<i class="bi bi-circle"></i>
+								<span>Consulter</span>
+							</a>
+						</li>
+
+
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+						<i class="bi bi-journal-text"></i>
+						<span>Colis</span>
+						<i class="bi bi-chevron-down ms-auto"></i>
+					</a>
+					<ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+						<li>
+							<a href="{{path('app_colis_index')}}">
 								<i class="bi bi-circle"></i>
 								<span>Consulter</span>
 							</a>
@@ -375,16 +392,13 @@
 						<i class="bi bi-bar-chart"></i>
 						<span>Locations</span>
 						<i class="bi bi-chevron-down ms-auto"></i>
+				<ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					</a>
-					<ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-						<li>
-							<a href="{{path('app_location_index')}}">
-								<i class="bi bi-circle"></i>
-								<span>Consulter</span>
-							</a>
-						</li>
-
-					</ul>
+						<li><a href="{{path('app_vehicule_index')}}">gerer vehicules</a></li>
+								<li><a href="{{path('app_promotion_index')}}">gerer promotion</a></li>
+								<li><a href="{{path('app_location_index')}}">gerer location</a></li>
+								
+						</ul> 
 				</li>
 
 				<li class="nav-item">
@@ -426,12 +440,12 @@
 
 				<li class="nav-heading">Pages</li>
 
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a class="nav-link collapsed" href="users-profile.html">
 						<i class="bi bi-person"></i>
 						<span>Profile</span>
 					</a>
-				</li>
+				</li> -->
 				<!-- End Profile Page Nav -->
 
 

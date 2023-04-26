@@ -17,13 +17,27 @@ class Colis
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Champ vide!!")]
+    #[Assert\NotBlank(message: "Nombre d'objets obligatoire !")]
     private ?int $nbItems = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "Description est obligatoire !")]
+    #[
+        Assert\Length(
+            min: 5,
+            max: 39,
+            minMessage: "La description doit comporter au moins 5 caractères ! ",
+            maxMessage: "La description doit comporter au plus 5 caractères ! ",
+        )
+    ]
+
+
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Poids obligatoire !")]
+    #[Assert\Type(type: "float", message: "Le prix doit être de type float.")]
+
     private ?float $poids = null;
 
     public function getId(): ?int

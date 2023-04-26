@@ -1,6 +1,78 @@
-<link href="{{asset("css/creercompte.css")}}" rel="stylesheet">
+<style>
+.form {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 0px 4px rgba(52, 52, 53, 0.185);
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+
+}
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #1a202c;
+}
+
+
+
+label {
+  color: rgb(0, 0, 0);
+  font-size: large;
+  margin-bottom: 10px;
+
+}
+
+input {
+  padding: 10px;
+  width: 200px;
+  font-size: 1rem;
+  height: 40px;
+}
+
+.input:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #cbd5e0;
+}
+
+.input:valid {
+  border: 1px solid green;
+}
+
+.input:invalid {
+  border: 1px solid rgba(14, 14, 14, 0.205);
+}
+
+.submit {
+  background-color: #ffaa24;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  align-self: center;
+  width: 40%;
+  margin-top: 10px;
+  margin-left:30%;
+  text-align: center;
+height:50px
+}
+.captcha_image{
+    width:50%;
+    margin-left:25%;
+    height:50%;
+    margin-bottom:5%;
+}
+
+.centerdiv {
+  justify-content: center;
+  align-items: center;
+  padding:10%;
+}</style>
 <div class="centerdiv">
-{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+{{ form_start(form) }}
     {{ form_label(form.nom) }}<br>
     {{ form_widget(form.nom) }}<br>
     {{ form_errors(form.nom) }}<br>
@@ -15,6 +87,7 @@
     {{ form_errors(form.mail) }}<br>
     {{ form_widget(form.mdp) }}<br>
     {{ form_errors(form.mdp) }}<br>
+     {{ form_row(form.captcha) }}<br>
     <button class="submit">{{ button_label|default('Créer') }}</button>
 {{ form_end(form) }}
 </div>

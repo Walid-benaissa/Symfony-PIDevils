@@ -1,14 +1,21 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
 {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
-<h1 class="title">Effectuer une commentaire</h1>
+<h1 class="title">Evauler votre conducteur</h1>
+<div>
+    {% for eval in form.eval %}
+    <div style="display: inline-block;margin-right:60px">
+    <label for={{'eval-' ~ loop.index}}>
+        <img src="{{ asset('photo/star-e.png') }}" width="50px" alt="NOM" class="circular-image">
+    </label>
+        {{ form_widget(eval, {'id': 'eval-' ~ loop.index, 'label_attr': {'style': 'display: inline-block;'}}) }}
+        {{ form_label(eval, null, {'label_attr': {'style': 'display: none;', 'for': 'eval-' ~ loop.index}}) }}
+    </div>
+    {% endfor %}
+    </div>
     <div class="label">
     {{ form_label(form.message) }}<br>
     </div>
-    <div class="label">
-        {% if not form.vars.valid %}
-        {{ form_errors(form.message,{'attr':{'class': 'error' }})}}<br>
-        {% endif %}</div>
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
     <button class="submit">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

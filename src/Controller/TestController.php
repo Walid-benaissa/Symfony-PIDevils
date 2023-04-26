@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Voiture;
+use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class TestController extends AbstractController
 {
@@ -26,19 +27,71 @@ class TestController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_test')]
-    public function index(): Response
+    public function index(UtilisateurRepository $ur): Response
     {
+        $cond = $ur->findbyrole('Conducteur');
+        $client = $ur->findbyrole('Client');
+
         return $this->render('1stpage.html.twig', [
             'controller_name' => 'ClassroomController',
+            'cond' =>  $cond,
+            'client' => $client
         ]);
     }
 
     #[Route('/', name: 'app_test1')]
     public function front(): Response
     {
-        return $this->render('herosection.html.twig', [
-            'controller_name' => 'ClassroomController',
-            'user' => $this->getUser()
+
+        try {
+            $curl = curl_init();
+        
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://api.adviceslip.com/advice',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ]);
+        
+            $response = curl_exec($curl);
+        
+            if(curl_error($curl)) {
+                throw new \Exception(curl_error($curl));
+            }
+        
+            curl_close($curl);
+        
+            $content = json_decode($response, true);
+            $advice = $content['slip']['advice'];
+        
+            return $this->render('herosection.html.twig', [
+                'controller_name' => 'ClassroomController',
+                'user' => $this->getUser(),
+                'advice'=>$advice
+            ]);
+        
+        } catch (Exception $e) {
+            // handle the error
+            echo 'Error: ' . $e->getMessage();
+        }
+        
+}
+
+        
+    
+
+    #[Route('/admin/utilisateurstat', name: 'app_utilisateur_showStat', methods: ['GET'])]
+    public function showStat(UtilisateurRepository $ur): Response
+    {
+        $cond = $ur->findbyrole('Conducteur');
+        $client = $ur->findbyrole('Client');
+        return $this->render('utilisateur/1stpage.html.twig', [
+            'cond' =>  $cond,
+            'client' => $client
         ]);
     }
 }

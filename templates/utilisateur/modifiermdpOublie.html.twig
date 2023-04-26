@@ -1,0 +1,19 @@
+
+{% extends '/utilisateur/login.html.twig'%}
+
+
+{% block body %}
+
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+    {{ form_label(form.mdp) }}<br>
+    
+    {{ form_widget(form.mdp,{'attr':{'class': 'form-control' }}) }}<br>
+    
+
+    {{ form_widget(form.save,{'attr':{'class': 'btn btn-primary' }}) }}<br>
+    
+ {{ form_end(form) }}
+ 
+   
+ 
+{% endblock %}

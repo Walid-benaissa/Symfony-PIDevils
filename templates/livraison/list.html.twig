@@ -1,38 +1,80 @@
 {% extends 'base-front.html.twig'%}
 {% block body %}
-	<h1>Consulter Livraisons</h1>
 
-	<table class="table">
-		<thead>
-			<tr>
+<link href="{{asset("css/Recherche-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
 
-				<th>Adresse Expedition</th>
-				<th>Adresse Destinataire</th>
-				<th>Prix</th>
-				<th>Etat</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for livraison in livraisons %}
-				<tr>
+   <style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
 
-					<td>{{ livraison.adresseExpedition }}</td>
-					<td>{{ livraison.adresseDestinataire }}</td>
-					<td>{{ livraison.prix }}</td>
-					<td>{{ livraison.etat }}</td>
-					<td>
-						<a href="{{ path('app_livraison_show', {'idLivraison': livraison.idLivraison}) }}">show</a>
-						<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="6">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    .centerdiv {
+        margin-top: 2rem;
+    }
+    
+</style>
 
-	<!--<a href="{{ path('app_livraison_new') }}">Create new</a>-->
+
+<div class="container">	
+
+<div class="row">
+
+	<form action="{{ path('app_livraison_prix')}}" method="POST" name="">
+
+											<div class="input-group mt-4">
+											  <div class="col">
+
+												<input type="text" name="min" class="form-control form-control1" placeholder="Prix minimum ">
+												</div>
+												 <div class="col">
+
+												<input type="text" name="max" class="form-control form-control1" placeholder="Prix maximum ">
+                                                </div>
+												<div class="input-group-append">
+                                                   <button type="submit"
+													<span class="input-group-text bg-transparent text-warning ">
+												<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+													</span>
+                                                      </button>
+												</div>
+
+											</div>
+
+										</form>
+	</div>			
+
+<div class="row">
+
+<div class="card-grid">
+
+{% for livraison in livraisons %}
+  <div class="col-md-4 mb-4">
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+
+    <h5 class="card-title text-center  mb-3">{{ livraison.colis.description }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Adresse Expedition : {{livraison.adresseExpedition}}</h6>
+	<p class="card-text mb-2 text-muted">Adresse Destinataire : {{livraison.adresseDestinataire}}</p>
+    <p class="card-text mb-2 text-muted ">Prix : {{livraison.prix}} Dinars  </p>
+    <p class="card-text mb-2 text-muted ">Etat : {{livraison.etat}}  </p>
+
+     
+	<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
+  	<a href="{{ path('app_livraison_delete', {'id': livraison.idLivraison}) }}"><i class="fa-solid fa-trash"></i></a>
+
+  </div>
+</div>
+</div>
+
+{% endfor %}
+</div>
+</div>
+</div>
+	{# <a href="{{ path('app_livraison_new') }}">Create new</a> #}
+	
+  </div>
 {% endblock %}

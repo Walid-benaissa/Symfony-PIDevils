@@ -20,6 +20,7 @@
 		</thead>
 		<tbody>
 			{% for utilisateur in utilisateurs %}
+			{% if utilisateur.id != 0 %}
 				<tr>
 					<td>{{ utilisateur.id }}</td>
 					<td>{{ utilisateur.nom }}</td>
@@ -32,10 +33,15 @@
 					<td>
 						<a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Voir plus </a>
 						<a href="{{ path('app_utilisateur_editb', {'id': utilisateur.id}) }}"> Modifier</a>
+						<button type="button" class="btn"> 
+						<a href="{{ path('app_utilisateur_bloquer', {'id': utilisateur.id}) }}">
+											{{ utilisateur.bloque ? 'Débloquer' : 'Bloquer' }}
+						 </a></button>
 					</td>
 				</tr>
+				{% endif %}
 			{% else %}
-				<tr>
+				<tr
 					<td colspan="10">Aucun utilisateur</td>
 				</tr>
 			{% endfor %}

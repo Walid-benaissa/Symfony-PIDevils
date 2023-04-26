@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,13 +24,52 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/commentaire/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentaireRepository $commentaireRepository): Response
+    public function new(Request $request, CommentaireRepository $commentaireRepository,UtilisateurRepository $ur): Response
     {
         $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form = $this->createForm(CommentaireType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data=$form->getData();
+            $commentaire->setId1($this->getUser());
+            $commentaire->setId2($this->getUser());
+            $commentaire->setMessage($data["message"]);
+            $id=$commentaire->getId1()->getId();
+            $u=$ur->find($id);
+            $u->setEvaluation((($u->getEvaluation()+$data["eval"]))/2);
+            $commentaireRepository->save($commentaire, true);
+            $ur->save($u,true);
+            return $this->redirectToRoute('app_test1', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('commentaire/new.html.twig', [
+            'commentaire' => $commentaire,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/evaluation/new', name: 'app_evaluation', methods: ['GET', 'POST'])]
+    public function evaluer(Request $request, CommentaireRepository $commentaireRepository): Response
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createFormBuilder()
+        ->add('eval', ChoiceType::class, ['choices'  => [
+            '  '=>1,
+            ' '=>2,
+            '   '=>3,
+            '    '=>4,
+            '     '=>5,
+        ],
+        'label'=>false,
+            'attr' => ['class' => 'row'],
+            'multiple'=>false,
+            'expanded'=>true])->getForm()
+            ;
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $commentaire->setId1($this->getUser());
             $commentaire->setId2($this->getUser());
             $commentaireRepository->save($commentaire, true);
@@ -35,7 +77,7 @@ class CommentaireController extends AbstractController
             return $this->redirectToRoute('app_test1', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('commentaire/new.html.twig', [
+        return $this->renderForm('commentaire/evaluer.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form,
         ]);

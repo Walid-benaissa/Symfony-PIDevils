@@ -1,0 +1,59 @@
+	<head>
+	<style>
+body {
+			font-family: "Open Sans", sans-serif;
+			background-color: #f2f2f2;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		
+		.title {
+			font-size: 32px;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+		
+		.table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+		}
+</style>
+	</head>
+<body>
+	<div class="container bod">
+    <h1 class="title">Reclamation n° {{reclamation.id}}</h1>
+    <div class="row">
+    <table class="table">
+		<tbody>
+			<tr>
+				<th>Effectué par</th>
+					<td>{{ reclamation.user.nom ~ " " ~ reclamation.user.prenom }}</td>
+			</tr>
+				<tr>
+				<th>Message</th>
+					<td>{{ reclamation.message }}</td>
+				</tr>
+				<tr>
+				<th>Etat</th>
+					<td>{{ reclamation.etat }}</td>
+				</tr>
+		</tbody>
+	</table>
+</body>
