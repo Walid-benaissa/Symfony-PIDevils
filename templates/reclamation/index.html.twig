@@ -1,7 +1,15 @@
 {% extends 'base-back.html.twig'%}
 {% block body %}
-	<h1>Gérer Reclamations</h1>
-
+	<div class="row">
+	<h1 class="col-6">Gérer Reclamations</h1>
+	<div class="offset-4 col-1">
+	<br>
+	{{form_start(form)}}
+	{{form_widget(form.lang)}}
+	<button class="btn btn-primary">{{ button_label|default('Change') }}</button>
+	{{form_end(form)}}
+	</div>
+	</div>
 	<table class="table">
 		<thead>
 			<tr>
@@ -12,6 +20,7 @@
 			</tr>
 		</thead>
 		<tbody>
+		{% if not translated %}
 			{% for reclamation in reclamations %}
 				<tr>
 					<td>{{ reclamation.id }}</td>
@@ -27,6 +36,23 @@
 					<td colspan="4">Aucune reclamation </td>
 				</tr>
 			{% endfor %}
+		{% else %}
+		{% for reclamation in translations %}
+				<tr>
+					<td>{{ reclamation.id }}</td>
+					<td>{{ reclamation.message }}</td>
+					<td>{{ reclamation.etat }}</td>
+					<td>
+						<a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">Voir plus</a>
+						<a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune reclamation </td>
+				</tr>
+			{% endfor %}
+		{% endif %}
 		</tbody>
 	</table>
 

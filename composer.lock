@@ -4,8 +4,112 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00abeb145fad1aaa0e5dcb5eef71a520",
+    "content-hash": "387c261ad7535b7e0fc9b1e4f813456d",
     "packages": [
+        {
+            "name": "bacon/bacon-qr-code",
+            "version": "2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Bacon/BaconQrCode.git",
+                "reference": "8674e51bb65af933a5ffaf1c308a660387c35c22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/8674e51bb65af933a5ffaf1c308a660387c35c22",
+                "reference": "8674e51bb65af933a5ffaf1c308a660387c35c22",
+                "shasum": ""
+            },
+            "require": {
+                "dasprid/enum": "^1.0.3",
+                "ext-iconv": "*",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "phly/keep-a-changelog": "^2.1",
+                "phpunit/phpunit": "^7 | ^8 | ^9",
+                "spatie/phpunit-snapshot-assertions": "^4.2.9",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "suggest": {
+                "ext-imagick": "to generate QR code images"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BaconQrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BaconQrCode is a QR code generator for PHP.",
+            "homepage": "https://github.com/Bacon/BaconQrCode",
+            "support": {
+                "issues": "https://github.com/Bacon/BaconQrCode/issues",
+                "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.8"
+            },
+            "time": "2022-12-07T17:46:57+00:00"
+        },
+        {
+            "name": "dasprid/enum",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DASPRiD/Enum.git",
+                "reference": "8e6b6ea76eabbf19ea2bf5b67b98e1860474012f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/8e6b6ea76eabbf19ea2bf5b67b98e1860474012f",
+                "reference": "8e6b6ea76eabbf19ea2bf5b67b98e1860474012f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1 <9.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7 | ^8 | ^9",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DASPRiD\\Enum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP 7.1 enum implementation",
+            "keywords": [
+                "enum",
+                "map"
+            ],
+            "support": {
+                "issues": "https://github.com/DASPRiD/Enum/issues",
+                "source": "https://github.com/DASPRiD/Enum/tree/1.0.4"
+            },
+            "time": "2023-03-01T18:44:03+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "2.0.1",
@@ -1521,6 +1625,82 @@
             "time": "2023-01-14T14:17:03+00:00"
         },
         {
+            "name": "endroid/qrcode",
+            "version": "4.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/qr-code.git",
+                "reference": "2436c2333a3931c95e2b96eb82f16f53143d6bba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/2436c2333a3931c95e2b96eb82f16f53143d6bba",
+                "reference": "2436c2333a3931c95e2b96eb82f16f53143d6bba",
+                "shasum": ""
+            },
+            "require": {
+                "bacon/bacon-qr-code": "^2.0.5",
+                "php": "^8.0"
+            },
+            "conflict": {
+                "khanamiryan/qrcode-detector-decoder": "^1.0.6"
+            },
+            "require-dev": {
+                "endroid/quality": "dev-master",
+                "ext-gd": "*",
+                "khanamiryan/qrcode-detector-decoder": "^1.0.4||^2.0.2",
+                "setasign/fpdf": "^1.8.2"
+            },
+            "suggest": {
+                "ext-gd": "Enables you to write PNG images",
+                "khanamiryan/qrcode-detector-decoder": "Enables you to use the image validator",
+                "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
+                "setasign/fpdf": "Enables you to use the PDF writer"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\QrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Endroid QR Code",
+            "homepage": "https://github.com/endroid/qr-code",
+            "keywords": [
+                "code",
+                "endroid",
+                "php",
+                "qr",
+                "qrcode"
+            ],
+            "support": {
+                "issues": "https://github.com/endroid/qr-code/issues",
+                "source": "https://github.com/endroid/qr-code/tree/4.8.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "abandoned": "endroid/qr-code",
+            "time": "2023-03-30T18:46:02+00:00"
+        },
+        {
             "name": "gregwar/captcha",
             "version": "v1.2.0",
             "source": {
@@ -1805,26 +1985,24 @@
         },
         {
             "name": "masterminds/html5",
-            "version": "2.7.6",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Masterminds/html5-php.git",
-                "reference": "897eb517a343a2281f11bc5556d6548db7d93947"
+                "reference": "3c5d5a56d56f48a1ca08a0670f0f80c1dad368f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/897eb517a343a2281f11bc5556d6548db7d93947",
-                "reference": "897eb517a343a2281f11bc5556d6548db7d93947",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/3c5d5a56d56f48a1ca08a0670f0f80c1dad368f3",
+                "reference": "3c5d5a56d56f48a1ca08a0670f0f80c1dad368f3",
                 "shasum": ""
             },
             "require": {
-                "ext-ctype": "*",
                 "ext-dom": "*",
-                "ext-libxml": "*",
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7"
+                "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7 || ^8"
             },
             "type": "library",
             "extra": {
@@ -1868,9 +2046,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Masterminds/html5-php/issues",
-                "source": "https://github.com/Masterminds/html5-php/tree/2.7.6"
+                "source": "https://github.com/Masterminds/html5-php/tree/2.8.0"
             },
-            "time": "2022-08-18T16:18:26+00:00"
+            "time": "2023-04-26T07:27:39+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -3802,6 +3980,175 @@
                 }
             ],
             "time": "2023-02-21T10:35:38+00:00"
+        },
+        {
+            "name": "symfony/http-client",
+            "version": "v6.2.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client.git",
+                "reference": "7daf5d24c21a683164688b95bb73b7a4bd3b32fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/7daf5d24c21a683164688b95bb73b7a4bd3b32fc",
+                "reference": "7daf5d24c21a683164688b95bb73b7a4bd3b32fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "psr/log": "^1|^2|^3",
+                "symfony/deprecation-contracts": "^2.1|^3",
+                "symfony/http-client-contracts": "^3",
+                "symfony/service-contracts": "^1.0|^2|^3"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "1.0",
+                "symfony/http-client-implementation": "3.0"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.5",
+                "amphp/http-client": "^4.2.1",
+                "amphp/http-tunnel": "^1.0",
+                "amphp/socket": "^1.1",
+                "guzzlehttp/promises": "^1.4",
+                "nyholm/psr7": "^1.0",
+                "php-http/httplug": "^1.0|^2.0",
+                "psr/http-client": "^1.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/stopwatch": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "http"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client/tree/v6.2.9"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-04-11T16:03:19+00:00"
+        },
+        {
+            "name": "symfony/http-client-contracts",
+            "version": "v3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client-contracts.git",
+                "reference": "df2ecd6cb70e73c1080e6478aea85f5f4da2c48b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/df2ecd6cb70e73c1080e6478aea85f5f4da2c48b",
+                "reference": "df2ecd6cb70e73c1080e6478aea85f5f4da2c48b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "suggest": {
+                "symfony/http-client-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.3-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Test/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to HTTP clients",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client-contracts/tree/v3.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-03-01T10:32:47+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -6595,16 +6942,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:twilio/twilio-php.git",
-                "reference": "11271c602398f7678dc465dcab97601e6e866819"
+                "reference": "db64f7b5555b1bb4b5ea1511917cadf064342c0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/11271c602398f7678dc465dcab97601e6e866819",
-                "reference": "11271c602398f7678dc465dcab97601e6e866819",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/db64f7b5555b1bb4b5ea1511917cadf064342c0e",
+                "reference": "db64f7b5555b1bb4b5ea1511917cadf064342c0e",
                 "shasum": ""
             },
             "require": {
@@ -6640,7 +6987,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2023-04-05T22:21:08+00:00"
+            "time": "2023-04-20T07:20:58+00:00"
         },
         {
             "name": "wemersonjanuario/wkhtmltopdf-windows",
