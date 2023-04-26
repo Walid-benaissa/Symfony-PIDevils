@@ -1,18 +1,8 @@
-{% extends 'base-back.html.twig'%}
+{% extends 'base-front.html.twig'%}
 
 
 {% block body %}
     <h1>Course </h1>
-    <style>
-    table {
-      border-collapse: collapse;
-    }
-    table td {
-      padding: 10px;
-    }
-   
-  </style>
-
 
     <table class="table">
         <thead>
@@ -36,8 +26,8 @@
                 <td>{{ course.prix }}</td>
                 <td>{{ course.statutCourse }}</td>
                 <td>
-                    <a href="{{ path('app_course_show', {'idCourse': course.idCourse}) }}">Details</a>
-                 
+                    <a href="{{ path('app_course_show', {'idCourse': course.idCourse}) }}">show</a>
+                    <a href="{{ path('app_course_edit', {'idCourse': course.idCourse}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -48,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_course_new') }}">Ajouter de nouveau </a>
+    <a href="{{ path('app_course_new') }}">Create new</a>
 {% endblock %}

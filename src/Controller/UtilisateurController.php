@@ -27,6 +27,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 class UtilisateurController extends AbstractController
@@ -79,7 +81,7 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/creatCptC', name: 'app_utilisateur_newC', methods: ['GET', 'POST'])]
-    public function newC(Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+    public function newC(Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger = null): Response
     {
         try {
             // Code that may throw an exception...
@@ -109,21 +111,54 @@ class UtilisateurController extends AbstractController
                 $ur->save($u, true);
 
                 /** @var UploadedFile $image */
-                $image = $formC['b3']->getData();
+                /*   $image = $formC['b3']->getData();
                 $destination = 'C:/uploadedFiles/Images/';
                 $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
                 $image->move($destination, $fileName);
-                $c->setB3('C:/uploadedFiles/Images/' . $fileName);
+                $c->setB3('C:/uploadedFiles/Images/' . $fileName); */
+                $image = $formC['b3']->getData();
+                if ($image) {
+                    $originalImgName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newImgename = $originalImgName . '-' . uniqid() . '.' . $image->guessExtension();
+
+                    if ($slugger) {
+                        $safeImgname = $slugger->slug($originalImgName);
+                        $newImgename = $safeImgname . '-' . uniqid() . '.' . $image->guessExtension();
+                    }
+
+                    try {
+                        $image->move(
+                            $this->getParameter('imgb_directory'),
+                            $newImgename
+                        );
+                    } catch (FileException $e) {
+                        // handle exception if something happens during file upload
+                    }
+                }
+                $c->setB3($newImgename);
 
                 /** @var UploadedFile $image */
                 $image = $formC['permis']->getData();
-                $destination = 'C:/uploadedFiles/Images/';
-                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
-                $image->move($destination, $fileName);
-                $c->setPermis('C:/uploadedFiles/Images/' . $fileName);
+                if ($image) {
+                    $originalImgName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newImgename = $originalImgName . '-' . uniqid() . '.' . $image->guessExtension();
 
+                    if ($slugger) {
+                        $safeImgname = $slugger->slug($originalImgName);
+                        $newImgename = $safeImgname . '-' . uniqid() . '.' . $image->guessExtension();
+                    }
+
+                    try {
+                        $image->move(
+                            $this->getParameter('imgb_directory'),
+                            $newImgename
+                        );
+                    } catch (FileException $e) {
+                        // handle exception if something happens during file upload
+                    }
+                }
+                $c->setPermis($newImgename);
                 $c->setUtilisateur($u);
                 $cr->save($c, true);
 
@@ -146,10 +181,15 @@ class UtilisateurController extends AbstractController
 
 
     #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
-    public function show(Utilisateur $utilisateur): Response
+    public function show(Utilisateur $u, ConducteurRepository $cr): Response
     {
+        $c = new Conducteur();
+        if ($u->getRole() == "Conducteur") {
+            /*  $c = $cr->gettcond($u->getId()); */
+        }
         return $this->render('utilisateur/show.html.twig', [
-            'utilisateur' => $utilisateur,
+            'utilisateur' => $u,
+            'conducteur' => $c,
         ]);
     }
     #[Route('/utilisateur/{id}', name: 'app_utilisateur_showfr', methods: ['GET'])]
@@ -161,20 +201,25 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
-    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
-        $id = $utilisateur->getId();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createFormBuilder()
+            ->add('role', ChoiceType::class, [
+                'choices'  => [
+                    'Conducteur' => 'Conducteur',
+                    'Client' => 'Client',
+                ],
+                'label' => 'Rôle',
+                'attr' => ['class' => 'row'],
+                'multiple' => false,
+                'expanded' => true
+            ])->getForm();
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $passwordHasher->hashPassword(
-                $utilisateur,
-                $utilisateur->getmdp()
-            );
-            $utilisateur->setMdp($hashedPassword);
+        if ($form->isSubmitted()) {
+            $utilisateur->setRole($form->getData()['role']);
             $utilisateurRepository->save($utilisateur, true);
 
-            return $this->redirectToRoute('app_utilisateur_editb', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/edit.html.twig', [

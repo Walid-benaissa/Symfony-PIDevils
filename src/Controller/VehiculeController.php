@@ -36,13 +36,13 @@ class VehiculeController extends AbstractController
         // Define the page parameter
         $request->query->getInt('page', 1),
         // Items per page
-        3
+        4
     );
         return $this->render('vehicule/listvehicule.html.twig', [
             'vehicules' => $pagination,
         ]);
     }
-
+//...................................................
     #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VehiculeRepository $vehiculeRepository ,SluggerInterface $slugger = null): Response
     {

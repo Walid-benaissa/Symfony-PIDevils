@@ -62,12 +62,38 @@
 							<a class="nav-link scrollto active" href="{{path('app_test1')}}">
 								Acceuil</a>
 						</li>
-						<li>
-							<a class="nav-link scrollto" href="#about">Course</a>
+						<li class="dropdown">
+							<a href="#">
+								<span>
+									Course</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+			     			   
+								<li><a href="{{path('app_course_new')}}">Effectuer</a></li>
+								<li><a href="{{path('app_course_index')}}">Consulter</a></li>
+								
+								
+
+							</ul>
 						</li>
-                  {% if is_granted('ROLE_COND') %}
-    {# Ne rien faire, car l'utilisateur a le rôle ROLE_COND #}
-{% else %}
+							<li class="dropdown">
+							<a href="#">
+								<span>
+									OffreCourse</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+			     			   
+								<li><a href="{{path('app_offre_course_new')}}">Effectuer</a></li>
+								<li><a href="{{path('app_offre_course_index')}}">Consulter</a></li>
+							
+								
+
+							</ul>
+						</li>
+
+
 						<li class="dropdown">
 							<a href="#">
 								<span>

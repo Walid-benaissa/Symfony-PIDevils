@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CourseRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
@@ -14,19 +15,37 @@ class Course
     private ?int $idCourse = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Le champ doit contenir que des lettres.'
+    )]
     private ?string $pointDepart = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Le champ doit contenir que des lettres.'
+    )]
     private ?string $pointDestination = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le champ est requis.')]
+    #[Assert\Positive(message: 'Le nombre doit être positif.')]
     private ?float $distance = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le champ est requis.')]
+    #[Assert\Positive(message: 'Le nombre doit être positif.')]
     private  ?float $prix = null;
+
+    
 
     #[ORM\Column(length: 150)]
     private ?string $statutCourse = null;
+
+    #[ORM\ManyToOne(inversedBy: 'courses', targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'idUser')]
+    private ?Utilisateur $user = null;
 
     public function getIdCourse(): ?int
     {
@@ -92,4 +111,17 @@ class Course
 
         return $this;
     }
+    public function getUser(): ?Utilisateur
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Utilisateur $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+   
 }
