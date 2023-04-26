@@ -22,7 +22,7 @@ services:
       - "../src/Kernel.php"
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-App\Service\TwilioClient:
-        arguments:
-            $accountSid: 'AC23c10455ba1e24c96fb6bcc98f9183a0'
-            $authToken: 'ca73d2dd53ebcc0b60d9cb40b2d47931'
+  App\Service\TwilioClient:
+    arguments:
+      $accountSid: "AC23c10455ba1e24c96fb6bcc98f9183a0"
+      $authToken: "ca73d2dd53ebcc0b60d9cb40b2d47931"

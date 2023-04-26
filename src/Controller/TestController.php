@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Entity\Voiture;
 use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 class TestController extends AbstractController
 {
@@ -44,11 +42,38 @@ class TestController extends AbstractController
     #[Route('/', name: 'app_test1')]
     public function front(): Response
     {
-        return $this->render('herosection.html.twig', [
-            'controller_name' => 'ClassroomController',
-            'user' => $this->getUser()
-        ]);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'https://api.adviceslip.com/advice',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2TLS,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+    ]);
+
+    $response = curl_exec($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    curl_close($curl);
+    $advice="";
+    if ($httpCode === 200) {
+        $content = json_decode($response, true);
+        $advice = $content['slip']['advice'];
     }
+    return $this->render('herosection.html.twig', [
+        'controller_name' => 'ClassroomController',
+        'user' => $this->getUser(),
+        'advice'=>$advice
+    ]);
+}
+
+        
+    
 
     #[Route('/admin/utilisateurstat', name: 'app_utilisateur_showStat', methods: ['GET'])]
     public function showStat(UtilisateurRepository $ur): Response
