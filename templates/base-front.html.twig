@@ -65,7 +65,9 @@
 						<li>
 							<a class="nav-link scrollto" href="#about">Course</a>
 						</li>
-
+                  {% if is_granted('ROLE_COND') %}
+    {# Ne rien faire, car l'utilisateur a le rôle ROLE_COND #}
+{% else %}
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -78,7 +80,11 @@
 
 							</ul>
 						</li>
-
+						{% endif %}
+ 
+ {% if is_granted('ROLE_COND') %}
+    {# Ne rien faire, car l'utilisateur a le rôle ROLE_COND #}
+{% else %}
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -91,16 +97,17 @@
 
 							</ul>
 						</li>
+						{% endif %}
                         {% if is_granted('ROLE_COND') %}
 							<li class="dropdown">
 							<a href="#">
 								<span>
-									Colis</span>
+									Livraison</span>
 								<i class="bi bi-chevron-down"></i>
 							</a>
 							<ul>
-								<li><a href="{{path('app_colis_all')}}">Consulter tous les colis</a></li>
-								<li><a href="{{path('app_colis_new')}}">Ajouter</a></li>
+								<li><a href="{{path('app_livraisons_front')}}">Consulter offres livraisons</a></li>
+								<li><a href="{{path('app_livraisons_front')}}">Consulter mes livraisons</a></li>
 
 							</ul>
 						</li>
@@ -197,7 +204,7 @@
 	<a href="#" class="instagram">
 		<i class="bx bxl-instagram"></i>
 	</a>
-	<a href="#" class="sms">
+	<a href="{{path('Password_send_sms')}}" class="sms">
 <i class="fa-solid fa-comment-sms"></i>
 	</a>
 </div></div></div><div class="col-lg-3 col-md-6 footer-links"><h4>Nos Services</h4><ul>
@@ -205,10 +212,7 @@
 	<i class="bx bx-chevron-right"></i>
 	<a href="#">Course</a>
 </li>
-<li>
-	<i class="bx bx-chevron-right"></i>
-	<a href="#">Livraison</a>
-</li>
+
 <li>
 	<i class="bx bx-chevron-right"></i>
 	<a href="#">Location</a>

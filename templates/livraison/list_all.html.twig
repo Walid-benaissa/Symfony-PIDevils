@@ -1,7 +1,7 @@
 {% extends 'base-front.html.twig'%}
 {% block body %}
 
-<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<link href="{{asset("css/Recherche-css.css")}}" rel="stylesheet">
 <div class="centerdiv">
 <style>
     .card-grid {
@@ -10,6 +10,33 @@
         gap: 1.5rem;
     }
 </style>
+<div class="container">	
+
+<div class="row">
+
+	<form action="{{ path('app_livraison_prix')}}" method="POST" name="">
+
+											<div class="input-group mt-4">
+											  <div class="col">
+
+												<input type="text" name="min" class="form-control form-control1" placeholder="Prix minimum ">
+												</div>
+												 <div class="col">
+
+												<input type="text" name="max" class="form-control form-control1" placeholder="Prix maximum ">
+                                                </div>
+												<div class="input-group-append">
+                                                   <button type="submit"
+													<span class="input-group-text bg-transparent text-warning ">
+												<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+													</span>
+                                                      </button>
+												</div>
+
+											</div>
+
+										</form>
+	</div>			
 <div class="row">
 <div class="card-grid">
 
@@ -29,16 +56,15 @@
         <p class="card-text mb-2 text-muted ">Nombre d'objets : {{ livraison.colis.nbItems}}</p>
     {% endif %}
     {# <a href="{{path('livraison.edit',{id:livraison.idLivraison})}}" class="card-link">editer</a> #}
-	<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
-  	<a href="{{ path('app_colis_delete', {'id': livraison.colis.id}) }}"><i class="fa-solid fa-trash"></i></a>
-  	<a href="{{ path('app_colis_edit', {'id': livraison.colis.id}) }}"><i class="fa-solid fa-circle-info"></i></a>
+	<a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-plus"></i> Livrer </a>
+  	
 
   </div>
 </div>
 </div>
 {% endfor %}
 </div>
-
+</div>
 </div>
 	{# <a href="{{ path('app_livraison_new') }}">Create new</a> #}
 	</div>
