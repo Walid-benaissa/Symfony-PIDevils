@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00abeb145fad1aaa0e5dcb5eef71a520",
+    "content-hash": "bd674b98f9ed8db4dc9eafd66a1d421c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6595,16 +6595,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:twilio/twilio-php.git",
-                "reference": "11271c602398f7678dc465dcab97601e6e866819"
+                "reference": "db64f7b5555b1bb4b5ea1511917cadf064342c0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/11271c602398f7678dc465dcab97601e6e866819",
-                "reference": "11271c602398f7678dc465dcab97601e6e866819",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/db64f7b5555b1bb4b5ea1511917cadf064342c0e",
+                "reference": "db64f7b5555b1bb4b5ea1511917cadf064342c0e",
                 "shasum": ""
             },
             "require": {
@@ -6640,7 +6640,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2023-04-05T22:21:08+00:00"
+            "time": "2023-04-20T07:20:58+00:00"
         },
         {
             "name": "wemersonjanuario/wkhtmltopdf-windows",
