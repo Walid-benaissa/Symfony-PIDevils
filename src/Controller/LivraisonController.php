@@ -20,16 +20,43 @@ use Twilio\Rest\Client;
 
 class LivraisonController extends AbstractController
 {
+
+
+
     #[Route('/livraison', name: 'app_livraison_index', methods: ['GET'])]
-    public function index(LivraisonRepository $livraisonRepository): Response
-    {
+    public function index(EntityManagerInterface $entityManager, LivraisonRepository $livraisonRepository, Request $request): Response
+    { {
+            $queryBuilder = $entityManager->createQueryBuilder()
+                ->select('v')
+                ->from(Livraison::class, 'v');
+            // Sorting
+            $sort = $request->query->get('sort');
+            if ($sort) {
+                $queryBuilder->orderBy('v.' . $sort, 'ASC');
+            }
 
-        $livraisons = $livraisonRepository->findAll();
+            $livraisons = $queryBuilder->getQuery()->getResult();
+            return $this->render('livraison/index.html.twig', [
+                'livraisons' => $livraisons,
+            ]);
+        }
 
-        return $this->render('livraison/index.html.twig', [
-            'livraisons' => $livraisons,
-        ]);
+        //   $livraisons = $livraisonRepository->findAll();
+
+        // return $this->render('livraison/index.html.twig', [
+        //     'livraisons' => $livraisons,
+        // ]);
     }
+    // #[Route('/livraison', name: 'app_livraison_index', methods: ['GET'])]
+    // public function index(LivraisonRepository $livraisonRepository): Response
+    // {
+
+    //     $livraisons = $livraisonRepository->findAll();
+
+    //     return $this->render('livraison/index.html.twig', [
+    //         'livraisons' => $livraisons,
+    //     ]);
+    // }
 
     #[Route('/livraison/liste', name: 'app_livraisons_front', methods: ['GET'])]
     public function afficher(LivraisonRepository $livraisonRepository): Response
@@ -203,7 +230,9 @@ class LivraisonController extends AbstractController
     //         ]
     //     );
     // }
+
 }
+
 // #[Route('/filtre_cat/{cat}', name: 'filtre')]
 // function filtre(OffreRepository $repository, CategoriesRepository $repo, $cat)
 // {
