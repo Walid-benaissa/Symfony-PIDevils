@@ -73,6 +73,52 @@ class LivraisonRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    //   rechercher par nom de produit
+
+    public function rechercheParNomDeProduit($etat, $adresseDestinataire)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('1 = 1');
+
+        if (!empty($etat)) {
+            $qb->andWhere('p.etat LIKE :etat')
+                ->setParameter('etat', '%' . $etat . '%');
+        }
+
+        if (!empty($adresseDestinataire)) {
+            $qb->andWhere('p.adresseDestinataire LIKE :adresseDestinataire')
+                ->setParameter('adresseDestinataire', '%' . $adresseDestinataire . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    // public function findByCat($value): array
+    // {
+    //     return $this->createQueryBuilder('f')
+    //         ->andWhere('f.adresseExpedition = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+    // public function rechercheParNomDeProduit($etat)
+    // {
+    //     $qb = $this->createQueryBuilder('p')
+    //         ->where('p.etat LIKE  :x')
+    //         ->setParameter('x', $etat);
+    //     return $qb->getQuery()->getResult();
+    // }
+
+    // public function rechercheParNomDeProduit($recherche)
+    // {
+    //     $qb = $this->createQueryBuilder('p')
+    //         ->where('p.etat LIKE :recherche')
+    //         ->orWhere('p.etat LIKE :recherche')
+    //         ->setParameter('recherche', $recherche . '%');
+    //     return $qb->getQuery()->getResult();
+    // }
     //    public function findOneBySomeField($value): ?Livraison
     //    {
     //        return $this->createQueryBuilder('l')

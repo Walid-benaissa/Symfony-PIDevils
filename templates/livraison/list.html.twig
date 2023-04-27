@@ -10,6 +10,32 @@
         gap: 1.5rem;
     }
 </style>
+<!-- recherche produit par nom-->
+<div class="container">	
+		<div class="row">
+			<div class="col-md-6">
+				<form action="{{path('app_recherche_dashboard_par_nom_du_produit')}}" method="POST" name="f">
+
+					<div class="input-group">
+						<input type="text" name="etat" class="form-control" placeholder="Rechercher">
+						
+						<div class="input-group-append">
+							<button type="submit" style="border-color: white;background-color: white;border-style: solid;">
+								<span class="input-group-text bg-transparent text-primary">
+									<i class="fa fa-search"></i>
+								</span>
+
+							</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+		
+		<!-- fin recherche produit par nom-->
+		<br>
+
 <div class="row">
 <div class="card-grid">
 
@@ -34,6 +60,7 @@
 </div>
 
 {% endfor %}
+</div>
 </div>
 </div>
 	{# <a href="{{ path('app_livraison_new') }}">Create new</a> #}

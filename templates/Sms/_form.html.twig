@@ -10,8 +10,10 @@
     <div class ="col-sm-12">
     {{ form_widget(form.number)}}
     {{ form_errors(form.number ,{'attr':{'class':'text-danger'}})}}
+      {{ form_widget(form.save,{'attr':{'class': 'btn btn-primary' }}) }}<br> 
+
     </div>
-   <button type="submit" class="btn btn-save">{{ button_label|default('Send Code') }}</button>
+   {# <button type="submit" class="btn btn-save">{{ button_label|default('Send Code') }}</button> #}
 
     {# <div class ="col-sm-12">
     {{ form_widget(form.adresseExpedition)}}

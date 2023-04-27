@@ -141,45 +141,89 @@ class LivraisonController extends AbstractController
 
         ]);
     }
-    // #[Route('/sendsms', name: 'Password_send_sms', methods: ['GET'])]
-    // // Send SMS notification to admin
-    // public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
-    // {   
-    //     $form = $this->createForm(SmsType::class);
+    #[Route('/rechercheDashbordParNom', name: 'app_recherche_dashboard_par_nom_du_produit')]
+    public function recgercheParNomDuProduit(LivraisonRepository $livraisonRepository, Request $request)
+    {
 
-    //     $form->handleRequest($request);
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
-    //         $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
-    //         $client = new Client($accountSid, $authToken);
-    //         $message = $client->messages->create(
-    //             '+21628440373', // replace with admin's phone number
-    //             [
-    //                 'from' => '+16076955652', // replace with your Twilio phone number
-    //                 'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
-    //             ]
-    //         );
-    //     }
+        $etat = $request->get('etat');
+        $adresseDestinataire = $request->get('adresseDestinataire');
 
-    //     return $this->redirectToRoute('app_livraisons_front');
-    // }
+        // $livraison =  $livraisonRespositry->rechercheParNomDeProduit($etat);
 
+        return $this->render(
+            'livraison/list.html.twig',
+            [
+                'livraisons' => $livraisonRepository->rechercheParNomDeProduit($etat, $adresseDestinataire),
 
-    // #[Route('/sendsms', name: 'Password_send_sms', methods: ['GET'])]
-    // public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
+            ]
+        );
+    }
+    #[Route('/sendsms', name: 'Password_send_sms')]
+    // Send SMS notification to admin
+    public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SmsType::class);
+
+        $form->handleRequest($request);
+        $err = " ";
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            $num = $data['number'];
+            $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
+            $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
+            $client = new Client($accountSid, $authToken);
+            $message = $client->messages->create(
+                $num, // replace with admin's phone number
+                [
+                    'from' => '+16076955652', // replace with your Twilio phone number
+                    'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
+                ]
+            );
+            return $this->redirectToRoute('app_livraisons_front');
+        } else {
+            $err = "erreur";
+        }
+
+        return $this->renderForm('sms/index.html.twig', [
+
+            'form' => $form,
+            'err' => $err,
+        ]);
+    }
+    // #[Route('/filtre_cat/{adresseExpedition}', name: 'filtre')]
+    // function filtre(LivraisonRepository $repo, $adresseExpedition): Response
     // {
-    //     $LivraisonController = new LivraisonController();
-    //     $form = $this->createForm(SmsType::class);
-
-    //     $form->handleRequest($request);
-
-    //     $to = '+216' . "28440373"; // The phone number to send the SMS to
-    //     $from = '+16076955652'; // Your Twilio phone number
-    //     $body = 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !.'; // The message body
-
-    //     // $twilioClient->sendSMS($to, $from, $body);
-    //     // $this->new($request, $entityManager);
-
-    //     return $this->redirectToRoute('sms/index.html.twig');
+    //     $catego = $repo->find($adresseExpedition);
+    //     $Offre = $repo->findByCat($catego);
+    //     $cats = $repo->findAll();
+    //     return $this->render(
+    //         'livraison/index.html.twig',
+    //         [
+    //             'Livraison' => $Offre, 'adresseExpedition' => $cats
+    //         ]
+    //     );
     // }
 }
+// #[Route('/filtre_cat/{cat}', name: 'filtre')]
+// function filtre(OffreRepository $repository, CategoriesRepository $repo, $cat)
+// {
+//     $catego = $repo->find($cat);
+//     $Offre = $repository->findByCat($catego);
+//     $cats = $repo->findAll();
+//     return $this->render('Front/offreFront/frontaffiche.html.twig', [
+//         'offre' => $Offre, 'cat' => $cats
+//     ]);
+// }
+// #[Route('/filtre_cat/{adresseExpedition }', name: 'filtre')]
+// function filtre(LivraisonRepository $repo, $adresseExpedition)
+// {
+//     $catego = $repo->find($adresseExpedition);
+//     $Offre = $repo->findByCat($catego);
+//     $cats = $repo->findAll();
+//     return $this->render(
+//         'livraison/index.html.twig',
+//         [
+//             'Livraison' => $Offre, 'adresseExpedition' => $cats
+//         ]
+//     );
+// }
