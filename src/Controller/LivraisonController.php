@@ -196,6 +196,7 @@ class LivraisonController extends AbstractController
         if ($form->isSubmitted()) {
             $data = $form->getData();
             $num = $data['number'];
+            $descripton = $data['description'];
             $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
             $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
             $client = new Client($accountSid, $authToken);
@@ -203,7 +204,8 @@ class LivraisonController extends AbstractController
                 $num, // replace with admin's phone number
                 [
                     'from' => '+16076955652', // replace with your Twilio phone number
-                    'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
+                    'body' => $descripton,
+                    // 'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
                 ]
             );
             return $this->redirectToRoute('app_livraisons_front');
