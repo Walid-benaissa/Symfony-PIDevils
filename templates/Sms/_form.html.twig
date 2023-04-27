@@ -1,5 +1,9 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
-
+<style>
+      .form {
+        margin-bottom: 50px;
+      }
+    </style>
 
     <div class="centerdiv">
  
@@ -10,15 +14,15 @@
     <div class ="col-sm-12">
     {{ form_widget(form.number)}}
     {{ form_errors(form.number ,{'attr':{'class':'text-danger'}})}}
-      {{ form_widget(form.save,{'attr':{'class': 'btn btn-primary' }}) }}<br> 
+     </br>  </br> 
+      {# {{ form_widget(form.save,{'attr':{'class': 'btn btn-warning' }}) }}</br> #}
+      <div class="text-center">
+    {# {{ form_widget(form.save,{'attr':{'class': 'btn btn-warning' }}) }}</br> #}
+     <button class="submit">{{ button_label|default('Envoyer') }}</button>
+
+</div>
+     
 
     </div>
-   {# <button type="submit" class="btn btn-save">{{ button_label|default('Send Code') }}</button> #}
 
-    {# <div class ="col-sm-12">
-    {{ form_widget(form.adresseExpedition)}}
-    {{ form_errors(form.adresseExpedition ,{'attr':{'class':'text-danger'}})}}
-    </div>
-
-    {# {{ form_start(form, {'action': path('Password_send_sms'), 'attr': {'novalidate':'novalidate'}}) }}
-    {{ form_widget(form) }} #}
+ 

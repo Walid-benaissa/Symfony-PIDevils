@@ -103,6 +103,14 @@ class LivraisonRepository extends ServiceEntityRepository
     }
 
 
+    public function sortByadresse()
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.nomV', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // public function sortBynom() {
     //     return $this->createQueryBuilder('e')
     //         ->orderBy('e.nomV', 'DESC')
