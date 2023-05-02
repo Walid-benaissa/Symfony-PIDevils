@@ -1,4 +1,5 @@
 <link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+
 <div class="centerdiv">
     {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
     <h1 class="title">Ajouter une course</h1>
@@ -22,7 +23,7 @@
         {{ form_label(form.distance) }}<br>
     </div>
     <div class="input">
-        {{ form_widget(form.distance, {'attr': {'class': 'input', 'step': '0.01', 'min': '0', 'title': 'Entrez une distance valide'}}) }}
+        {{ form_widget(form.distance, {'attr': {'class': 'input distance-field', 'step': '0.01', 'min': '0', 'title': 'Entrez une distance valide'}}) }}
     </div>
     {{ form_errors(form.distance) }}
 
@@ -30,7 +31,7 @@
         {{ form_label(form.prix) }}<br>
     </div>
     <div class="input">
-        {{ form_widget(form.prix, {'attr': {'class': 'input', 'step': '0.01', 'min': '0', 'title': 'Entrez un prix valide'}}) }}
+        {{ form_widget(form.prix, {'attr': {'class': 'input price-field', 'step': '0.01', 'min': '0', 'title': 'Entrez un prix valide'}}) }}
     </div>
     {{ form_errors(form.prix) }}
 
@@ -42,6 +43,16 @@
     </div>
     {{ form_errors(form.statutCourse) }}
 
+    <script>
+        const distanceField = document.querySelector('.distance-field');
+        const priceField = document.querySelector('.price-field');
+
+        distanceField.addEventListener('input', () => {
+            const distance = parseFloat(distanceField.value);
+            const price = distance * 2.25; // Calcul du prix en fonction de la distance (ici, un prix fixe de 0.5€ par kilomètre)
+            priceField.value = price.toFixed(2); // Affectation du prix calculé au champ de prix
+        });
+    </script>
 
     <button class="submit">{{ button_label|default('Ajouter') }}</button>
     {{ form_end(form) }}
