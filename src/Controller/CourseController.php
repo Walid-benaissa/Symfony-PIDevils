@@ -94,15 +94,6 @@ public function new(Request $request, CourseRepository $courseRepository): Respo
             'course' => $course,
         ]);
     }
-    #[Route('/jeu', name: 'app_course_Jeu', methods: ['GET'])]
-    public function Jeu(Request $request, Course $course): Response
-    {
-        return $this->render('course/Jeu.html.twig', [
-            'course' => $course,
-            'score' => $score,
-        ]);
-    }
-    
 
     #[Route('/course/{idCourse}/edit', name: 'app_course_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Course $course, CourseRepository $courseRepository): Response
