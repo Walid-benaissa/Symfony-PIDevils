@@ -110,16 +110,19 @@
 				<li class="nav-item">
 					<a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
 						<i class="bi bi-layout-text-window-reverse"></i>
-						<span>Courses</span>
+						<span>Offres Courses</span>
 						<i class="bi bi-chevron-down ms-auto"></i>
 					</a>
 					<ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li>
-							<a href="{{path('app_course_index')}}">
+							<a href="{{path('app_offre_course_new')}}">
+								<i class="bi bi-circle"></i>
+								<span>Effectuer</span>
+							</a>
+						<a href="{{path('app_offre_course_index')}}">
 								<i class="bi bi-circle"></i>
 								<span>Consulter</span>
 							</a>
-							<a href="{{path('app_stats')}}"><i class="fa fa-tachometer"></i>Statistique</a>
 						</li>
 					</ul>
 				</li>
