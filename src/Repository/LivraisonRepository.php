@@ -74,9 +74,9 @@ class LivraisonRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //   rechercher par nom de produit
 
-    public function rechercheParNomDeProduit($etat, $adresseDestinataire)
+
+    public function rechercheParetat($etat, $adresseDestinataire)
     {
         $qb = $this->createQueryBuilder('p')
             ->where('1 = 1');
@@ -84,11 +84,6 @@ class LivraisonRepository extends ServiceEntityRepository
         if (!empty($etat)) {
             $qb->andWhere('p.etat LIKE :etat')
                 ->setParameter('etat', '%' . $etat . '%');
-        }
-
-        if (!empty($adresseDestinataire)) {
-            $qb->andWhere('p.adresseDestinataire LIKE :adresseDestinataire')
-                ->setParameter('adresseDestinataire', '%' . $adresseDestinataire . '%');
         }
 
         return $qb->getQuery()->getResult();
@@ -106,7 +101,7 @@ class LivraisonRepository extends ServiceEntityRepository
     public function sortByadresse()
     {
         return $this->createQueryBuilder('e')
-            ->orderBy('e.nomV', 'DESC')
+            ->orderBy('e.nomV', 'ASC')
             ->getQuery()
             ->getResult();
     }
