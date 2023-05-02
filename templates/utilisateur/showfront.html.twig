@@ -13,6 +13,7 @@
         <div class="card-subtitle">{{ utilisateur.role }}</div>
         <div class="card-subtitle">{{ utilisateur.evaluation }}</div>
 	<a class="submit" href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier</a>
+	<a class="submit" href="{{ path('app_utilisateur_changemdp', {'id': utilisateur.id}) }}">Changer mot de passe</a>
 
         </div>
 		</div>

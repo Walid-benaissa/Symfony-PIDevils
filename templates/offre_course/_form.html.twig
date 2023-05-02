@@ -1,4 +1,48 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<link href="{{ asset("css/form-css.css") }}" rel="stylesheet">
+<div class="centerdiv">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form'}}) }}
+    <h1 class="title">Ajouter une offre</h1>
+
+    <div class="label">
+        {{ form_label(form.matriculeVehicule) }}<br>
+    </div>
+    <div class="input">
+        {{ form_widget(form.matriculeVehicule, {'attr': {'class': 'input', 'pattern': '[0-9]+', 'title': 'Entrez un numéro de matricule valide'}}) }}
+    </div>
+    {{ form_errors(form.matriculeVehicule) }}
+
+    <div class="label">
+        {{ form_label(form.cinConducteur) }}<br>
+    </div>
+    <div class="input">
+        {{ form_widget(form.cinConducteur, {'attr': {'class': 'input', 'pattern': '[0-9]+', 'title': 'Entrez un numéro de CIN valide'}}) }}
+    </div>
+    {{ form_errors(form.cinConducteur) }}
+
+    <div class="label">
+        {{ form_label(form.nbPassagers) }}<br>
+    </div>
+    <div class="input">
+        {{ form_widget(form.nbPassagers, {'attr': {'class': 'input', 'pattern': '[0-9]+', 'title': 'Entrez un nombre valide'}}) }}
+    </div>
+    {{ form_errors(form.nbPassagers) }}
+
+    <div class="label">
+        {{ form_label(form.optionsOffre) }}<br>
+    </div>
+    <div class="input">
+        {{ form_widget(form.optionsOffre, {'attr': {'class': 'input'}}) }}
+    </div>
+    {{ form_errors(form.optionsOffre) }}
+
+    <div class="label">
+        {{ form_label(form.statutOffre) }}<br>
+    </div>
+    <div class="input">
+        {{ form_widget(form.statutOffre, {'attr': {'class': 'input'}}) }}
+    </div>
+    {{ form_errors(form.statutOffre) }}
+
+    <button class="submit">{{ button_label|default('Ajouter') }}</button>
+    {{ form_end(form) }}
+</div>

@@ -165,7 +165,7 @@ if($mostReserved)
             'vehicules' => $pagination,
         ]);
     }
-
+//...................................................
     #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VehiculeRepository $vehiculeRepository ,SluggerInterface $slugger = null): Response
     {

@@ -2,27 +2,37 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class MailController extends AbstractController
 {
 
+
     #[Route('mdp/mail/{to}', name: 'app_mail')]
-    public function sendEmail(MailerInterface $mailer, $to)
+    public function sendEmail(MailerInterface $mailer, $to, Request $request)
     {
         $code = "";
         $digits = "0123456789";
         for ($i = 0; $i < 6; $i++) {
             $code .= $digits[rand(0, 9)];
         }
+        $session = $request->getSession();
+        $session->set("code", $code);
+        $session->set('to', $to);
         $email = (new Email())
             ->from('pfe.mailer2022@gmail.com')
             ->to($to)
@@ -243,32 +253,77 @@ class MailController extends AbstractController
             </html>');
 
         $mailer->send($email);
-        return $this->redirectToRoute('app_utilisateur_codeV', ['code' => $code, 'mail' => $to]);
+        return $this->redirectToRoute('app_utilisateur_codeV');
     }
 
 
-    #[Route('/mdp/codeV/{code}', name: 'app_utilisateur_codeV')]
-    public function codeV(Request $request, $code, $mail): Response
+    #[Route('/mdp/codeV', name: 'app_utilisateur_codeV')]
+    public function codeV(Request $request, SessionInterface $session): Response
     {
         $err = '';
         $form = $this->createFormBuilder()
-            ->add('code', TextType::class, ['label' => 'code de validation:'])
+            ->add('code', TextType::class, ['label' => 'code de validation:', 'attr' => [
+                'placeholder' => 'saisir votre code'
+            ]])
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $codee = $form->getData()['code'];
+            $code = $request->getSession()->get('code');
             if ($codee == $code) {
-
                 return $this->redirectToRoute('app_utilisateur_mdpObchange', []);
             } else {
-                $err = "votre code n'est pas valide ";
+                $err = "votre code n'est pas valide";
             }
         }
 
         return  $this->render('utilisateur/codeValidation.html.twig', [
             'form' => $form,
-            'err' => $mail,
+            'err' => $err
+        ]);
+    }
+
+
+    #[Route('/mdp/changemdpOublie/', name: 'app_utilisateur_mdpObchange')]
+    public function mdpOublier(Request $request, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+
+    {
+
+        $form = $this->createFormBuilder()
+            ->add('mdp', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'label' => ' ',
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Mot de passe:',
+                    'attr' => [
+                        'placeholder' => 'saisir votre mot de passe'
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe:',
+                    'attr' => ['placeholder' => 'Confirmez mot de passe'],
+                ]
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Valider'])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mdp = $form->getData()['mdp'];
+            $mail = $request->getSession()->get('to');
+            $utilisateur = $ur->findOneBy(['mail' => $mail]);
+            $hashedPassword = $passwordHasher->hashPassword(
+                new Utilisateur(),
+                $mdp
+            );
+            $utilisateur->setMdp($hashedPassword);
+            $ur->save($utilisateur, true);
+
+            return $this->redirectToRoute('app_utilisateur_login');
+        }
+        return  $this->render('utilisateur/modifiermdpOublie.html.twig', [
+            'form' => $form,
 
         ]);
     }

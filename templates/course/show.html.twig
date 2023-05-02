@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <th>PointDepart</th>
-                <td>{{ course.pointDepart }}</td>
+                <td>{{ course.pointDepart}}</td>
             </tr>
             <tr>
                 <th>PointDestination</th>
@@ -33,9 +33,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_course_index') }}">back to list</a>
+    <a href="{{ path('app_course_index') }}">Retour</a>
+    <a href="{{ path('app_course_edit', {'idCourse': course.idCourse}) }}">Modifier</a>
 
-    <a href="{{ path('app_course_edit', {'idCourse': course.idCourse}) }}">edit</a>
+   
 
     {{ include('course/_delete_form.html.twig') }}
 {% endblock %}

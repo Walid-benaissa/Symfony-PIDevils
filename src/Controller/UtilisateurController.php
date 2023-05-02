@@ -26,6 +26,10 @@ use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 class UtilisateurController extends AbstractController
 {
@@ -50,6 +54,13 @@ class UtilisateurController extends AbstractController
     {
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form->add('captcha', CaptchaType::class, [
+            'label' => ' ',
+
+            'attr' => [
+                'placeholder' => 'Entre code'
+            ]
+        ]);
 
         $utilisateur->setRole("Client");
         $form->handleRequest($request);
@@ -70,18 +81,20 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/creatCptC', name: 'app_utilisateur_newC', methods: ['GET', 'POST'])]
-    public function newC(Profiler $profiler, LoggerInterface $logger, Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
+    public function newC(Request $request, ConducteurRepository $cr, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger = null): Response
     {
-        $u = new Utilisateur();
-        $c = new Conducteur();
-        $formC = $this->createForm(ConducteurType::class);
-        $formC->handleRequest($request);
-        $u->setRole("Conducteur");
         try {
             // Code that may throw an exception...
             $u = new Utilisateur();
             $c = new Conducteur();
             $formC = $this->createForm(ConducteurType::class);
+            $formC->add('captcha', CaptchaType::class, [
+                'label' => ' ',
+
+                'attr' => [
+                    'placeholder' => 'Entre code'
+                ]
+            ]);
             $formC->handleRequest($request);
             if ($formC->isSubmitted() && $formC->isValid()) {
                 $data = $formC->getData();
@@ -98,37 +111,63 @@ class UtilisateurController extends AbstractController
                 $ur->save($u, true);
 
                 /** @var UploadedFile $image */
-                $image = $formC['b3']->getData();
+                /*   $image = $formC['b3']->getData();
                 $destination = 'C:/uploadedFiles/Images/';
                 $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
                 $image->move($destination, $fileName);
-                $c->setB3('C:/uploadedFiles/Images/' . $fileName);
+                $c->setB3('C:/uploadedFiles/Images/' . $fileName); */
+                $image = $formC['b3']->getData();
+                if ($image) {
+                    $originalImgName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newImgename = $originalImgName . '-' . uniqid() . '.' . $image->guessExtension();
+
+                    if ($slugger) {
+                        $safeImgname = $slugger->slug($originalImgName);
+                        $newImgename = $safeImgname . '-' . uniqid() . '.' . $image->guessExtension();
+                    }
+
+                    try {
+                        $image->move(
+                            $this->getParameter('imgb_directory'),
+                            $newImgename
+                        );
+                    } catch (FileException $e) {
+                        // handle exception if something happens during file upload
+                    }
+                }
+                $c->setB3($newImgename);
 
                 /** @var UploadedFile $image */
                 $image = $formC['permis']->getData();
-                $destination = 'C:/uploadedFiles/Images/';
-                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileName = $originalFileName . '-' . uniqid() . '.' . $image->guessExtension();
-                $image->move($destination, $fileName);
-                $c->setPermis('C:/uploadedFiles/Images/' . $fileName);
+                if ($image) {
+                    $originalImgName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newImgename = $originalImgName . '-' . uniqid() . '.' . $image->guessExtension();
 
+                    if ($slugger) {
+                        $safeImgname = $slugger->slug($originalImgName);
+                        $newImgename = $safeImgname . '-' . uniqid() . '.' . $image->guessExtension();
+                    }
+
+                    try {
+                        $image->move(
+                            $this->getParameter('imgb_directory'),
+                            $newImgename
+                        );
+                    } catch (FileException $e) {
+                        // handle exception if something happens during file upload
+                    }
+                }
+                $c->setPermis($newImgename);
                 $c->setUtilisateur($u);
                 $cr->save($c, true);
+
                 return $this->redirectToRoute('app_utilisateur_login', [], Response::HTTP_SEE_OTHER);
             }
             return $this->renderForm('utilisateur/creatCptC.html.twig', [
                 'form' => $formC,
             ]);
         } catch (\Exception $e) {
-            $logger->error(sprintf(
-                'An exception occurred: %s in %s:%d',
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-
-            ));
-            $profiler->disable();
             throw $e;
         }
     }
@@ -142,10 +181,15 @@ class UtilisateurController extends AbstractController
 
 
     #[Route('/admin/utilisateur/{id}', name: 'app_utilisateur_show', methods: ['GET'])]
-    public function show(Utilisateur $utilisateur): Response
+    public function show(Utilisateur $u, ConducteurRepository $cr): Response
     {
+        $c = new Conducteur();
+        if ($u->getRole() == "Conducteur") {
+            /*  $c = $cr->gettcond($u->getId()); */
+        }
         return $this->render('utilisateur/show.html.twig', [
-            'utilisateur' => $utilisateur,
+            'utilisateur' => $u,
+            'conducteur' => $c,
         ]);
     }
     #[Route('/utilisateur/{id}', name: 'app_utilisateur_showfr', methods: ['GET'])]
@@ -157,20 +201,25 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/admin/utilisateuredit/{id}', name: 'app_utilisateur_editb', methods: ['GET', 'POST'])]
-    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+    public function editB(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
-        $id = $utilisateur->getId();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createFormBuilder()
+            ->add('role', ChoiceType::class, [
+                'choices'  => [
+                    'Conducteur' => 'Conducteur',
+                    'Client' => 'Client',
+                ],
+                'label' => 'Rôle',
+                'attr' => ['class' => 'row'],
+                'multiple' => false,
+                'expanded' => true
+            ])->getForm();
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $passwordHasher->hashPassword(
-                $utilisateur,
-                $utilisateur->getmdp()
-            );
-            $utilisateur->setMdp($hashedPassword);
+        if ($form->isSubmitted()) {
+            $utilisateur->setRole($form->getData()['role']);
             $utilisateurRepository->save($utilisateur, true);
 
-            return $this->redirectToRoute('app_utilisateur_editb', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('utilisateur/edit.html.twig', [
@@ -236,7 +285,9 @@ class UtilisateurController extends AbstractController
     {
         $err = '';
         $form = $this->createFormBuilder()
-            ->add('mail', EmailType::class, ['label' => 'Mail:'])
+            ->add('mail', EmailType::class, ['label' => 'Mail:', 'attr' => [
+                'placeholder' => 'saisir votre E-mail'
+            ]])
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
         $form->handleRequest($request);
@@ -256,14 +307,14 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-
-
-    #[Route('/mdp/changemdpOublie/', name: 'app_utilisateur_mdpObchange')]
-    public function mdpOublier(Request $request, UtilisateurRepository $ur, UserPasswordHasherInterface $passwordHasher): Response
-
+    #[Route('/utilisateur/modifiermotdepasse/{id}', name: 'app_utilisateur_changemdp')]
+    public function editPassword(Request $request,  Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface  $passwordHasher)
     {
-
+        $err = "";
         $form = $this->createFormBuilder()
+            ->add('mdpA', PasswordType::class, ['label' => 'Ancien mot de passe :', 'attr' => [
+                'placeholder' => 'saisir votre ancien mot de passe '
+            ]])
             ->add('mdp', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => ' ',
@@ -279,25 +330,26 @@ class UtilisateurController extends AbstractController
                     'attr' => ['placeholder' => 'Confirmez mot de passe'],
                 ]
             ])
-            ->add('save', SubmitType::class, ['label' => 'Valider'])
             ->getForm();
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $mdp = $form->getData()['mdp'];
-            $utilisateur = new Utilisateur();
-            $hashedPassword = $passwordHasher->hashPassword(
-                $utilisateur,
-                $mdp
-            );
-            $utilisateur->setMdp($hashedPassword);
-            $ur->save($utilisateur, true);
-
-            return $this->redirectToRoute('app_utilisateur_login');
+            $data = $form->getData();
+            $oldpwd = $data['mdpA'];
+            if ($passwordHasher->isPasswordValid($utilisateur, $oldpwd)) {
+                $newpwd = $data['mdp'];
+                $hashedPassword2 = $passwordHasher->hashPassword($utilisateur, $newpwd);
+                $utilisateur->setMdp($hashedPassword2);
+                $utilisateurRepository->save($utilisateur, true);
+                return $this->redirectToRoute('app_utilisateur_showfr', ['id' => $utilisateur->getId()], Response::HTTP_SEE_OTHER);
+            } else {
+                $err = "Ancien mot de passe incorrect";
+            }
         }
-
-        return  $this->render('utilisateur/modifiermdpOublier.html.twig', [
+        return $this->renderForm('utilisateur/changermdpfront.html.twig', [
+            'utilisateur' => $utilisateur,
             'form' => $form,
-
+            'err' => $err,
         ]);
     }
 }

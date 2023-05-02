@@ -1,4 +1,4 @@
-{% extends 'base-back.html.twig'%}
+{% extends 'base-front.html.twig'%}
 
 
 {% block body %}
@@ -26,8 +26,8 @@
                 <td>{{ offre_course.optionsOffre }}</td>
                 <td>{{ offre_course.statutOffre }}</td>
                 <td>
-                    <a href="{{ path('app_offre_course_show', {'idOffre': offre_course.idOffre}) }}">show</a>
-                    <a href="{{ path('app_offre_course_edit', {'idOffre': offre_course.idOffre}) }}">edit</a>
+                    <a href="{{ path('app_offre_course_show', {'idOffre': offre_course.idOffre}) }}">Details</a>
+                 
                 </td>
             </tr>
         {% else %}
@@ -38,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_offre_course_new') }}">Create new</a>
+    <a href="{{ path('app_offre_course_new') }}">Ajouter de nouveau</a>
 {% endblock %}

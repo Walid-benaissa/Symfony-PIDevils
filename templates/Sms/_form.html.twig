@@ -1,0 +1,37 @@
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<style>
+      .form {
+        margin-bottom: 50px;
+      }
+    </style>
+
+    <div class="centerdiv">
+ 
+    {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form'}}) }}
+       <h1 class="title">Envoyer SMS</h1>
+
+<label for="inputText" class ="col-sm-12 col-form-label"> Numéro de téléphone </label> 
+    <div class ="col-sm-12">
+    {{ form_widget(form.number)}}
+    {{ form_errors(form.number ,{'attr':{'class':'text-danger'}})}}
+     </br> 
+
+</div>
+<label for="description" class="col-sm-12 col-form-label">Message</label>
+<div class="col-sm-12">
+    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+    {{ form_errors(form.description, {'attr': {'class': 'text-danger'}}) }}
+</div>
+
+     </br>  </br> 
+      
+      <div class="text-center">
+   
+     <button class="submit">{{ button_label|default('Envoyer') }}</button>
+</div>
+
+     
+
+    </div>
+
+ 
