@@ -38,6 +38,16 @@ class CourseRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findByUser($id)
+    {
+        return $this->createQueryBuilder("r")
+            ->join('r.user', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Course[] Returns an array of Course objects

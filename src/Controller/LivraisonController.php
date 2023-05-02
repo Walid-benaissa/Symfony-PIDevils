@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Livraison;
 use App\Form\LivraisonType;
+use App\Form\SmsType;
 use App\Repository\LivraisonRepository;
 use App\Repository\UtilisateurRepository;
 use App\Service\TwilioClient;
@@ -15,16 +16,55 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
 
 class LivraisonController extends AbstractController
 {
+
+
+
     #[Route('/livraison', name: 'app_livraison_index', methods: ['GET'])]
-    public function index(LivraisonRepository $livraisonRepository): Response
+    public function index(EntityManagerInterface $entityManager, LivraisonRepository $livraisonRepository, Request $request): Response
+    { {
+            $queryBuilder = $entityManager->createQueryBuilder()
+                ->select('v')
+                ->from(Livraison::class, 'v');
+            // Sorting
+            $sort = $request->query->get('sort');
+            if ($sort) {
+                $queryBuilder->orderBy('v.' . $sort, 'ASC');
+            }
+
+            $livraisons = $queryBuilder->getQuery()->getResult();
+            return $this->render('livraison/index.html.twig', [
+                'livraisons' => $livraisons,
+            ]);
+        }
+
+        //   $livraisons = $livraisonRepository->findAll();
+
+        // return $this->render('livraison/index.html.twig', [
+        //     'livraisons' => $livraisons,
+        // ]);
+    }
+    // #[Route('/livraison', name: 'app_livraison_index', methods: ['GET'])]
+    // public function index(LivraisonRepository $livraisonRepository): Response
+    // {
+
+    //     $livraisons = $livraisonRepository->findAll();
+
+    //     return $this->render('livraison/index.html.twig', [
+    //         'livraisons' => $livraisons,
+    //     ]);
+    // }
+
+    #[Route('/livraison/liste', name: 'app_livraisons_front', methods: ['GET'])]
+    public function afficher(LivraisonRepository $livraisonRepository): Response
     {
 
         $livraisons = $livraisonRepository->findAll();
 
-        return $this->render('livraison/index.html.twig', [
+        return $this->render('livraison/list_all.html.twig', [
             'livraisons' => $livraisons,
         ]);
     }
@@ -121,28 +161,100 @@ class LivraisonController extends AbstractController
         $minPrix = $request->get('min');
         $maxPrix = $request->get('max');
 
-        return $this->render('livraison/list.html.twig', [
+        return $this->render('livraison/list_all.html.twig', [
             'livraisons' => $livraisonRepository->findByPrix($minPrix, $maxPrix),
 
 
 
         ]);
     }
+    #[Route('/rechercheDashbordParNom', name: 'app_recherche_dashboard_par_nom_du_produit')]
+    public function recgercheParNomDuProduit(LivraisonRepository $livraisonRepository, Request $request)
+    {
 
-    // #[Route('/send-sms', name: 'Password_send_sms', methods: ['GET'])]
-    // public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
+        $etat = $request->get('etat');
+        $adresseDestinataire = $request->get('adresseDestinataire');
+
+        // $livraison =  $livraisonRespositry->rechercheParNomDeProduit($etat);
+
+        return $this->render(
+            'livraison/list.html.twig',
+            [
+                'livraisons' => $livraisonRepository->rechercheParNomDeProduit($etat, $adresseDestinataire),
+
+            ]
+        );
+    }
+    #[Route('/sendsms', name: 'Password_send_sms')]
+    // Send SMS notification to admin
+    public function sendSms(Request $request, TwilioClient $twilioClient, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SmsType::class);
+
+        $form->handleRequest($request);
+        $err = " ";
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            $num = $data['number'];
+            $descripton = $data['description'];
+            $accountSid = 'AC23c10455ba1e24c96fb6bcc98f9183a0';
+            $authToken = 'ca73d2dd53ebcc0b60d9cb40b2d47931';
+            $client = new Client($accountSid, $authToken);
+            $message = $client->messages->create(
+                $num, // replace with admin's phone number
+                [
+                    'from' => '+16076955652', // replace with your Twilio phone number
+                    'body' => $descripton,
+                    // 'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
+                ]
+            );
+            return $this->redirectToRoute('app_livraisons_front');
+        } else {
+            $err = "erreur";
+        }
+
+        return $this->renderForm('sms/index.html.twig', [
+
+            'form' => $form,
+            'err' => $err,
+        ]);
+    }
+    // #[Route('/filtre_cat/{adresseExpedition}', name: 'filtre')]
+    // function filtre(LivraisonRepository $repo, $adresseExpedition): Response
     // {
-    //     $form = $this->createForm(SendType::class);
-
-    //     $form->handleRequest($request);
-
-    //     $to = '+21628440373'; // The phone number to send the SMS to
-    //     $from = '+16076955652'; // Your Twilio phone number
-    //     $body = 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !.'; // The message body
-
-    //     $twilioClient->sendSMS($to, $from, $body);
-    //     $this->new($request, $entityManager);
-
-    //     return new Response('SMS sent successfully!');
+    //     $catego = $repo->find($adresseExpedition);
+    //     $Offre = $repo->findByCat($catego);
+    //     $cats = $repo->findAll();
+    //     return $this->render(
+    //         'livraison/index.html.twig',
+    //         [
+    //             'Livraison' => $Offre, 'adresseExpedition' => $cats
+    //         ]
+    //     );
     // }
+
 }
+
+// #[Route('/filtre_cat/{cat}', name: 'filtre')]
+// function filtre(OffreRepository $repository, CategoriesRepository $repo, $cat)
+// {
+//     $catego = $repo->find($cat);
+//     $Offre = $repository->findByCat($catego);
+//     $cats = $repo->findAll();
+//     return $this->render('Front/offreFront/frontaffiche.html.twig', [
+//         'offre' => $Offre, 'cat' => $cats
+//     ]);
+// }
+// #[Route('/filtre_cat/{adresseExpedition }', name: 'filtre')]
+// function filtre(LivraisonRepository $repo, $adresseExpedition)
+// {
+//     $catego = $repo->find($adresseExpedition);
+//     $Offre = $repo->findByCat($catego);
+//     $cats = $repo->findAll();
+//     return $this->render(
+//         'livraison/index.html.twig',
+//         [
+//             'Livraison' => $Offre, 'adresseExpedition' => $cats
+//         ]
+//     );
+// }

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OffreCourseRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 #[ORM\Entity(repositoryClass: OffreCourseRepository::class)]
@@ -15,12 +17,30 @@ class OffreCourse
     private $idOffre;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: 'Le champ est requis.')]
+    #[Assert\Positive(message: 'Le nombre doit être positif.')]
+    #[Assert\Regex(
+        pattern: '/^\d+$/',
+        message: 'Le champ doit contenir que des nombres.'
+    )]
     private ?int $matriculeVehicule = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: 'Le champ est requis.')]
+    #[Assert\Positive(message: 'Le nombre doit être positif.')]
+    #[Assert\Regex(
+        pattern: '/^\d+$/',
+        message: 'Le champ doit contenir que des nombres.'
+    )]
     private ?int $cinConducteur = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: 'Le champ est requis.')]
+    #[Assert\Positive(message: 'Le nombre doit être positif.')]
+    #[Assert\Regex(
+        pattern: '/^\d+$/',
+        message: 'Le champ doit contenir que des nombres.'
+    )]
     private ?int $nbPassagers = null;
 
     #[ORM\Column(length: 255, nullable: true)]
