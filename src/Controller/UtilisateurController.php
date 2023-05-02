@@ -285,7 +285,9 @@ class UtilisateurController extends AbstractController
     {
         $err = '';
         $form = $this->createFormBuilder()
-            ->add('mail', EmailType::class, ['label' => 'Mail:'])
+            ->add('mail', EmailType::class, ['label' => 'Mail:', 'attr' => [
+                'placeholder' => 'saisir votre E-mail'
+            ]])
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
         $form->handleRequest($request);
@@ -310,7 +312,9 @@ class UtilisateurController extends AbstractController
     {
         $err = "";
         $form = $this->createFormBuilder()
-            ->add('mdpA', PasswordType::class, ['label' => 'Ancien mot de passe '])
+            ->add('mdpA', PasswordType::class, ['label' => 'Ancien mot de passe :', 'attr' => [
+                'placeholder' => 'saisir votre ancien mot de passe '
+            ]])
             ->add('mdp', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => ' ',

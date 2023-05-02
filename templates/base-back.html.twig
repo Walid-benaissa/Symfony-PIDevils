@@ -152,8 +152,9 @@
 				<ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					</a>
 						<li><a href="{{path('app_vehicule_index')}}">gerer vehicules</a></li>
-								<li><a href="{{path('app_promotion_index')}}">gerer promotion</a></li>
+								
 								<li><a href="{{path('app_location_index')}}">gerer location</a></li>
+								<li><a href="{{path('stats')}}">Statistiques Des Locations</a></li>
 								
 						</ul> 
 				</li>
@@ -219,7 +220,19 @@
 		</aside>
 		<!-- End Sidebar-->
 
-		<main id="main" class="main"> {% block body %}{% endblock %}
+		<main id="main" class="main">
+		<div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+
+</script>
+
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		
+		 {% block body %}{% endblock %}
 			</main>
 			<!-- End #main -->
 

@@ -79,4 +79,24 @@ class VehiculeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function sortByprix() {
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.prix', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function sortBynom() {
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.nomV', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+public function sortByville() {
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.ville', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 }

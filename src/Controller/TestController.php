@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Voiture;
 use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,7 +46,7 @@ class TestController extends AbstractController
 
         try {
             $curl = curl_init();
-        
+
             curl_setopt_array($curl, [
                 CURLOPT_URL => 'https://api.adviceslip.com/advice',
                 CURLOPT_RETURNTRANSFER => true,
@@ -56,33 +57,31 @@ class TestController extends AbstractController
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
             ]);
-        
+
             $response = curl_exec($curl);
-        
-            if(curl_error($curl)) {
+
+            if (curl_error($curl)) {
                 throw new \Exception(curl_error($curl));
             }
-        
+
             curl_close($curl);
-        
+
             $content = json_decode($response, true);
             $advice = $content['slip']['advice'];
-        
+
             return $this->render('herosection.html.twig', [
                 'controller_name' => 'ClassroomController',
                 'user' => $this->getUser(),
-                'advice'=>$advice
+                'advice' => $advice
             ]);
-        
         } catch (Exception $e) {
             // handle the error
             echo 'Error: ' . $e->getMessage();
         }
-        
-}
+    }
 
-        
-    
+
+
 
     #[Route('/admin/utilisateurstat', name: 'app_utilisateur_showStat', methods: ['GET'])]
     public function showStat(UtilisateurRepository $ur): Response

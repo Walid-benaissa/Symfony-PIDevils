@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig'%}
+{% extends 'base-back.html.twig'%}
 
 {% block body %}
 	<h1>Vehicule</h1>
@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<th>Image</th>
-				<td>{{ vehicule.image }}</td>
+				<td> <img src="{{asset('photo/'~vehicule.image)}}" alt="Game" class="circular-image" style="width:50px; lenght:50px;"></td>
 			</tr>
 			<tr>
 				<th>Ville</th>

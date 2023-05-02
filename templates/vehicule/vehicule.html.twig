@@ -42,8 +42,7 @@
     }
   </style>
 
-  {% for vehicule in vehicules %}
-    <div class="vehicule-container">
+  <div class="vehicule-container">
       <div class="image-container">
         <img src="{{ asset('photo/'~vehicule.image) }}" alt="{{ vehicule.nomV }}" class="circular-image">
       </div>
@@ -53,18 +52,7 @@
         <div class="vehicule-price">
           {{ vehicule.prix }} EUR /par jour
         </div>
-         	<a href="{{ path('app_location_new', {'idVehicule': vehicule.idVehicule}) }}"class="select-button">reserver</a>
-          
-
+        <a href="{{ path('app_location_new',) }}" class="select-button">Reserver </a>
       </div>
     </div>
-  {% else %}
-    <p>No records found.</p>
-  {% endfor %}
-
-  <div class="pagination">
-		{{ knp_pagination_render(vehicules) }}
-	</div>
-{% endblock %}
-
-
+    {% endblock %}

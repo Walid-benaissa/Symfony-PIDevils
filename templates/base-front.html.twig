@@ -77,8 +77,9 @@
 
 							</ul>
 						</li>
-						
-
+                  {% if is_granted('ROLE_COND') %}
+    {# Ne rien faire, car l'utilisateur a le rôle ROLE_COND #}
+{% else %}
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -91,7 +92,11 @@
 
 							</ul>
 						</li>
-
+						{% endif %}
+ 
+ {% if is_granted('ROLE_COND') %}
+    {# Ne rien faire, car l'utilisateur a le rôle ROLE_COND #}
+{% else %}
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -104,23 +109,24 @@
 
 							</ul>
 						</li>
+						{% endif %}
                         {% if is_granted('ROLE_COND') %}
 							<li class="dropdown">
 							<a href="#">
 								<span>
-									Colis</span>
+									Livraison</span>
 								<i class="bi bi-chevron-down"></i>
 							</a>
 							<ul>
-								<li><a href="{{path('app_colis_all')}}">Consulter tous les colis</a></li>
-								<li><a href="{{path('app_colis_new')}}">Ajouter</a></li>
+								<li><a href="{{path('app_livraisons_front')}}">Consulter offres livraisons</a></li>
+								<li><a href="{{path('app_livraisons_front')}}">Consulter mes livraisons</a></li>
 
 							</ul>
 						</li>
 						{% endif %}
 						
 						<li>
-							<a class="nav-link scrollto " href="#portfolio">Location</a>
+						
 						<li class="dropdown">
 							<a href="#">
 								<span>
@@ -128,9 +134,10 @@
 								<i class="bi bi-chevron-down"></i>
 							</a>
 							<ul>
+							    <li><a href="{{path('app_vehicule_new')}}">Ajouter vehicule</a></li>
 								<li><a href="{{path('app_vehicule')}}">Consulter vehicules</a></li>
-								<li><a href="{{path('app_vehicule_new')}}">Ajouter vehicule</a></li>
-								<li><a href="{{path('app_vehicule')}}">consulter vehicule en promotion</a></li>
+								
+							
 						   
 								
 
@@ -174,7 +181,7 @@
 							</ul>
 						</li>
 						<li>
-							<a class="nav-link scrollto" href="{{path('app_utilisateur_showfr', {'id': app.user.id})}}">Profil</a>
+							<a class="nav-link scrollto" href="{{path('app_utilisateur_showfr', {'id': app.user.id})}}">Profil </a>
 							
 						</li>
 					</ul>
@@ -183,7 +190,7 @@
 				<!-- .navbar -->
 
 				<a class="get-started-btn scrollto" href="{{path('app_logout')}}">
-					Se Déconnecter</a>
+					  Se Déconnecter</a>
 
 			</div>
 		</header>
@@ -191,7 +198,19 @@
 
 		<!-- ======= Hero Section ======= -->
 	</body>
-</html></br></br></br></br></br></br><div>{% block body %}{% endblock %}</div><!-- ======= Footer ======= --><footer id="footer"><div class="footer-top"><div class="container"><div class="row"><div class="col-lg-3 col-md-6"><div class="footer-info">
+</html></br></br></br></br></br></br><div>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+{% block body %}
+
+{% endblock %}</div><!-- ======= Footer ======= --><footer id="footer"><div class="footer-top"><div class="container"><div class="row"><div class="col-lg-3 col-md-6"><div class="footer-info">
 <h3>Fi Thenyti<span>.</span>
 </h3>
 <p>
@@ -210,7 +229,8 @@
 	<a href="#" class="instagram">
 		<i class="bx bxl-instagram"></i>
 	</a>
-	<a href="#" class="sms">
+	<a href="{{path('Password_send_sms')}}" class="sms">
+		{# <a href="#" class="sms"> #}
 <i class="fa-solid fa-comment-sms"></i>
 	</a>
 </div></div></div><div class="col-lg-3 col-md-6 footer-links"><h4>Nos Services</h4><ul>
@@ -218,10 +238,7 @@
 	<i class="bx bx-chevron-right"></i>
 	<a href="#">Course</a>
 </li>
-<li>
-	<i class="bx bx-chevron-right"></i>
-	<a href="#">Livraison</a>
-</li>
+
 <li>
 	<i class="bx bx-chevron-right"></i>
 	<a href="#">Location</a>

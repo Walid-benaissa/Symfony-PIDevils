@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -260,7 +262,9 @@ class MailController extends AbstractController
     {
         $err = '';
         $form = $this->createFormBuilder()
-            ->add('code', TextType::class, ['label' => 'code de validation:'])
+            ->add('code', TextType::class, ['label' => 'code de validation:', 'attr' => [
+                'placeholder' => 'saisir votre code'
+            ]])
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
         $form->handleRequest($request);
