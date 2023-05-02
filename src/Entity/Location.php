@@ -16,9 +16,10 @@ class Location
     private $idContrat;
 
 
-
-    #[ORM\Column(nullable: true)]
-    private ?int $idVehicule = null;
+    
+    #[ORM\ManyToOne(targetEntity: Vehicule::class, inversedBy: 'locations')]
+    #[ORM\JoinColumn(name: 'id_vehicule', referencedColumnName: 'id_vehicule')]
+    private ?Vehicule $idVehicule = null;
 
 
     #[ORM\Column(nullable: true)]
@@ -39,12 +40,12 @@ class Location
 
 
 
-    public function getIdVehicule(): ?int
+    public function getIdVehicule(): ?Vehicule
     {
         return $this->idVehicule;
     }
 
-    public function setIdVehicule(int $idVehicule): self
+    public function setIdVehicule(Vehicule $idVehicule): self
     {
         $this->idVehicule = $idVehicule;
 
