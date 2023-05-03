@@ -75,7 +75,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $commentaires;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
-    private Collection $reclamations;
+    private Collection $reclamations;   
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
     private Collection $voitures;
