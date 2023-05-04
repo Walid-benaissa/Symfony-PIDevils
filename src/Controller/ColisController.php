@@ -50,6 +50,8 @@ class ColisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coli->setIdClient($this->getUser());
+            $id = $coli->getClient()->getId();
             $colisRepository->save($coli, true);
 
             return $this->redirectToRoute('app_livraison_new', [], Response::HTTP_SEE_OTHER);
@@ -58,6 +60,16 @@ class ColisController extends AbstractController
         return $this->renderForm('colis/new.html.twig', [
             'coli' => $coli,
             'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/colis/{id}', name: 'app_colis_byuser', methods: ['GET'])]
+    public function showfr(ColisRepository $colisRepository, $id): Response
+    {
+
+        return $this->render('colis/list.html.twig', [
+            'colis' => $colisRepository->findByUser($id),
         ]);
     }
 

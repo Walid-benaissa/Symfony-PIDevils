@@ -104,7 +104,7 @@
 								<i class="bi bi-chevron-down"></i>
 							</a>
 							<ul>
-								<li><a href="{{path('app_colis_all')}}">Consulter</a></li>
+								<li><a href="{{path('app_colis_byuser',{'id': app.user.id})}})}}">Consulter</a></li>
 								<li><a href="{{path('app_colis_new')}}">Ajouter</a></li>
 
 							</ul>
@@ -118,8 +118,8 @@
 								<i class="bi bi-chevron-down"></i>
 							</a>
 							<ul>
-								<li><a href="{{path('app_livraisons_front')}}">Consulter offres livraisons</a></li>
-								<li><a href="{{path('app_livraisons_front')}}">Consulter mes livraisons</a></li>
+								<li><a href="{{path('app_livraisons_offre')}}">Consulter offres livraisons</a></li>
+								<li><a href="{{path('app_livraisons_front',{'id': app.user.id})}})}}">Consulter mes livraisons</a></li>
 
 							</ul>
 						</li>

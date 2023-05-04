@@ -12,32 +12,7 @@
 </style>
 <div class="container">	
 
-<div class="row">
 
-	<form action="{{ path('app_livraison_prix')}}" method="POST" name="">
-
-											<div class="input-group mt-4">
-											  <div class="col">
-
-												<input type="text" name="min" class="form-control form-control1" placeholder="Prix minimum ">
-												</div>
-												 <div class="col">
-
-												<input type="text" name="max" class="form-control form-control1" placeholder="Prix maximum ">
-                                                </div>
-												<div class="input-group-append">
-                                                   <button type="submit"
-													<span class="input-group-text bg-transparent text-warning ">
-												<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-													</span>
-                                                      </button>
-												</div>
-
-											</div>
-
-										</form>
-	</div>			
-<div class="row">
 <div class="card-grid">
 
 {% for livraison in livraisons %}
@@ -50,13 +25,15 @@
 	<p class="card-text mb-2 text-muted">Adresse Destinataire : {{livraison.adresseDestinataire}}</p>
     <p class="card-text mb-2 text-muted ">Prix : {{livraison.prix}} Dinars  </p>
     <p class="card-text mb-2 text-muted ">Etat : {{livraison.etat}}  </p>
+    
 
      {% if livraison.colis is not empty %}
         <p class="card-text mb-2 text-muted  ">Poids : {{ livraison.colis.poids }}</p>
         <p class="card-text mb-2 text-muted ">Nombre d'objets : {{ livraison.colis.nbItems}}</p>
+        <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
     {% endif %}
     {# <a href="{{path('livraison.edit',{id:livraison.idLivraison})}}" class="card-link">editer</a> #}
-	<a href="{{ path('app_livraison_update', {'id': livraison.idLivraison}) }}"> <i class="fa-solid fa-plus"></i> Livrer </a>
+	{# <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-plus"></i> Livrer </a> #}
   	
 
   </div>

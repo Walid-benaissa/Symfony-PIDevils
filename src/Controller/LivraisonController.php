@@ -5,6 +5,7 @@ namespace App\Controller;
 // use MercurySeries\FlashyBundle\FlashyNotifier;
 // use FlashyBundle\FlashyNotifier\FlashyNotifier;
 use App\Entity\Livraison;
+use App\Entity\Utilisateur;
 use App\Form\LivraisonType;
 use App\Form\SmsType;
 use App\Repository\LivraisonRepository;
@@ -63,16 +64,54 @@ class LivraisonController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/livraison/liste', name: 'app_livraisons_front', methods: ['GET'])]
-    public function afficher(LivraisonRepository $livraisonRepository): Response
+
+
+    #[Route('/livraison/offre', name: 'app_livraisons_offre', methods: ['GET'])]
+    public function afficheroffre(LivraisonRepository $livraisonRepository): Response
     {
 
-        $livraisons = $livraisonRepository->findAll();
+        $livraisons = $livraisonRepository->findByOffre();
 
         return $this->render('livraison/list_all.html.twig', [
             'livraisons' => $livraisons,
         ]);
     }
+
+    #[Route('/livraison/liste/{id}', name: 'app_livraisons_front', methods: ['GET'])]
+    public function afficher(LivraisonRepository $livraisonRepository, $id): Response
+    {
+
+        $livraisons = $livraisonRepository->findBylivreur($id);
+
+        return $this->render('livraison/list_livreur.html.twig', [
+            'livraisons' => $livraisons,
+        ]);
+    }
+
+
+
+
+    // #[Route('/livraison/liste', name: 'app_livraisons_front', methods: ['GET'])]
+    // public function afficher(LivraisonRepository $livraisonRepository): Response
+    // {
+
+    //     $livraisons = $livraisonRepository->findAll();
+
+    //     return $this->render('livraison/list_all.html.twig', [
+    //         'livraisons' => $livraisons,
+    //     ]);
+    // }
+
+    // #[Route('/livraison/liste', name: 'app_livraisons_front', methods: ['GET'])]
+    // public function afficher(LivraisonRepository $livraisonRepository): Response
+    // {
+
+    //     $livraisons = $livraisonRepository->findAll();
+
+    //     return $this->render('livraison/list_all.html.twig', [
+    //         'livraisons' => $livraisons,
+    //     ]);
+    // }
 
 
 
@@ -138,6 +177,17 @@ class LivraisonController extends AbstractController
             'livraison' => $livraison,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/livraison/update/{id}', name: 'app_livraison_update', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Livraison $livraison, LivraisonRepository $livraisonRepository): Response
+    {
+        $livraison->setLivreur($this->getUser());
+        // $id = $livraison->getLivreur()->getId();
+        $livraisonRepository->save($livraison, true);
+
+
+        return $this->redirectToRoute('app_livraisons_front', [], Response::HTTP_SEE_OTHER);
     }
 
 
