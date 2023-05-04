@@ -41,10 +41,28 @@ class LivraisonRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findByOffre()
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.Livreur IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByUser($id)
     {
         return $this->createQueryBuilder('l')
             ->join('l.Client', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findBylivreur($id)
+    {
+        return $this->createQueryBuilder('l')
+            ->join('l.Livreur', 'u')
             ->where('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

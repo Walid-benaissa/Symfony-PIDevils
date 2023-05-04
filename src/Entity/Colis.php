@@ -40,6 +40,10 @@ class Colis
 
     private ?float $poids = null;
 
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: 'id_client')]
+    private ?Utilisateur $Client = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +81,29 @@ class Colis
     public function setPoids(float $poids): self
     {
         $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getClient(): ?Utilisateur
+    {
+        return $this->Client;
+    }
+
+    public function setClient(?Utilisateur $Client): self
+    {
+        $this->Client = $Client;
+
+        return $this;
+    }
+    public function getIdClient(): ?Utilisateur
+    {
+        return $this->Client;
+    }
+
+    public function setIdClient(?Utilisateur $Client): self
+    {
+        $this->Client = $Client;
 
         return $this;
     }

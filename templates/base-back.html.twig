@@ -20,6 +20,9 @@
 		<link
 		href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+		{{ encore_entry_link_tags('app') }}
+
+
 		<!-- Vendor CSS Files -->
 		<link href="{{asset("back/vendor/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet">
 		<link href="{{asset("back/vendor/bootstrap-icons/bootstrap-icons.css")}}" rel="stylesheet">
@@ -32,6 +35,7 @@
 
 		<!-- Template Main CSS File -->
 		<link href="{{asset("back/css/style.css")}}" rel="stylesheet">
+		<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 	</head>
 
 	<body>
@@ -285,6 +289,7 @@
 		</header>
 		<!-- End Header -->
 
+
 		<!-- ======= Sidebar ======= -->
 		<aside id="sidebar" class="sidebar">
 
@@ -354,12 +359,16 @@
 				<li class="nav-item">
 					<a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
 						<i class="bi bi-layout-text-window-reverse"></i>
-						<span>Courses</span>
+						<span>Offres Courses</span>
 						<i class="bi bi-chevron-down ms-auto"></i>
 					</a>
 					<ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li>
-							<a href="{{path('app_course_index')}}">
+							<a href="{{path('app_offre_course_new')}}">
+								<i class="bi bi-circle"></i>
+								<span>Effectuer</span>
+							</a>
+						<a href="{{path('app_offre_course_index')}}">
 								<i class="bi bi-circle"></i>
 								<span>Consulter</span>
 							</a>
@@ -495,6 +504,8 @@ function googleTranslateElementInit() {
 				<i class="bi bi-arrow-up-short"></i>
 			</a>
 
+			{{ encore_entry_script_tags('app') }}
+
 			<!-- Vendor JS Files -->
 			<script src="{{asset("back/vendor/apexcharts/apexcharts.min.js")}}"></script>
 			<script src="{{asset("back/vendor/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
@@ -507,7 +518,9 @@ function googleTranslateElementInit() {
 
 			<!-- Template Main JS File -->
 			<script src="{{asset("back/js/main.js")}}"></script>
-
+			<script src="//code.jquery.com/jquery.js"></script>
+			<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+            {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 		</body>
 
 	</html>

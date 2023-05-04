@@ -63,4 +63,46 @@ class OffreCourseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function countPeopleByTypeDon(): array
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('d.statut_offre as StatutOffre, COUNT(DISTINCT d.IdOffre) as count')
+            ->groupBy('d.statut_offre')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+   /* public function sortByOptionOffre()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.optionsOffre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }*/
+    public function sortByprix() {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.prix', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    
+    public function sortByIdOffre() {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.idOffre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function sortByMatricule() {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.matriculeVehicule', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function sortByPAssagers() {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.nbPassagers', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

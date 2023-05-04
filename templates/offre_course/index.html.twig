@@ -1,42 +1,88 @@
-{% extends 'base-front.html.twig'%}
-
+{% extends 'base-back.html.twig'%}
 
 {% block body %}
-    <h1>Offre Course </h1>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id Offre</th>
-                <th>MatriculeVehicule</th>
-                <th>CinConducteur</th>
-                <th>NbPassagers</th>
-                <th>OptionsOffre</th>
-                <th>StatutOffre</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for offre_course in offre_courses %}
-            <tr>
-                <td>{{ offre_course.idOffre }}</td>
-                <td>{{ offre_course.matriculeVehicule }}</td>
-                <td>{{ offre_course.cinConducteur }}</td>
-                <td>{{ offre_course.nbPassagers }}</td>
-                <td>{{ offre_course.optionsOffre }}</td>
-                <td>{{ offre_course.statutOffre }}</td>
-                <td>
-                    <a href="{{ path('app_offre_course_show', {'idOffre': offre_course.idOffre}) }}">Details</a>
-                 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+</script>
 
-    <a href="{{ path('app_offre_course_new') }}">Ajouter de nouveau</a>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<h1>Offre Course </h1>
+<table>
+  <tbod>
+  <tr>
+  <td>
+  <div class="ms-3">
+          <a href="{{ path('app_offre_course_index', {'sort': 'idOffre'}) }}" class="btn btn-outline-primary">Trier par id</a>
+        </div>
+</td>
+
+		<td>
+         <div class="ms-3">
+          <a href="{{ path('app_offre_course_index', {'sort': 'matriculeVehicule'}) }}" class="btn btn-outline-primary">Trier par matricule</a>
+        </div>
+</td>
+	<td>
+         <div class="ms-3">
+          <a href="{{ path('app_offre_course_index', {'sort': 'nbPassagers'}) }}" class="btn btn-outline-primary">Trier par passagers</a>
+        </div>
+</td>
+</tr>
+</tbody>
+</table>
+
+<input type="search" id="myInput" class="form-control pl-6" placeholder="Rechercher "/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#offre-course-table tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>
+
+<table class="table" id="offre-course-table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Matricule Vehicule</th>
+      <th scope="col">CIN Conducteur</th>
+      <th scope="col">Nb Passagers</th>
+      <th scope="col">Options Offre</th>
+      <th scope="col">Statut Offre</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for offre_course in offre_courses %}
+    <tr>
+      <th scope="row">{{ offre_course.idOffre }}</th>
+      <td>{{ offre_course.matriculeVehicule }}</td>
+      <td>{{ offre_course.cinConducteur }}</td>
+      <td>{{ offre_course.nbPassagers }}</td>
+      <td>{{ offre_course.optionsOffre }}</td>
+      <td>{{ offre_course.statutOffre }}</td>
+      <td>
+        <a href="{{ path('app_offre_course_show', {'idOffre': offre_course.idOffre}) }}" class="btn btn-primary">Détails</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="7">Aucun enregistrement trouvé.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="mt-3">
+    <a href="{{ path('app_offre_course_new') }}" class="btn btn-success">Ajouter de nouveau</a>
+</div>
+
 {% endblock %}
