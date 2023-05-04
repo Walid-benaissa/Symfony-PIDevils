@@ -1,8 +1,8 @@
 {% extends 'base-front.html.twig' %}
 
 {% block body %}
-  <title>Vehicule list</title>
-  <h1>Vehicule list</h1>
+
+  <h1>Liste des Vehicules </h1>
   <style>
     .vehicule-container {
       display: flex; /* new */
@@ -53,14 +53,15 @@
         <div class="vehicule-price">
           {{ vehicule.prix }} EUR /par jour
         </div>
-        <a href="{{ path('app_location_new',) }}" class="select-button">Select </a>
+         	<a href="{{ path('app_location_new', {'idVehicule': vehicule.idVehicule}) }}"class="select-button">reserver</a>
+          
+
       </div>
     </div>
   {% else %}
     <p>No records found.</p>
   {% endfor %}
 
-	<a href="{{ path('app_vehicule_new') }}">Create new</a>
   <div class="pagination">
 		{{ knp_pagination_render(vehicules) }}
 	</div>

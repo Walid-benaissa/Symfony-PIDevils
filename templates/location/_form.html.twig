@@ -1,5 +1,10 @@
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
 {{ form_start(form) }}
+<h1 class="title">Create new Location</h1>
+    
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }} </button>
+    <button class="submit">{{ button_label|default('Save') }} </button>
 
 {{ form_end(form) }}
+</div>

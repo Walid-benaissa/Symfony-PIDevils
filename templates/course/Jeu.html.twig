@@ -1,0 +1,30 @@
+{% extends 'base-front.html.twig'%}
+
+{% block body %}
+<h1>Jeu de devinette</h1>
+
+<p>Je pense à un nombre entre 1 et 100. Pouvez-vous deviner lequel ?</p>
+
+<form method="post">
+    {{ form_start(form) }}
+    {{ form_row(form.number, {'attr': {'min': 1, 'max': 100}}) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+</form>
+
+{% if number is not null %}
+    {% if number == target %}
+        <p>Félicitations ! Vous avez deviné le nombre {{ target }} en {{ count }} essais.</p>
+    {% else %}
+        {% if number < target %}
+            <p>Le nombre à deviner est plus grand que {{ number }}.</p>
+        {% else %}
+            <p>Le nombre à deviner est plus petit que {{ number }}.</p>
+        {% endif %}
+        <p>Il vous reste {{ max_tries - count }} essais.</p>
+    {% endif %}
+{% endif %}
+
+<a href="{{ path('app_course_showfr') }}">Retour</a>
+
+{% endblock %}

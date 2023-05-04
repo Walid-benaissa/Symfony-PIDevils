@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig'%}
+{% extends 'base-back.html.twig'%}
 
 
 {% block body %}
@@ -23,7 +23,27 @@
       object-fit: cover; /* pour que l'image conserve son ratio d'aspect */
     }
   </style>
-
+  <table>
+  <tbod>
+  <tr>
+  <td>
+  <div class="ms-3">
+          <a href="{{ path('app_vehicule_index', {'sort': 'nomV'}) }}" class="btn btn-outline-primary">Trier par Nom</a>
+        </div>
+</td>
+<td>
+        <div class="ms-3">
+          <a href="{{ path('app_vehicule_index', {'sort': 'prix'}) }}" class="btn btn-outline-primary">Trier par Prix</a>
+        </div>
+		</td>
+		<td>
+         <div class="ms-3">
+          <a href="{{ path('app_vehicule_index', {'sort': 'ville'}) }}" class="btn btn-outline-primary">Trier par Ville</a>
+        </div>
+</td>
+</tr>
+</tbody>
+</table>
 	<table class="table" id='myTable'>
 		<thead>
 			<tr>
@@ -52,11 +72,12 @@
     </td>
 					<td>{{ vehicule.ville }}</td>
 					<td>{{ vehicule.prix }}</td>
-					<td>{{ vehicule.description }}</td>
+					<td>{{ vehicule.description }}</td> 
 					<td>{{ vehicule.type }}</td>
 					<td>
 						<a href="{{ path('app_vehicule_show', {'idVehicule': vehicule.idVehicule}) }}">show</a>
 						<a href="{{ path('app_vehicule_edit', {'idVehicule': vehicule.idVehicule}) }}">edit</a>
+						     <a href="{{ path('app_qr_codes', {'idVehicule': vehicule.idVehicule}) }}">qrcode</a>
 					</td>
 				</tr>
 			{% else %}
@@ -67,6 +88,6 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_vehicule_new') }}">Create new</a>
+	<a href="{{ path('generator_service') }}" class="btn btn-primary px-3 py-1">Export PDF</a>
 {% endblock %}
 

@@ -47,6 +47,9 @@ class Course
     #[ORM\JoinColumn(name: 'idUser')]
     private ?Utilisateur $user = null;
 
+    
+
+
     public function getIdCourse(): ?int
     {
         return $this->idCourse;
@@ -123,5 +126,5 @@ class Course
         return $this;
     }
 
-   
+  
 }

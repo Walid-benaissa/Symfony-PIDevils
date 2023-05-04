@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VehiculeRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
@@ -49,10 +51,19 @@ class Vehicule
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
     private ?string $type = null;
+    #[ORM\OneToMany(mappedBy: 'idVehicule', targetEntity: Location::class, orphanRemoval: true)]
+    private Collection $locations;
+
+    #[ORM\Column]
+    private ?bool $discountApplied = null;
 
     //#[ORM\ManyToOne(inversedBy: 'idPromotion', targetEntity: Promotion::class)]
     //private ?Promotion $Promotion = null;
-
+    public function __construct()
+    {
+        $this->locations = new ArrayCollection();
+        
+    }
     public function getIdVehicule(): ?int
     {
         return $this->idVehicule;
@@ -155,4 +166,27 @@ class Vehicule
 
         return $this;
     } */
+    /**
+     * @return Collection<int, Location>
+     */
+    public function getLocations(): Collection
+    {
+        return $this->locations;
+    }
+
+    public function isDiscountApplied(): ?bool
+    {
+        return $this->discountApplied;
+    }
+
+    public function setDiscountApplied(bool $discountApplied): self
+    {
+        $this->discountApplied = $discountApplied;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->nomV;
+    }
 }
