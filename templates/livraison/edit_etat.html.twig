@@ -1,0 +1,42 @@
+
+{% extends 'base-front.html.twig'%}
+{% block body %}
+<link href="{{asset("css/form-css.css")}}" rel="stylesheet">
+<div class="centerdiv">
+   {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form' }})}}
+    <h1 class="title">Modifier Etat Livraison</h1>
+
+  </br>
+   <div class ="col-sm-12">
+
+    <h6 class="card-subtitle mb-2 text-muted">Adresse Expedition : {{livraison.adresseExpedition}}</h6>
+      </br>
+    </div>
+
+  
+   <div class ="col-sm-12">
+    <h6 class="card-subtitle mb-2 text-muted">Adresse Destinataire : {{livraison.adresseDestinataire}}</h6>
+  </br>
+    </div>  
+
+ 
+   <div class ="col-sm-12">
+       <h6 class="card-subtitle mb-2 text-muted">Prix: {{livraison.prix}}</h6>
+  </br>
+    </div>  
+
+       <label for="inputText" class ="col-sm-12 col-form-label"> Etat </label>
+   <div class ="col-sm-12">
+    {{ form_widget(form.etat)}}
+    {{ form_errors(form.etat ,{'attr':{'class':'text-danger'}})}}
+   </div>  
+        </br>
+    <button class="submit">{{ button_label|default('Modifier') }}</button>
+    {{ form_end(form) }}
+    </br>
+
+
+</div>
+  </br>
+{% endblock %}
+
