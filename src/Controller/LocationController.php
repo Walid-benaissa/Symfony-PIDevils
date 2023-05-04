@@ -129,7 +129,7 @@ class LocationController extends AbstractController
             ->getRepository(Location::class)->findBy(
                 ['idContrat' => $idContrat]
             );
-        return $this->render('map/api_arcgis.html.twig', [
+        return $this->render('map/map.html.twig', [
             'location' => $location,
         ]);
     }
