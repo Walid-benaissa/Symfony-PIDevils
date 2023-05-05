@@ -77,15 +77,16 @@ class ReclamationController extends AbstractController
     #[Route('/admin/reclamation/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->add('etat', ChoiceType::class, ['choices'  => [
+        $form = $this->createFormBuilder()
+        ->add('etat', ChoiceType::class, ['choices'  => [
             'Ouvert' => 'Ouvert',
             'En Cours' => "En Cours",
             'Traité' => 'Traite',
-        ],]);
+        ],])
+        ->getForm();
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setEtat($form->getData()['etat']);
             $reclamationRepository->save($reclamation, true);
 
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);

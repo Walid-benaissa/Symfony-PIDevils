@@ -16,7 +16,6 @@
 			</tr>
 		</thead>
 		<tbody>
-		{% if not translated %}
 			{% for reclamation in reclamations %}
 				<tr>
 					<td>{{ reclamation.id }}</td>
@@ -32,23 +31,6 @@
 					<td colspan="4">Aucune reclamation </td>
 				</tr>
 			{% endfor %}
-		{% else %}
-		{% for reclamation in translations %}
-				<tr>
-					<td>{{ reclamation.id }}</td>
-					<td>{{ reclamation.message }}</td>
-					<td>{{ reclamation.etat }}</td>
-					<td>
-						<a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">Voir plus</a>
-						<a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">Aucune reclamation </td>
-				</tr>
-			{% endfor %}
-		{% endif %}
 		</tbody>
 	</table>
 

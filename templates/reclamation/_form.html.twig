@@ -5,14 +5,11 @@
     <a class="btn btn-primary col-2" href="{{ path('app_reclamation_index') }}">Retour</a>
     {% endif %}
     <h1 class="title">{{title}}</h1>
+    {% if button_label != "Update"  %}
     <div class="label">
     {{ form_label(form.message) }}<br>
     </div>
-    {% if button_label == "Update"  %}
     <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea'}})}}</div>
-    {% else %}
-    <div class="textarea">{{ form_widget(form.message,{'attr':{'class': 'input textarea' }})}}</div>
-    {% endif %}
     <div class="label">
     {{ form_label(form.type) }}<br>
     </div>
@@ -20,7 +17,10 @@
     {{ form_widget(form.type)}}
     </Div>
     {{ form_errors(form.type)}}<br>
-    {% if button_label == "Update"  %}
+    <div class="label">
+    {% else %}
+    <p>Message: {{reclamation.message}}</p>
+    <p>Type: {{reclamation.type}}</p>
     <div class="label">
     {{ form_label(form.etat) }}<br>
     </div>
@@ -29,7 +29,6 @@
     </Div>
     {{ form_errors(form.etat)}}<br>
     {% endif %}
-
     <div class="row">
     {% if button_label == "Update" %}
     <button class="col-2 offset-2 submit btn">{{ button_label|default('Ajouter') }}</button>

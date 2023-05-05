@@ -20,7 +20,7 @@ class CommentaireType extends AbstractType
     {
         $builder
             ->add('message', TextareaType::class, [
-                'constraints' => [new AcmeAssert\ContainsMotCensor(options: [$this, 'message'])],
+                'constraints' => [new AcmeAssert\ContainsMotCensor(['mode' => 'strict'])],
             ])
             ->add('eval', ChoiceType::class, [
                 'choices'  => [
