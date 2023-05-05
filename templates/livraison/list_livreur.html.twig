@@ -30,7 +30,7 @@
      {% if livraison.colis is not empty %}
         <p class="card-text mb-2 text-muted  ">Poids : {{ livraison.colis.poids }}</p>
         <p class="card-text mb-2 text-muted ">Nombre d'objets : {{ livraison.colis.nbItems}}</p>
-        <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
+        <a href="{{ path('app_livraison_modifEtat', {'id': livraison.idLivraison}) }}"> <i class="fa-solid fa-pen-to-square"></i></a>
     {% endif %}
     {# <a href="{{path('livraison.edit',{id:livraison.idLivraison})}}" class="card-link">editer</a> #}
 	{# <a href="{{ path('app_livraison_edit', {'idLivraison': livraison.idLivraison}) }}"> <i class="fa-solid fa-plus"></i> Livrer </a> #}

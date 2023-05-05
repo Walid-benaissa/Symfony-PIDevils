@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,6 +116,36 @@ class LivraisonController extends AbstractController
 
 
 
+    #[Route('/livraison/modifEtat/{id}', name: 'app_livraison_modifEtat', methods: ['GET', 'POST'])]
+    public function modifierEtat(Request $request, Livraison $livraison, LivraisonRepository $livraisonRepository): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('etat', ChoiceType::class, [
+                'choices'  => [
+                    'En attente' => 'En attente',
+                    'En cours' => 'En cours',
+                    'Livrée' => 'Livrée',
+                ],
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $livraison->setEtat($form->getData()['etat']);
+            //  $livraison->setIdClient($this->getUser());
+            //$id = $livraison->getClient()->getId();
+            $livraisonRepository->save($livraison, true);
+
+
+            return $this->redirectToRoute('app_livraisons_offre', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('livraison/edit_etat.html.twig', [
+            'livraison' => $livraison,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/livraison/new', name: 'app_livraison_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UtilisateurRepository $userRepo, LivraisonRepository $livraisonRepository): Response
     {
@@ -137,8 +168,6 @@ class LivraisonController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
 
 
     #[Route('/livraison/{id}', name: 'app_livraison_byuser', methods: ['GET'])]
@@ -187,7 +216,7 @@ class LivraisonController extends AbstractController
         $livraisonRepository->save($livraison, true);
 
 
-        return $this->redirectToRoute('app_livraisons_front', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('Password_send_sms', [], Response::HTTP_SEE_OTHER);
     }
 
 
@@ -265,7 +294,7 @@ class LivraisonController extends AbstractController
                     // 'body' => 'Bonjour cher client, votre livraison est en route. Merci pour votre confiance !', // replace with your message
                 ]
             );
-            return $this->redirectToRoute('app_livraisons_front');
+            return $this->redirectToRoute('app_livraisons_offre');
         } else {
             $err = "erreur";
         }

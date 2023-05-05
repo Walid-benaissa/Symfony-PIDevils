@@ -24,7 +24,8 @@
 
 </head>
 <body>
-  <div id="viewDiv"></div>
+ <div >  <div id="viewDiv" > <br> <br> <br> <br> <br> <br> <br>  <br>  <br> <br> <br> <br> <br>  <br> <br> <br> <br>  <br>  <br> <br> <br> <br></div> </div>
+  
 </body>
 <script>
   require([
@@ -57,9 +58,9 @@
 
       const params = {
         address: {
-          "address": "{% for Course in Course %}{{Course.pointDepart}}  {% endfor %}"    
-       
-   
+          "address": "{% for location in location %}{{location.lieu}}  {% endfor %}"    
+        
+    
         }
       }
 

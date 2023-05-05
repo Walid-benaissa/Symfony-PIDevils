@@ -21,38 +21,8 @@ class ReclamationController extends AbstractController
     #[Route('/admin/reclamation', name: 'app_reclamation_index')]
     public function index(TranslatorInterface $translator,ReclamationRepository $reclamationRepository): Response
     {
-        $form=$this->createFormBuilder()
-        ->add('lang', ChoiceType::class, ['choices'  => [
-            'English' => 'en',
-            'Français' => "fr",
-        ]])
-        ->getForm();
-        $translated=false;
-        $res=[];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $lang=$form->getData()["lang"];
-            $all=$reclamationRepository->findAll();
-            $res=array();
-            if($lang=="en"){
-                foreach($all as $i){
-                $rec=new Reclamation();
-                    $rec->setMessage($translator->trans($i->getMessage(),locale:'en_EN'));
-                $res.array_push($rec);
-                $translated=true;
-                }
-            }
-            return $this->redirectToRoute('app_reclamation_index', [
-                'reclamations' => $reclamationRepository->findAll(),
-                'form'=>$form,
-                'translations'=>$res,
-                'translated'=>$translated
-            ]);
-        }
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
-            'form'=>$form,
-            'translations'=>$res,
-            'translated'=>$translated
         ]);
     }
 

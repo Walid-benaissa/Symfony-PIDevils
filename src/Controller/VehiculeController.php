@@ -277,5 +277,22 @@ if($mostReserved)
             'vehicule' => $vehicule,
         ]);
     }
+
+    #[Route('/recherche', name: 'app_vehicule_recherche', methods: ['GET', 'POST'])]
+    public function recherche(Request $request, VehiculeRepository $vehiculeRepository ): Response
+    {
+        $vehicule = new Vehicule();
+        $form = $this->createForm(VehiculeType::class, $vehicule);
+        $form->handleRequest($request);
+
+    
+
+    
+        
+
+        return $this->renderForm('vehicule/recherche.html.twig', [
+            'vehicule' => $vehicule,
+        ]);
+    }
  
 }
