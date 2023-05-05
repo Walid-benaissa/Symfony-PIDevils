@@ -29,7 +29,7 @@
 					<td>{{ utilisateur.numTel }}</td>
 					<td>{{ utilisateur.role }}</td>
 					<td>{{ utilisateur.evaluation }}</td>
-					<td>{{ utilisateur.bloque ? 'Yes' : 'No' }}</td>
+					<td>{{ utilisateur.bloque ? 'Oui' : 'Non' }}</td>
 					<td>
 						<a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Voir plus </a>
 						<a href="{{ path('app_utilisateur_editb', {'id': utilisateur.id}) }}"> Modifier</a>
