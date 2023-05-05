@@ -8,39 +8,44 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
     {% endfor %}
-    <h1>List Location</h1>
+   <style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 30%;
+  margin: 20px;
+}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdContrat</th>
-         
-                <th>IdVehicule</th>
-                <th>DateDebut</th>
-                <th>DateFin</th>
-                <th>Lieu</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for location in locations %}
-            <tr>
-                <td>{{ location.idContrat }}</td>
-          
-                <td>{{ location.idVehicule }}</td>
-                <td>{{ location.dateDebut ? location.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ location.dateFin ? location.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ location.lieu }}</td>
-                <td><a href="{{ path('app_location_map', {'idContrat': location.idContrat}) }}" class="btn btn-info">Localisation </a></td>
-              
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+
+<h1>List Location</h1>
+<div class="row">
+    {% for location in locations %}
+        <div class="card col-4">
+            <div class="container">
+                <h4><b>IdContrat: {{ location.idContrat }}</b></h4>
+                <p>IdVehicule: {{ location.idVehicule }}</p>
+                <p>DateDebut: {{ location.dateDebut ? location.dateDebut|date('Y-m-d H:i:s') : '' }}</p>
+                <p>DateFin: {{ location.dateFin ? location.dateFin|date('Y-m-d H:i:s') : '' }}</p>
+                <p>Lieu: {{ location.lieu }}</p>
+                <a href="{{ path('app_location_map', {'idContrat': location.idContrat}) }}" class="btn btn-info">Localisation</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <p>No records found</p>
+        </div>
+    {% endfor %}
+</div>
+</div>
+
 
 
 {% endblock %}
