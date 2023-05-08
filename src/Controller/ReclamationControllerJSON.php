@@ -24,12 +24,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ReclamationControllerJSON extends AbstractController
 {
 
-    #[Route("/reclamationJson/{id}", name: "reclamationJson")]
-    public function reclamationId($id, SerializerInterface $serializer, ReclamationRepository $repo)
+    #[Route("/reclamationJson/{id}", name: "reclamationJsonTest",methods: ['GET'])]
+    public function reclamationId($id, NormalizerInterface $normalizer, ReclamationRepository $repo)
     {
         $recs = $repo->findByUser($id);
-        $json = $serializer->serialize($recs,'json',['groups'=>"reclamation"]);
-        return new Response($json);
+        $json = $normalizer->normalize($recs,'json',['groups'=>"reclamation"]);
+        return new Response(json_encode($json));
     }
 
     #[Route('/reclamationJson/new', name: 'app_reclamation_newJson', methods: ['GET', 'POST'])]
