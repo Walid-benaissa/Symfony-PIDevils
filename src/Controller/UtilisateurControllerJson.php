@@ -31,20 +31,36 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 
 
 class UtilisateurControllerJson extends AbstractController
 {
-    #[Route("/user/{id}", name: "reclamationJson")]
+    #[Route("/user/{id}", name: "userJson")]
     public function showuserId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
     {
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
         return new Response(json_encode($userNormalises));
     }
 
-    #[Route('/creatCptMobile', name: 'app_utilisateur_newM', methods: ['GET', 'POST'])]
-    public function newcompteM(Request $request, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+
+
+    #[Route("/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
+    public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
+        $user = new Utilisateur();
+        $user->setNom($req->get('nom'));
+        $user->setPrenom($req->get('prenom'));
+        $user->setMail($req->get('mail'));
+        $user->setMdp($req->get('mdp'));
+        $user->setNumTel($req->get('num_tel'));
+        $user->setRole($req->get('role'));
+        $em->persist($user);
+        $em->flush();
+
+        $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
+        return new Response(json_encode($jsonContent));
     }
 }
