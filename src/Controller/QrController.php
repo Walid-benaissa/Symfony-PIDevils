@@ -64,7 +64,7 @@ public function index(int $idVehicule,UrlGeneratorInterface $urlGenerator,Entity
     $qrCode->setSize(200)->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 255, 255));
     $qrCodes['withImage'] = $writer->write($qrCode, $logo, $label->setText('With Image')->setFont(new NotoSans(20)))->getDataUri();
     $reservationUrl = $urlGenerator->generate('app_location_new', ['idVehicule'=>$vehicule->getId()]);
-    return $this->render('qr_code/index.html.twig', array_merge($qrCodes,['reservationUrl' => null]));
+    return $this->render('qr_code/indexback.html.twig', array_merge($qrCodes,['reservationUrl' => null]));
 }
 
 }
