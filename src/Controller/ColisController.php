@@ -29,8 +29,10 @@ class ColisController extends AbstractController
     #[Route('/list', name: 'app_colis_all', methods: ['GET'])]
     public function all(ColisRepository $colisRepository): Response
     {
+        $colis = new Colis();
+        $colis->setClient($this->getUser());
         return $this->render('colis/list.html.twig', [
-            'colis' => $colisRepository->findAll(),
+            'colis' => $colisRepository->findByUser($colis->getClient()->getid()),
         ]);
     }
 
