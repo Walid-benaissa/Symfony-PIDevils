@@ -7,6 +7,8 @@ use App\Repository\VehiculeRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
@@ -14,7 +16,9 @@ class Vehicule
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    
     private ?int $idVehicule = null;
+    
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
@@ -23,33 +27,41 @@ class Vehicule
         match: false,
         message: 'le nom ne peut  pas contenir des chiffres',
     )]
+    #[Groups("Vehicule")]
     private ?string $nomV = null;
 
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Groups("Vehicule")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("Vehicule")]
    
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Groups("Vehicule")]
     private ?string $ville = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Groups("Vehicule")]
     private ?float $prix = null;
 
 
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Groups("Vehicule")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "ce champ est obligatoire")]
+    #[Groups("Vehicule")]
+    
     private ?string $type = null;
     #[ORM\OneToMany(mappedBy: 'idVehicule', targetEntity: Location::class, orphanRemoval: true)]
     private Collection $locations;
