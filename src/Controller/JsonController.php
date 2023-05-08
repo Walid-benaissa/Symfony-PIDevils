@@ -40,12 +40,14 @@ class JsonController extends AbstractController
         $jsonContent = $normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
         return new Response(json_encode($jsonContent));
     }
-    #[Route("updateBesoinJSON/{idVehicule}", name: "updateBesoinJSON")]
-    public function updateStudentJSON(Request $req, $idVehicule, NormalizerInterface $Normalizer)
-    {
 
-        $em = $this->getDoctrine()->getManager();
+    #[Route('/updateBesoinJSON/{idVehicule}', name: 'updateBesoinJSON', methods: ['GET', 'POST'])]
+    public function updateStudentJSON($idVehicule, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
+    {
         $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
+        if (!$vehicule) {
+            return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
+        }
         $vehicule->setNomV($req->get('nom_v'));
         $vehicule->setId($req->get('id'));
         $vehicule->setImage($req->get('image'));
@@ -53,11 +55,29 @@ class JsonController extends AbstractController
         $vehicule->setPrix($req->get('prix'));
         $vehicule->setDescription($req->get('description'));
         $vehicule->setType($req->get('type'));
-     
-
         $em->flush();
 
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
-        return new Response("vehicule updated successfully " . json_encode($jsonContent));
+        return new Response("Vehicle updated successfully " . json_encode($jsonContent));
     }
+ 
+
+    #[Route('/vehiculeJson/delete/{idVehicule}', name: 'app_vehicule_updateJson', methods: ['GET', 'POST'])]
+    public function delete($idVehicule, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
+    {
+        $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
+    
+        if (!$vehicule) {
+            return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
+        }
+    
+        $em->remove($vehicule);
+        $em->flush();
+    
+        $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
+        return new Response("Vehicle deleted successfully " . json_encode($jsonContent));
+    }
+    
+    
 }
+  
