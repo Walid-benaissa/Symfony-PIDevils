@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ConducteurRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ConducteurRepository::class)]
 
@@ -16,9 +17,11 @@ class Conducteur
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("conducteur")]
     private ?string $b3 = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("conducteur")]
     private ?string $permis = null;
 
 

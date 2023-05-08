@@ -45,9 +45,6 @@ class UtilisateurControllerJson extends AbstractController
         return new Response(json_encode($userNormalises));
     }
 
-
-
-
     #[Route("/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
@@ -64,6 +61,29 @@ class UtilisateurControllerJson extends AbstractController
         $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
         return new Response(json_encode($jsonContent));
     }
+    #[Route("/creatCptMobilec", name: "app_utilisateur_newcM", methods: ['GET', 'POST'])]
+    public function newcompteCM(UtilisateurRepository $ur, Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
+    {
+        $user = new Utilisateur();
+        $c = new Conducteur();
+        $user->setNom($req->get('nom'));
+        $user->setPrenom($req->get('prenom'));
+        $user->setMail($req->get('mail'));
+        $user->setMdp($req->get('mdp'));
+        $user->setNumTel($req->get('num_tel'));
+        $user->setRole($req->get('role'));
+        $c->setB3($req->get('b3'));
+        $c->setPermis($req->get('permis'));
+        $em->persist($user);
+        $em->flush();
+        $c->setUtilisateur($ur->findbymail($user->getMail()));
+        $em->persist($c);
+        $em->flush();
+
+        $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
+        return new Response(json_encode($jsonContent));
+    }
+
 
     #[Route('/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
     public function edituserId($id, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
