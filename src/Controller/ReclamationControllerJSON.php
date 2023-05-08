@@ -30,24 +30,7 @@ class ReclamationControllerJSON extends AbstractController
         ]);
     }
 
-    #[Route('/reclamation/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
-    {
-        $reclamation = new Reclamation();
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
-        $reclamation->setEtat('Ouvert');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reclamation->setUser($this->getUser());
-            $reclamationRepository->save($reclamation, true);
-            return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('reclamation/new.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form,
-        ]);
-    }
+    
 
     #[Route('/admin/reclamation/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
@@ -112,6 +95,25 @@ class ReclamationControllerJSON extends AbstractController
         $recs = $repo->findByUser($id);
         $json = $serializer->serialize($recs,'json',['groups'=>"reclamation"]);
         return new Response($json);
+    }
+
+    #[Route('/reclamation/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamation = new Reclamation();
+        $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->handleRequest($request);
+        $reclamation->setEtat('Ouvert');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setUser($this->getUser());
+            $reclamationRepository->save($reclamation, true);
+            return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('reclamation/new.html.twig', [
+            'reclamation' => $reclamation,
+            'form' => $form,
+        ]);
     }
 
     
