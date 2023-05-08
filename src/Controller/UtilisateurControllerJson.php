@@ -47,6 +47,7 @@ class UtilisateurControllerJson extends AbstractController
 
 
 
+
     #[Route("/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
@@ -62,5 +63,22 @@ class UtilisateurControllerJson extends AbstractController
 
         $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
         return new Response(json_encode($jsonContent));
+    }
+
+    #[Route('/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
+    public function edituserId($id, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
+    {
+        $u = $em->getRepository(Utilisateur::class)->find($id);
+        if (!$u) {
+            return new Response('Utilisateur not found', Response::HTTP_NOT_FOUND);
+        }
+        $u->setNom($req->get('nom'));
+        $u->setPrenom($req->get('prenom'));
+        $u->setMail($req->get('mail'));
+        $u->setNumTel($req->get('num_tel'));
+        $em->flush();
+
+        $jsonContent = $Normalizer->normalize($u, 'json', ['groups' => 'user']);
+        return new Response("Utilisateur updated successfully " . json_encode($jsonContent));
     }
 }
