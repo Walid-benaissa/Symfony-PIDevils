@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class VoitureControllerJson extends AbstractController
 {
-    #[Route('/voiture/voituserM/{id}', name: 'voitureJsonsss')]
+    #[Route('/voiture/voituserM/{id}', name: 'voitureJson')]
     public function showfrMobile(NormalizerInterface $normalize, VoitureRepository $repo,  $id)
     {
         $recs = $repo->findByUser($id);
