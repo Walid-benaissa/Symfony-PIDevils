@@ -9,6 +9,7 @@ use App\Repository\UtilisateurRepository;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
@@ -16,9 +17,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("user")]
     private ?int $id = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups("user")]
     #[Assert\NotBlank(message: "Vous devez saisir votre nom")]
     #[Assert\Regex(
         pattern: '/\d/',
@@ -27,6 +30,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $nom = null;
 
+    #[Groups("user")]
     #[Assert\NotBlank(message: "Vous devez saisir votre prénom")]
     #[Assert\Regex(
         pattern: '/\d/',
@@ -36,6 +40,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
 
+    #[Groups("user")]
     #[Assert\NotBlank(message: "Vous devez saisir votre mail")]
     #[Assert\Email(
         message: 'Vous devez saisir un e-mail valide',
@@ -43,10 +48,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $mail = null;
 
+    #[Groups("user")]
     #[Assert\NotBlank(message: "Vous devez saisir votre mot de passe")]
     #[ORM\Column(length: 100)]
     private ?string $mdp = null;
 
+    #[Groups("user")]
     #[Assert\NotBlank(message: "Vous devez saisir votre numéro de téléphone")]
     #[Assert\Regex(
         pattern: '/\D/',
@@ -62,6 +69,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20)]
     private ?string $numTel = null;
 
+    #[Groups("user")]
     #[ORM\Column(length: 30)]
     private ?string $role = null;
 
@@ -75,7 +83,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $commentaires;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
-    private Collection $reclamations;   
+    private Collection $reclamations;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Voiture::class, orphanRemoval: true)]
     private Collection $voitures;
@@ -340,7 +348,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-     /**
+    /**
      * @return Collection<int, Course>
      */
     public function getCourses(): Collection

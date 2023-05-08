@@ -5,32 +5,39 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VoitureRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
 {
     #[ORM\Id]
     #[ORM\Column(length: 30)]
+    #[Groups("voiture")]
     #[Assert\NotBlank(message: "Vous devez saisir l'immatriculation")]
     private ?string $immatriculation = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups("voiture")]
     #[Assert\NotBlank(message: "Vous devez saisir le modèle ")]
     private ?string $modele = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups("voiture")]
     #[Assert\NotBlank(message: "Vous devez saisir la marque ")]
     private ?string $marque = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups("voiture")]
     #[Assert\NotBlank(message: "Vous devez saisir l'etat ")]
     private ?string $etat = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("voiture")]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'voitures', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'id')]
+    #[Groups("voiture")]
     private ?Utilisateur $user = null;
 
     public function getImmatriculation(): ?string
