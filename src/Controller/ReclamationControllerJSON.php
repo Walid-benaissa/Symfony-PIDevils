@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\ReclamationRepository;
+use App\Repository\UtilisateurRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
@@ -22,73 +24,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ReclamationControllerJSON extends AbstractController
 {
 
-    #[Route('/admin/reclamation', name: 'app_reclamation_index')]
-    public function index(TranslatorInterface $translator,ReclamationRepository $reclamationRepository): Response
-    {
-        return $this->render('reclamation/index.html.twig', [
-            'reclamations' => $reclamationRepository->findAll(),
-        ]);
-    }
-
-    
-
-    #[Route('/admin/reclamation/{id}', name: 'app_reclamation_show', methods: ['GET'])]
-    public function show(Reclamation $reclamation): Response
-    {
-        return $this->render('reclamation/show.html.twig', [
-            'reclamation' => $reclamation,
-        ]);
-    }
-    #[Route('/admin/reclamation/print/{id}', name: 'app_reclamation_pdf_show')]
-    public function showpdf(Reclamation $reclamation)
-    {
-        $html =  $this->renderView('reclamation\reclamationpdf.html.twig', ['reclamation' => $reclamation,]);
-        $dompdf = new Dompdf(['chroot' => __DIR__, 'enable_remote' => true]);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-        return new Response(
-            $dompdf->stream('resume', ["Attachment" => false]),
-            Response::HTTP_OK,
-            ['Content-Type' => 'application/pdf']
-        );
-    }
-
-    
-
-    #[Route('/admin/reclamation/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
-    {
-        $form = $this->createFormBuilder()
-        ->add('etat', ChoiceType::class, ['choices'  => [
-            'Ouvert' => 'Ouvert',
-            'En Cours' => "En Cours",
-            'Traité' => 'Traite',
-        ],])
-        ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reclamation->setEtat($form->getData()['etat']);
-            $reclamationRepository->save($reclamation, true);
-
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('reclamation/edit.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/admin/reclamation/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
-    public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $reclamation->getId(), $request->request->get('_token'))) {
-            $reclamationRepository->remove($reclamation, true);
-        }
-
-        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route("/reclamationJson/{id}", name: "reclamationJson")]
     public function reclamationId($id, SerializerInterface $serializer, ReclamationRepository $repo)
     {
@@ -97,24 +32,41 @@ class ReclamationControllerJSON extends AbstractController
         return new Response($json);
     }
 
-    #[Route('/reclamation/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
+    #[Route('/reclamationJson/new', name: 'app_reclamation_newJson', methods: ['GET', 'POST'])]
+    public function new(UtilisateurRepository $u, Request $req, EntityManagerInterface $em,NormalizerInterface $Normalizer): Response
     {
         $reclamation = new Reclamation();
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
-        $reclamation->setEtat('Ouvert');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reclamation->setUser($this->getUser());
-            $reclamationRepository->save($reclamation, true);
-            return $this->redirectToRoute('app_reclamation_showuser', ['id' => $reclamation->getUser()->getId()], Response::HTTP_SEE_OTHER);
-        }
+        $reclamation->setMessage($req->get('message'));
+        $reclamation->setEtat($req->get('etat'));
+        $reclamation->setType($req->get('type'));
+        $reclamation->setUser($u->find($req->get('user')));
+        $em->persist($reclamation);
+        $em->flush();
 
-        return $this->renderForm('reclamation/new.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form,
-        ]);
+        $jsonContent = $Normalizer->normalize($reclamation, 'json', ['groups' => 'reclamation']);
+        return new Response(json_encode($jsonContent));
     }
 
-    
+    #[Route('/reclamationJson/update/{id}', name: 'app_reclamation_updateJson', methods: ['GET', 'POST'])]
+    public function update(Reclamation $r, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
+    {
+        $r->setMessage($req->get('message'));
+        $r->setEtat($req->get('etat'));
+        $r->setType($req->get('type'));
+        $em->flush();
+
+        $jsonContent = $Normalizer->normalize($r, 'json', ['groups' => 'reclamation']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    #[Route('/reclamationJson/delete/{id}', name: 'app_reclamation_updateJson', methods: ['GET', 'POST'])]
+    public function delete(Reclamation $r, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
+    {
+        $em->remove($r);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($r, 'json', ['groups' => 'reclamation']);
+        return new Response("besoin deleted successfully " . json_encode($jsonContent));
+    }
+
+
 }
