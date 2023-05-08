@@ -20,6 +20,10 @@ use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/vehicule')]
 class VehiculeController extends AbstractController
@@ -294,5 +298,7 @@ if($mostReserved)
             'vehicule' => $vehicule,
         ]);
     }
+   
+
  
 }
