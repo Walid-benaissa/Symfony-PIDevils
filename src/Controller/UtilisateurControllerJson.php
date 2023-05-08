@@ -30,8 +30,16 @@ use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 
 class UtilisateurControllerJson extends AbstractController
 {
+    #[Route("/user/{id}", name: "reclamationJson")]
+    public function reclamationId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
+    {
+        $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
+        return new Response(json_encode($userNormalises));
+    }
 }
