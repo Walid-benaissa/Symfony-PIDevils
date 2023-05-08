@@ -38,7 +38,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UtilisateurControllerJson extends AbstractController
 {
-    #[Route("/user/{id}", name: "reclamationJson")]
+    #[Route("/user/{id}", name: "userJson")]
     public function showuserId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
     {
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
