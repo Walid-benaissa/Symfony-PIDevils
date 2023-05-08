@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
@@ -13,20 +15,25 @@ class Reclamation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("reclamation")]
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("reclamation")]
     #[Assert\NotBlank(message: "Vous devez saisir un message")]
     private ?string $message = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("reclamation")]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'idUser')]
+    #[Groups("reclamation")]
     private ?Utilisateur $user = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups("reclamation")]
     private ?string $type = null;
 
     public function getId(): ?int
