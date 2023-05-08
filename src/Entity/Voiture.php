@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VoitureRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 class Voiture
@@ -36,6 +37,7 @@ class Voiture
 
     #[ORM\ManyToOne(inversedBy: 'voitures', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'id')]
+    #[Groups("voiture")]
     private ?Utilisateur $user = null;
 
     public function getImmatriculation(): ?string
