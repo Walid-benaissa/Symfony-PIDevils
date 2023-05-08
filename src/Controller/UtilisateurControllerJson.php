@@ -37,9 +37,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 class UtilisateurControllerJson extends AbstractController
 {
     #[Route("/user/{id}", name: "reclamationJson")]
-    public function reclamationId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
+    public function showuserId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
     {
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
         return new Response(json_encode($userNormalises));
+    }
+
+    #[Route('/creatCptMobile', name: 'app_utilisateur_newM', methods: ['GET', 'POST'])]
+    public function newcompteM(Request $request, UtilisateurRepository $utilisateurRepository, UserPasswordHasherInterface $passwordHasher): Response
+    {
     }
 }
