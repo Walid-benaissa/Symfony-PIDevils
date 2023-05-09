@@ -74,6 +74,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $role = null;
 
     #[ORM\Column]
+    #[Groups("user")]
     private ?float $evaluation = 0;
 
     #[ORM\Column]

@@ -29,7 +29,6 @@ class Reclamation
 
     #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'idUser')]
-    #[Groups("reclamation")]
     private ?Utilisateur $user = null;
 
     #[ORM\Column(length: 30)]

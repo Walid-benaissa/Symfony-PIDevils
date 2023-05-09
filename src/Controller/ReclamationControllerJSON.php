@@ -24,16 +24,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ReclamationControllerJSON extends AbstractController
 {
 
-    #[Route("/reclamationJson/{id}", name: "reclamationJson")]
-    public function reclamationId($id, SerializerInterface $serializer, ReclamationRepository $repo)
-    {
-        $recs = $repo->findByUser($id);
-        $json = $serializer->serialize($recs,'json',['groups'=>"reclamation"]);
-        return new Response($json);
-    }
-
     #[Route('/reclamationJson/new', name: 'app_reclamation_newJson', methods: ['GET', 'POST'])]
-    public function new(UtilisateurRepository $u, Request $req, EntityManagerInterface $em,NormalizerInterface $Normalizer): Response
+    public function newrec(UtilisateurRepository $u, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $reclamation = new Reclamation();
         $reclamation->setMessage($req->get('message'));
@@ -42,8 +34,7 @@ class ReclamationControllerJSON extends AbstractController
         $reclamation->setUser($u->find($req->get('user')));
         $em->persist($reclamation);
         $em->flush();
-
-        $jsonContent = $Normalizer->normalize($reclamation, 'json', ['groups' => 'reclamation']);
+        $jsonContent = $Normalizer->normalize($reclamation, 'json', ['groups' => "reclamation"]);
         return new Response(json_encode($jsonContent));
     }
 
@@ -59,14 +50,21 @@ class ReclamationControllerJSON extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/reclamationJson/delete/{id}', name: 'app_reclamation_updateJson', methods: ['GET', 'POST'])]
+    #[Route('/reclamationJson/delete/{id}', name: 'app_reclamation_deleteJson', methods: ['GET', 'POST'])]
     public function delete(Reclamation $r, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $em->remove($r);
         $em->flush();
         $jsonContent = $Normalizer->normalize($r, 'json', ['groups' => 'reclamation']);
-        return new Response("besoin deleted successfully " . json_encode($jsonContent));
+        return new Response("Reclamation supprimé avec succéss " . json_encode($jsonContent));
     }
 
+    #[Route("/reclamationJson/{id}", name: "app_reclamationJson_showByUser",methods: ['GET'])]
+    public function reclamationId($id, NormalizerInterface $normalizer, ReclamationRepository $repo)
+    {
+        $recs = $repo->findByUser($id);
+        $json = $normalizer->normalize($recs,'json',['groups'=>"reclamation"]);
+        return new Response(json_encode($json));
+    }
 
 }

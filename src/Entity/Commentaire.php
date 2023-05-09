@@ -6,6 +6,7 @@ use App\Validator as AcmeAssert;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
@@ -14,19 +15,23 @@ class Commentaire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("commentaire")]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("commentaire")]
     private ?Utilisateur $id1 = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("commentaire")]
     private ?Utilisateur $id2 = null;
 
     #[ORM\Column(length: 255)]
     #[AcmeAssert\ContainsMotCensor]
     #[Assert\NotBlank(message: "Vous devez saisir un message ")]
+    #[Groups("commentaire")]
     private ?string $message = null;
 
     public function getId(): ?int
