@@ -45,7 +45,7 @@ class UtilisateurControllerJson extends AbstractController
         return new Response(json_encode($userNormalises));
     }
 
-    #[Route("/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
+    #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
         $user = new Utilisateur();
