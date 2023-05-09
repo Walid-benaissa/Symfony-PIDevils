@@ -41,7 +41,7 @@ class JsonController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/updateBesoinJSON/{idVehicule}', name: 'updateBesoinJSON', methods: ['GET', 'POST'])]
+    #[Route('/updateVehiculeJSON/{idVehicule}', name: 'updateBesoinJSON', methods: ['GET', 'POST'])]
     public function updateStudentJSON($idVehicule, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
