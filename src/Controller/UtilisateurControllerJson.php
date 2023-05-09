@@ -25,9 +25,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -44,6 +47,15 @@ class UtilisateurControllerJson extends AbstractController
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
         return new Response(json_encode($userNormalises));
     }
+
+    /* #[Route("/user/login/{id}", name: "userJson")]
+    public function authentif(Request $req, NormalizerInterface $normalizer, Utilisateur $u, UserCheckerInterface $checker, UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $formLoginAuthenticator)
+    {
+        $checker->checkPreAuth($u);
+        $res=$userAuthenticator->authenticateUser($u, $formLoginAuthenticator, $req);
+        $userNormalises = $normalizer->normalize($u, 'json', ['groups' => "user"]);
+        return new Response(json_encode($res));
+    } */
 
     #[Route("/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response

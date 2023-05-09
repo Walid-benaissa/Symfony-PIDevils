@@ -50,16 +50,16 @@ class ReclamationControllerJSON extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/reclamationJson/delete/{id}', name: 'app_reclamation_updateJson', methods: ['GET', 'POST'])]
+    #[Route('/reclamationJson/delete/{id}', name: 'app_reclamation_deleteJson', methods: ['GET', 'POST'])]
     public function delete(Reclamation $r, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $em->remove($r);
         $em->flush();
         $jsonContent = $Normalizer->normalize($r, 'json', ['groups' => 'reclamation']);
-        return new Response("besoin deleted successfully " . json_encode($jsonContent));
+        return new Response("Reclamation supprimé avec succéss " . json_encode($jsonContent));
     }
 
-    #[Route("/reclamationJson/{id}", name: "reclamationJsonTest",methods: ['GET'])]
+    #[Route("/reclamationJson/{id}", name: "app_reclamationJson_showByUser",methods: ['GET'])]
     public function reclamationId($id, NormalizerInterface $normalizer, ReclamationRepository $repo)
     {
         $recs = $repo->findByUser($id);
