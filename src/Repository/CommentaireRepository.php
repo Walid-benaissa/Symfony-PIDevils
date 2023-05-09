@@ -39,6 +39,16 @@ class CommentaireRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByUser($id)
+    {
+        return $this->createQueryBuilder("c")
+            ->join('c.id1', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Commentaire[] Returns an array of Commentaire objects
 //     */
