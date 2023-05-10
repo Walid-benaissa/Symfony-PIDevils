@@ -78,6 +78,6 @@ class UtilisateurRepository extends ServiceEntityRepository
             ->Where('u.mail = :val')
             ->setParameter('val', $val)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

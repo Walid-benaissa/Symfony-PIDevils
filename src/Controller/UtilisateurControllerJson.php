@@ -48,6 +48,22 @@ class UtilisateurControllerJson extends AbstractController
         return new Response(json_encode($userNormalises));
     }
 
+    #[Route("/json/user/authenticate", name: "userJson",methods:["GET","POST"])]
+    public function auth(Request $req, UtilisateurRepository $ur, NormalizerInterface $normalizer)
+    {
+        $user=$ur->findbymail($req->get('mail'));
+        $mdp=$req->get('mdp');
+        $res=[];
+        if ($user!=null or $mdp=="12"){
+            
+            $res=json_encode($normalizer->normalize($user, 'json', ['groups' => "user"]));
+        }
+        else{
+            $res=["response"=>"failed"];
+        }
+        return new Response(json_encode($res));
+    }
+    
     #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
@@ -64,7 +80,8 @@ class UtilisateurControllerJson extends AbstractController
         $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
         return new Response(json_encode($jsonContent));
     }
-    #[Route("/creatCptMobilec", name: "app_utilisateur_newcM", methods: ['GET', 'POST'])]
+
+    #[Route("/json/creatCptMobilec", name: "app_utilisateur_newcM", methods: ['GET', 'POST'])]
     public function newcompteCM(UtilisateurRepository $ur, Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
         $user = new Utilisateur();
@@ -88,7 +105,7 @@ class UtilisateurControllerJson extends AbstractController
     }
 
 
-    #[Route('/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
+    #[Route('/json/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
     public function edituserId($id, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $u = $em->getRepository(Utilisateur::class)->find($id);
