@@ -44,40 +44,11 @@ class TestController extends AbstractController
     public function front(): Response
     {
 
-        try {
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-                CURLOPT_URL => 'https://api.adviceslip.com/advice',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-            ]);
-
-            $response = curl_exec($curl);
-
-            if (curl_error($curl)) {
-                throw new \Exception(curl_error($curl));
-            }
-
-            curl_close($curl);
-
-            $content = json_decode($response, true);
-            $advice = $content['slip']['advice'];
-
             return $this->render('herosection.html.twig', [
                 'controller_name' => 'ClassroomController',
                 'user' => $this->getUser(),
-                'advice' => $advice
             ]);
-        } catch (Exception $e) {
-            // handle the error
-            echo 'Error: ' . $e->getMessage();
-        }
+        
     }
 
 

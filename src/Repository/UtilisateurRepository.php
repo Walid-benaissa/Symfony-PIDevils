@@ -72,4 +72,12 @@ class UtilisateurRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+    public function findbymail($val)
+    {
+        return $this->createQueryBuilder('u')
+            ->Where('u.mail = :val')
+            ->setParameter('val', $val)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

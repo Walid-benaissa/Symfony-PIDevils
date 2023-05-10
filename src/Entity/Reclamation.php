@@ -29,7 +29,6 @@ class Reclamation
 
     #[ORM\ManyToOne(inversedBy: 'reclamations', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'idUser')]
-    #[Groups("reclamation")]
     private ?Utilisateur $user = null;
 
     #[ORM\Column(length: 30)]
@@ -39,6 +38,13 @@ class Reclamation
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getMessage(): ?string
