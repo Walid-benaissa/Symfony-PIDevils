@@ -62,7 +62,7 @@ class LivraisonControllerJson extends AbstractController
         $em->persist($livraison);
         $em->flush();
 
-        $jsonContent = $normalizer->normalize($livraison, 'json', ['groups' => 'user']);
+        $jsonContent = $normalizer->normalize($livraison, 'json', ['groups' => 'livraison']);
         return new Response(json_encode($jsonContent));
     }
 
@@ -78,7 +78,7 @@ class LivraisonControllerJson extends AbstractController
         $livraison->setPrix($req->get('prix'));
         $em->flush();
 
-        $jsonContent = $Normalizer->normalize($livraison, 'json', ['groups' => 'Livraison']);
+        $jsonContent = $Normalizer->normalize($livraison, 'json', ['groups' => 'livraison']);
         return new Response("livraison updated successfully " . json_encode($jsonContent));
     }
 
@@ -94,7 +94,7 @@ class LivraisonControllerJson extends AbstractController
         $em->remove($livraison);
         $em->flush();
 
-        $jsonContent = $Normalizer->normalize($livraison, 'json', ['groups' => 'Livraison']);
+        $jsonContent = $Normalizer->normalize($livraison, 'json', ['groups' => 'livraison']);
         return new Response("Livraison deleted successfully " . json_encode($jsonContent));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LivraisonRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LivraisonRepository::class)]
@@ -13,9 +14,11 @@ class Livraison
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer", name: "id_livraison", nullable: false)]
+    #[Groups("livraison")]
     private int $idLivraison;
 
     #[ORM\Column(length: 150)]
+    #[Groups("livraison")]
     #[Assert\NotBlank(message: "L'adresse d'expédition est obligatoire !")]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z0-9\s]+$/',
@@ -24,6 +27,7 @@ class Livraison
     private ?string $adresseExpedition = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("livraison")]
     #[Assert\NotBlank(message: "L'adresse destinataire est obligatoire !")]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z0-9\s]+$/',
@@ -32,12 +36,14 @@ class Livraison
     private ?string $adresseDestinataire = null;
 
     #[ORM\Column]
+    #[Groups("livraison")]
     #[Assert\NotBlank(message: "Le prix est obligatoire !")]
     #[Assert\NotEqualTo(value: 0, message: "Le prix ne doit pas être égal à 0 !")]
     #[Assert\Positive(message: "Le prix ne doit pas être négatif !")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("livraison")]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
