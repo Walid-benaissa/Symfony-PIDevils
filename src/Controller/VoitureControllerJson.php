@@ -21,12 +21,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class VoitureControllerJson extends AbstractController
 {
-    
-    #[Route('/voiture/voituserM/new', name: 'app_voiture_newJson', methods: ['GET', 'POST'])]
-    public function new(UtilisateurRepository $u, Request $req, EntityManagerInterface $em,NormalizerInterface $Normalizer): Response
+
+    #[Route('/json/voituserM/new', name: 'app_voiture_newJson', methods: ['GET', 'POST'])]
+    public function new(UtilisateurRepository $u, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $v = new Voiture();
-        $v->setImmatriculation($req->get('immat'));
+        $v->setImmatriculation($req->get('immatriculation'));
         $v->setEtat($req->get('etat'));
         $v->setMarque($req->get('marque'));
         $v->setModele($req->get('modele'));
@@ -38,11 +38,11 @@ class VoitureControllerJson extends AbstractController
         $jsonContent = $Normalizer->normalize($v, 'json', ['groups' => 'voiture']);
         return new Response(json_encode($jsonContent));
     }
-    
+
     #[Route('/modifiervoiture', name: 'app_voiture_updateJsonoui', methods: ['GET', 'POST'])]
     public function update(Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer, VoitureRepository $vr): Response
     {
-        $v=$vr->find($req->get('immat'));
+        $v = $vr->find($req->get('immat'));
         $v->setEtat($req->get('etat'));
         $v->setMarque($req->get('marque'));
         $v->setModele($req->get('modele'));
@@ -68,5 +68,4 @@ class VoitureControllerJson extends AbstractController
         $jsonContent = $Normalizer->normalize($r, 'json', ['groups' => 'voiture']);
         return new Response("voiture deleted successfully " . json_encode($jsonContent));
     }
-
 }
