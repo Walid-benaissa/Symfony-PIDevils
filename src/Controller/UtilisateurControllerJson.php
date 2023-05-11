@@ -55,13 +55,12 @@ class UtilisateurControllerJson extends AbstractController
         $mdp=$req->get('mdp');
         $res=[];
         if ($user!=null or $mdp=="12"){
-            
-            $res=json_encode($normalizer->normalize($user, 'json', ['groups' => "user"]));
+            $res="id:".$user->getId()."nom:".$user->getNom()."prenom:".$user->getPrenom()."mail:".$user->getMail()."num_tel:".$user->getNumTel()."role:".$user->getRole();
         }
         else{
-            $res=["response"=>"failed"];
+            $res="failed";
         }
-        return new Response(json_encode($res));
+        return new Response($res);
     }
     
     #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
