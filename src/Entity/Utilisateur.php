@@ -50,6 +50,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank(message: "Vous devez saisir votre mot de passe")]
     #[ORM\Column(length: 100)]
+    #[Groups("user")]
     private ?string $mdp = null;
 
     #[Groups("user")]

@@ -41,26 +41,44 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UtilisateurControllerJson extends AbstractController
 {
-    #[Route("/user/{id}", name: "userJson")]
+    #[Route("/user/{id}", name: "userJson1")]
     public function showuserId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
     {
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
         return new Response(json_encode($userNormalises));
     }
 
-    #[Route("/json/user/authenticate", name: "userJson",methods:["GET","POST"])]
+    #[Route("/json/eval", name: "userJsoneval")]
+    public function eval(EntityManagerInterface $em, UtilisateurRepository $ur, Request $req,NormalizerInterface $normalizer)
+    {
+        $user=$ur->find($req->get("id"));
+        $user->setEvaluation(($user->getEvaluation()+$req->get("eval"))/2);
+        $em->persist($user);
+        $em->flush();
+        return new Response(json_encode(["response"=>"success"]));
+    }
+
+    #[Route("/json/user/authenticate", name: "userJson2",methods:["GET","POST"])]
     public function auth(Request $req, UtilisateurRepository $ur, NormalizerInterface $normalizer)
     {
         $user=$ur->findbymail($req->get('mail'));
-        $mdp=$req->get('mdp');
-        $res=[];
-        if ($user!=null or $mdp=="12"){
-            $res="id:".$user->getId()."nom:".$user->getNom()."prenom:".$user->getPrenom()."mail:".$user->getMail()."num_tel:".$user->getNumTel()."role:".$user->getRole();
+        
+        /* $res=[];
+        if ($user!=null){
+            $res="id:".$user->getId().
+            "nom:".$user->getNom().
+            "prenom:".$user->getPrenom().
+            "mail:".$user->getMail().
+            "num_tel:".$user->getNumTel().
+            "role:".$user->getRole().
+            "mdp:".$user->getmdp();
         }
         else{
             $res="failed";
-        }
-        return new Response($res);
+        } */
+        $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
+        return new Response(json_encode($jsonContent));
+        //return new Response($res);
     }
     
     #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
