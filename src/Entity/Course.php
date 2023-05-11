@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CourseRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
@@ -12,6 +13,7 @@ class Course
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("Course")]
     private ?int $idCourse = null;
 
     #[ORM\Column(length: 150)]
@@ -19,6 +21,7 @@ class Course
         pattern: '/^[a-zA-Z]+$/',
         message: 'Le champ doit contenir que des lettres.'
     )]
+    #[Groups("Course")]
     private ?string $pointDepart = null;
 
     #[ORM\Column(length: 150)]
@@ -26,16 +29,19 @@ class Course
         pattern: '/^[a-zA-Z]+$/',
         message: 'Le champ doit contenir que des lettres.'
     )]
+    #[Groups("Course")]
     private ?string $pointDestination = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le champ est requis.')]
     #[Assert\Positive(message: 'Le nombre doit être positif.')]
+    #[Groups("Course")]
     private ?float $distance = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le champ est requis.')]
     #[Assert\Positive(message: 'Le nombre doit être positif.')]
+    #[Groups("Course")]
     private  ?float $prix = null;
 
     
@@ -45,6 +51,7 @@ class Course
 
     #[ORM\ManyToOne(inversedBy: 'courses', targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'idUser')]
+    #[Groups("Course")]
     private ?Utilisateur $user = null;
 
     
@@ -128,3 +135,4 @@ class Course
 
   
 }
+

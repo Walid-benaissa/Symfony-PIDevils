@@ -66,5 +66,13 @@ class ReclamationControllerJSON extends AbstractController
         $json = $normalizer->normalize($recs,'json',['groups'=>"reclamation"]);
         return new Response(json_encode($json));
     }
+    #[Route('/json/reclamationrec', name: 'apppjsonaffichage', methods: ['GET','POST'])]
+    public function getRecla(ReclamationRepository $ok, NormalizerInterface $normalizer): Response
+    {
+        $Reclamation = $ok->findAll();
+        $jsonContent = $normalizer->normalize($Reclamation, 'json', ['groups' => 'reclamation']);
+        return new Response(json_encode($jsonContent));
+    }
+
 
 }

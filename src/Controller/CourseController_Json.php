@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CourseController_Json extends AbstractController
 {
-    #[Route('/showfr_get', name: 'app_course_showfr_json', methods: ['GET'])]
+    #[Route('/json/showfrget', name: 'app_course_showfr_json', methods: ['GET', 'POST'])]
     public function showfr_api(CourseRepository $courseRepository): Response
     {
         $courses = $courseRepository->findAll() ;
@@ -46,7 +46,7 @@ class CourseController_Json extends AbstractController
         
     }
     
-    #[Route('/new_courseApijson', name: 'app_course_new_json')]   
+    #[Route('/json/new_courseApijson', name: 'app_course_new_json', methods: ['GET', 'POST'])]   
     function new_api(Request $req, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {
        
