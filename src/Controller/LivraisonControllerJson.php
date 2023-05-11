@@ -82,7 +82,7 @@ class LivraisonControllerJson extends AbstractController
         return new Response("livraison updated successfully " . json_encode($jsonContent));
     }
 
-    #[Route('/livraisonJson/delete/{idLivraison}', name: 'app_livraison_deleteJson', methods: ['GET', 'POST'])]
+    #[Route('/json/livraisonJson/delete/{idLivraison}', name: 'app_livraison_deleteJson', methods: ['GET', 'POST'])]
     public function delete($idLivraison, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $livraison = $em->getRepository(Livraison::class)->find($idLivraison);
