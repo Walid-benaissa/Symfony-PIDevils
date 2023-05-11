@@ -41,13 +41,36 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UtilisateurControllerJson extends AbstractController
 {
-    #[Route("/user/{id}", name: "userJson")]
+    #[Route("/user/{id}", name: "userJson1")]
     public function showuserId(NormalizerInterface $normalizer, Utilisateur $utilisateur)
     {
         $userNormalises = $normalizer->normalize($utilisateur, 'json', ['groups' => "user"]);
         return new Response(json_encode($userNormalises));
     }
 
+    #[Route("/json/user/authenticate", name: "userJson2",methods:["GET","POST"])]
+    public function auth(Request $req, UtilisateurRepository $ur, NormalizerInterface $normalizer)
+    {
+        $user=$ur->findbymail($req->get('mail'));
+        
+        /* $res=[];
+        if ($user!=null){
+            $res="id:".$user->getId().
+            "nom:".$user->getNom().
+            "prenom:".$user->getPrenom().
+            "mail:".$user->getMail().
+            "num_tel:".$user->getNumTel().
+            "role:".$user->getRole().
+            "mdp:".$user->getmdp();
+        }
+        else{
+            $res="failed";
+        } */
+        $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
+        return new Response(json_encode($jsonContent));
+        //return new Response($res);
+    }
+    
     #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
@@ -64,7 +87,8 @@ class UtilisateurControllerJson extends AbstractController
         $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
         return new Response(json_encode($jsonContent));
     }
-    #[Route("/creatCptMobilec", name: "app_utilisateur_newcM", methods: ['GET', 'POST'])]
+
+    #[Route("/json/creatCptMobilec", name: "app_utilisateur_newcM", methods: ['GET', 'POST'])]
     public function newcompteCM(UtilisateurRepository $ur, Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
         $user = new Utilisateur();
@@ -88,7 +112,7 @@ class UtilisateurControllerJson extends AbstractController
     }
 
 
-    #[Route('/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
+    #[Route('/json/updateuser/{id}', name: 'app_utilisateur_editM', methods: ['GET', 'POST'])]
     public function edituserId($id, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $u = $em->getRepository(Utilisateur::class)->find($id);

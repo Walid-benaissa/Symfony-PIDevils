@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ColisRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ColisRepository::class)]
@@ -14,13 +15,16 @@ class Colis
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("colis")]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups("colis")]
     #[Assert\NotBlank(message: "Nombre d'objets obligatoire !")]
     private ?int $nbItems = null;
 
     #[ORM\Column(length: 150)]
+    #[Groups("colis")]
     #[Assert\NotBlank(message: "Description est obligatoire !")]
     #[
         Assert\Length(
@@ -35,6 +39,7 @@ class Colis
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups("colis")]
     #[Assert\NotBlank(message: "Poids obligatoire !")]
     #[Assert\Type(type: "float", message: "Le prix doit être de type float.")]
 

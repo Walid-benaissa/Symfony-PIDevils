@@ -61,24 +61,21 @@ class JsonController extends AbstractController
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
         return new Response("Vehicle updated successfully " . json_encode($jsonContent));
     }
- 
+
 
     #[Route('/vehiculeJson/delete/{idVehicule}', name: 'app_vehicule_updateJson', methods: ['GET', 'POST'])]
     public function delete($idVehicule, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
-    
+
         if (!$vehicule) {
             return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
         }
-    
+
         $em->remove($vehicule);
         $em->flush();
-    
+
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
         return new Response("Vehicle deleted successfully " . json_encode($jsonContent));
     }
-    
-    
 }
-  
