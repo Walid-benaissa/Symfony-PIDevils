@@ -39,7 +39,7 @@ class VoitureControllerJson extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/modifiervoiture', name: 'app_voiture_updateJsonoui', methods: ['GET', 'POST'])]
+    #[Route('/json/modifiervoiture', name: 'app_voiture_updateJsonoui', methods: ['GET', 'POST'])]
     public function update(Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer, VoitureRepository $vr): Response
     {
         $v = $vr->find($req->get('immat'));
@@ -52,7 +52,7 @@ class VoitureControllerJson extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/voiture/voituserM/{id}', name: 'voitureJson')]
+    #[Route('/json/voiture/voituserM/{id}', name: 'voitureJson')]
     public function showfrMobile(NormalizerInterface $normalize, VoitureRepository $repo,  $id)
     {
         $recs = $repo->findByUser($id);
@@ -60,7 +60,7 @@ class VoitureControllerJson extends AbstractController
         return new Response(json_encode($json));
     }
 
-    #[Route('/voiture/voituserM/delete/{id}', name: 'app_voiture_updateJson', methods: ['GET', 'POST'])]
+    #[Route('/json/voiture/voituserM/delete/{id}', name: 'app_voiture_updateJson', methods: ['GET', 'POST'])]
     public function delete(Voiture $r, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $em->remove($r);
