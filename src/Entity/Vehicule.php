@@ -16,7 +16,7 @@ class Vehicule
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    
+    #[Groups("Vehicule")]
     private ?int $idVehicule = null;
     
 
