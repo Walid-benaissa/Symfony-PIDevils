@@ -49,7 +49,7 @@ class JsonController extends AbstractController
         if (!$vehicule) {
             return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
         }
-        $vehicule->setNomV($req->get('nom_v'));
+        $vehicule->setNomV($req->get('nomV'));
         $vehicule->setId($req->get('id'));
         $vehicule->setImage($req->get('image'));
         $vehicule->setVille($req->get('ville'));
@@ -63,19 +63,21 @@ class JsonController extends AbstractController
     }
 
 
-    #[Route('/vehiculeJson/delete/{idVehicule}', name: 'app_vehicule_updateJson', methods: ['GET', 'POST'])]
+    #[Route('/delete/{idVehicule}', name: 'appVehicule_deleteJson', methods: ['GET', 'POST'])]
     public function delete($idVehicule, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
 
         if (!$vehicule) {
-            return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
+            return new Response('vehicule not found', Response::HTTP_NOT_FOUND);
         }
 
         $em->remove($vehicule);
         $em->flush();
 
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
-        return new Response("Vehicle deleted successfully " . json_encode($jsonContent));
+        return new Response("vehicule deleted successfully " . json_encode($jsonContent));
     }
+
+	
 }
