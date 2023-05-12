@@ -55,7 +55,7 @@ class CourseController_Json extends AbstractController
         return new JsonResponse($formatted);
     }
     
-    #[Route('/edit_courseApijson/{idCourse}', name: 'app_course_edit_json', methods: ['GET', 'POST'])]
+    #[Route('/json/edit_courseApijson/{idCourse}', name: 'app_course_edit_json', methods: ['GET', 'POST'])]
     public function edit_api($idCourse, Request $req, EntityManagerInterface $em): Response
     {
         $course = $em->getRepository(Course::class)->find($idCourse);
@@ -76,7 +76,7 @@ class CourseController_Json extends AbstractController
         return new JsonResponse(["" => "Course mise à jour avec succès", "course" => $formatted]);
     }
 
-    #[Route('/delete_courseApijson/{idCourse}', name: 'app_course_delete_json', methods: ['GET', 'POST'])]
+    #[Route('/json/delete_courseApijson/{idCourse}', name: 'app_course_delete_json', methods: ['GET', 'POST'])]
     public function delete_api($idCourse, EntityManagerInterface $em, Request $req): Response
     {
         $course = $em->getRepository(Course::class)->find($idCourse);
