@@ -48,6 +48,16 @@ class UtilisateurControllerJson extends AbstractController
         return new Response(json_encode($userNormalises));
     }
 
+    #[Route("/json/eval", name: "userJsoneval")]
+    public function eval(EntityManagerInterface $em, UtilisateurRepository $ur, Request $req,NormalizerInterface $normalizer)
+    {
+        $user=$ur->find($req->get("id"));
+        $user->setEvaluation(($user->getEvaluation()+$req->get("eval"))/2);
+        $em->persist($user);
+        $em->flush();
+        return new Response(json_encode(["response"=>"success"]));
+    }
+
     #[Route("/json/user/authenticate", name: "userJson2",methods:["GET","POST"])]
     public function auth(Request $req, UtilisateurRepository $ur, NormalizerInterface $normalizer)
     {

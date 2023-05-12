@@ -42,20 +42,24 @@ class VoitureControllerJson extends AbstractController
     #[Route('/json/modifiervoiture', name: 'app_voiture_updateJsonoui', methods: ['GET', 'POST'])]
     public function update(Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer, VoitureRepository $vr): Response
     {
-        $v = $vr->find($req->get('immat'));
+        $id=$req->get('id');
+        $v = $vr->findByUser($id);
+        $v->setImmatriculation($req->get("immatriculation"));
         $v->setEtat($req->get('etat'));
         $v->setMarque($req->get('marque'));
         $v->setModele($req->get('modele'));
-        $v->setPhoto($req->get('photo'));
         $em->flush();
         $jsonContent = $Normalizer->normalize($v, 'json', ['groups' => 'voiture']);
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/json/voiture/voituserM/{id}', name: 'voitureJson')]
-    public function showfrMobile(NormalizerInterface $normalize, VoitureRepository $repo,  $id)
+    #[Route('/json/voiture/voituserM', name: 'voitureJson')]
+    public function showfrMobile(Request $req, NormalizerInterface $normalize, VoitureRepository $repo)
     {
+        $id=$req->get("id");
         $recs = $repo->findByUser($id);
+        if($recs==null)
+        return new Response("Voiture not found");
         $json = $normalize->normalize($recs, 'json', ['groups' => "voiture"]);
         return new Response(json_encode($json));
     }
