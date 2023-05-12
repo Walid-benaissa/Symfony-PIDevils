@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 
-#[Route('/vehicule')]
+#[Route('/json/vehicule')]
 class JsonController extends AbstractController
 {
-    #[Route('/allVehicule/json', name: 'appjsonaffichage', methods: ['GET'])]
+    #[Route('/allVehicule/json', name: 'appjsonaffichage', methods: ['GET','POST'])]
     public function getVehiculeeee(VehiculeRepository $ok, NormalizerInterface $normalizer): Response
     {
         $Vehicule = $ok->findAll();
@@ -23,11 +23,11 @@ class JsonController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route("/addvJSON/new", name: "addVJSON", methods: ['GET'])]
+    #[Route("/addvJSON/new", name: "addVJSON", methods: ['GET','POST'])]
     public function addvJnnnnSON(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
         $vehicule = new Vehicule();
-        $vehicule->setNomV($req->get('nom_v'));
+        $vehicule->setNomV($req->get('nomV'));
         $vehicule->setId($req->get('id'));
         $vehicule->setImage($req->get('image'));
         $vehicule->setVille($req->get('ville'));
@@ -61,24 +61,21 @@ class JsonController extends AbstractController
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
         return new Response("Vehicle updated successfully " . json_encode($jsonContent));
     }
- 
+
 
     #[Route('/vehiculeJson/delete/{idVehicule}', name: 'app_vehicule_updateJson', methods: ['GET', 'POST'])]
     public function delete($idVehicule, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $vehicule = $em->getRepository(Vehicule::class)->find($idVehicule);
-    
+
         if (!$vehicule) {
             return new Response('Vehicule not found', Response::HTTP_NOT_FOUND);
         }
-    
+
         $em->remove($vehicule);
         $em->flush();
-    
+
         $jsonContent = $Normalizer->normalize($vehicule, 'json', ['groups' => 'Vehicule']);
         return new Response("Vehicle deleted successfully " . json_encode($jsonContent));
     }
-    
-    
 }
-  

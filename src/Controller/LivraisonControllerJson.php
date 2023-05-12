@@ -29,7 +29,7 @@ class LivraisonControllerJson extends AbstractController
 {
 
 
-    #[Route('/show_getLivraison', name: 'app_livraison_showfr_json', methods: ['GET'])]
+    #[Route('/json/show_getLivraison', name: 'app_livraison_showlv_json', methods: ['GET', 'POST'])]
     public function show_api(LivraisonRepository $LivraisonRepository): Response
     {
         $livraisons = $LivraisonRepository->findByOffre();
@@ -50,7 +50,7 @@ class LivraisonControllerJson extends AbstractController
 
 
 
-    #[Route("/newLivraison", name: "app_livraison_new_json", methods: ['GET', 'POST'])]
+    #[Route('/json/newLivraison', name: "app_livraison_new_json", methods: ['GET', 'POST'])]
     public function newLivraison(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
         $livraison = new Livraison();
@@ -66,7 +66,7 @@ class LivraisonControllerJson extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
-    #[Route('/updateLivraisonJSON/{idLivraison}', name: 'updateLivraisonJSON', methods: ['GET', 'POST'])]
+    #[Route('/json/updateLivraisonJSON/{idLivraison}', name: 'updateLivraisonJSON', methods: ['GET', 'POST'])]
     public function updateLivraisonJSON($idLivraison, Request $req, EntityManagerInterface $em, NormalizerInterface $Normalizer): Response
     {
         $livraison = $em->getRepository(Livraison::class)->find($idLivraison);
@@ -82,7 +82,7 @@ class LivraisonControllerJson extends AbstractController
         return new Response("livraison updated successfully " . json_encode($jsonContent));
     }
 
-    #[Route('/livraisonJson/delete/{idLivraison}', name: 'app_livraison_deleteJson', methods: ['GET', 'POST'])]
+    #[Route('/json/livraisonJson/delete/{idLivraison}', name: 'app_livraison_deleteJson', methods: ['GET', 'POST'])]
     public function delete($idLivraison, EntityManagerInterface $em, Request $req, NormalizerInterface $Normalizer): Response
     {
         $livraison = $em->getRepository(Livraison::class)->find($idLivraison);
