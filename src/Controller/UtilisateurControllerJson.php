@@ -49,38 +49,25 @@ class UtilisateurControllerJson extends AbstractController
     }
 
     #[Route("/json/eval", name: "userJsoneval")]
-    public function eval(EntityManagerInterface $em, UtilisateurRepository $ur, Request $req,NormalizerInterface $normalizer)
+    public function eval(EntityManagerInterface $em, UtilisateurRepository $ur, Request $req, NormalizerInterface $normalizer)
     {
-        $user=$ur->find($req->get("id"));
-        $user->setEvaluation(($user->getEvaluation()+$req->get("eval"))/2);
+        $user = $ur->find($req->get("id"));
+        $user->setEvaluation(($user->getEvaluation() + $req->get("eval")) / 2);
         $em->persist($user);
         $em->flush();
-        return new Response(json_encode(["response"=>"success"]));
+        return new Response(json_encode(["response" => "success"]));
     }
 
-    #[Route("/json/user/authenticate", name: "userJson2",methods:["GET","POST"])]
+    #[Route("/json/user/authenticate", name: "userJson2", methods: ["GET", "POST"])]
     public function auth(Request $req, UtilisateurRepository $ur, NormalizerInterface $normalizer)
     {
-        $user=$ur->findbymail($req->get('mail'));
-        
-        /* $res=[];
-        if ($user!=null){
-            $res="id:".$user->getId().
-            "nom:".$user->getNom().
-            "prenom:".$user->getPrenom().
-            "mail:".$user->getMail().
-            "num_tel:".$user->getNumTel().
-            "role:".$user->getRole().
-            "mdp:".$user->getmdp();
-        }
-        else{
-            $res="failed";
-        } */
+        $user = $ur->findbymail($req->get('mail'));
+        if ($user == null)
+            return new Response("User not found", 201);
         $jsonContent = $normalizer->normalize($user, 'json', ['groups' => 'user']);
         return new Response(json_encode($jsonContent));
-        //return new Response($res);
     }
-    
+
     #[Route("/json/creatCptMobile", name: "app_utilisateur_newM", methods: ['GET', 'POST'])]
     public function newcompteM(Request $req, NormalizerInterface $normalizer, EntityManagerInterface $em): Response
     {
