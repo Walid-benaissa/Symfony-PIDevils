@@ -58,6 +58,8 @@ class VoitureControllerJson extends AbstractController
     {
         $id=$req->get("id");
         $recs = $repo->findByUser($id);
+        if($recs==null)
+        return new Response("Voiture not found");
         $json = $normalize->normalize($recs, 'json', ['groups' => "voiture"]);
         return new Response(json_encode($json));
     }
