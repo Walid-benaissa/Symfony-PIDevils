@@ -64,10 +64,10 @@ class LivraisonControllerJson extends AbstractController
 
         $jsonContent = $normalizer->normalize($livraison, 'json', ['groups' => 'livraison']);
         $sid    = "ACb41add57cfe9cce88d4b9dec32886a34";
-        $token  = "aeefa0ce3b4a15611706b146cb4c2ef0";
+        $token  = "aeefa0ce3b4a15611706b146cb4c2ef0A";
         // Send SMS notification using Twilio
         $sid = 'ACb41add57cfe9cce88d4b9dec32886a34';
-        $token = 'aeefa0ce3b4a15611706b146cb4c2ef0';
+        $token = 'aeefa0ce3b4a15611706b146cb4c2ef0A';
         $twilioNumber = '+15075858388'; // Enter your Twilio phone number here
 
         $client = new Client($sid, $token);

@@ -40,7 +40,7 @@
         "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "6.2.*",
         "tecnickcom/tcpdf": "^6.6",
-        "twilio/sdk": "*",
+        "twilio/sdk": "^7.3",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3"
     },
     "require-dev": {
